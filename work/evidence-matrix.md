@@ -1,6 +1,15 @@
-# Evidence matrix: household emergency preparedness (v0.1)
+# Evidence matrix: household emergency preparedness (v0.2)
 
-Draft v0.1, 16/11/2026. Compiled only from the three evidence extracts below; nothing here comes from the original sources directly.
+Draft v0.2, 16/11/2026. Compiled only from the four evidence extracts below; nothing here comes from the original sources directly.
+
+## Change log
+
+- **v0.2 (16/11/2026).**
+  - **Sweden now uses SE26**, the June 2026 booklet *In case of crisis or war* (MCF0180, `work/evidence/sweden-2026.md`), in every topic table, the headline figures and the conflicts list. It replaces the 2018 edition (SE, in `work/evidence/nordic-sources.md`). Where 2018 said something different, a short "(2018: …)" note is kept.
+  - **Headline figures changed by SE26:** self-sufficiency is now "at least one week" (2018 gave no figure), so 7 days is backed by two sources (NO, SE26); water is "at least three litres of water a day, mainly for drinking and cooking" (2018: "per adult"); prescription medicines "a month's supply" (new, the longest of any source); cash "around 1,000 SEK in cash at home per adult" (new, the only amount in any source); pets supplied for "at least a week" (new row); stored water checked "once or twice a year" (new).
+  - Other SE26 changes recorded: a fire extinguisher and a tin opener on the checklist; a full dry-toilet method (sawdust or compost litter); an evacuation list with map and compass; digital backups; talking to children; coping tips; stop-the-bleed steps; Run, Hide, Tell. Iodine is still not mentioned.
+  - Conflicts list updated (items 1, 2, 3, 5, 6, 8, 11, 12, 15) and a new item 16 (how much cash). The cross-source gaps table now shows what `work/research/gap-research.md` v0.2 verified, corrected or left unverified.
+- **v0.1 (16/11/2026).** First draft from the UK, Nordic (with SE 2018) and DE/FR extracts.
 
 ## Purpose
 
@@ -10,8 +19,9 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 - `work/evidence/uk-sources.md` (the "UK extract")
 - `work/evidence/nordic-sources.md` (the "Nordic extract")
 - `work/evidence/germany-france-sources.md` (the "DE/FR extract")
+- `work/evidence/sweden-2026.md` (the "SE26 extract"), which replaces the SE entries in the Nordic extract
 
-`work/research/gap-research.md` is referred to where it covers a gap, but none of its content is copied here.
+`work/research/gap-research.md` (v0.2) is referred to where it covers a gap. Its findings are not copied into the topic tables; the cross-source gaps table gives its verification status in brief.
 
 ## Sources
 
@@ -26,7 +36,8 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Ready Scotland / Safer Scotland, "Home Emergency Plan" with "Are you prepared?" checklist | PDF, 2 pages | UK | p.N |
 | DK | Danish Emergency Management Agency (DEMA), *Be Prepared for a Crisis* | PDF metadata 2024; English edition; 6 pages | Nordic | p.N |
 | NO | Norwegian Directorate for Civil Protection (DSB), *How you can play your part in Norway's emergency preparedness – Advice on emergency preparedness* | PDF metadata 2024; English edition; 20 pages | Nordic | p.N |
-| SE | Swedish Civil Contingencies Agency (MSB), *If Crisis or War Comes* | **May 2018 edition** (MSB1214). MSB has since issued a revised edition, which has not been checked | Nordic | PDF page with printed pages, e.g. "p.6 (pr. 10–11)" |
+| SE26 | Swedish Civil Defence and Resilience Agency (MCF, formerly MSB), *In case of crisis or war* | **June 2026** (MCF0180); English edition; 32 pages. **Used for Sweden throughout this matrix** | SE26 | p.N (printed = PDF) |
+| SE | Swedish Civil Contingencies Agency (MSB), *If Crisis or War Comes* | May 2018 edition (MSB1214). **Superseded by SE26**; cited only in "(2018: …)" notes where it differs | Nordic | PDF page with printed pages, e.g. "p.6 (pr. 10–11)" |
 | FI | Finnish Ministry of the Interior et al., *Prepared People Cope Better* | "Year of publication 2024" (PDF metadata 2025); English edition; 8 pages | Nordic | p.N |
 | DE | Federal Office of Civil Protection and Disaster Assistance (BBK), *Disasters: Guide for Emergency Preparedness and Correct Action in Emergency Situations* | 6th edition, December 2018; English edition; 68 pages | DE/FR | p.N (printed = PDF) |
 | FR | French Government poster, *Votre kit d'urgence 72 h* ("Your 72-hour emergency kit") | PDF metadata July 2022; **in French; all quotations are the extractor's translations** | DE/FR | "p1" (single page) |
@@ -41,21 +52,23 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 - "Not covered" means the extract records nothing on that topic for that source. "Not captured" means the part of the source that might cover it was not captured (mainly RS-KIT, and UK-GOV's and BRC's linked pages). Absence in this matrix is absence in the extracts, not necessarily in the source.
 - Where an extract adds its own comment rather than reporting the source, this matrix labels it "extractor's note".
 - **Topic 26 is numbered differently.** In the UK extract, topic 26 is "Useful phone numbers"; in the Nordic and DE/FR extracts, topic 26 is "War, military and civil defence (context only)". This matrix keeps both, as 26A and 26B.
-- **No source appears in more than one extract**, so the extracts never disagree about what the same source says. Inconsistencies *within* a source or a source family are flagged where the extracts record them.
+- **No source appears in more than one extract**, so the extracts never disagree about what the same source says. The one exception is the Swedish booklet: SE (2018, Nordic extract) and SE26 (2026, SE26 extract) are two editions of the same publication. SE26 is used throughout; "(2018: …)" notes record only where the old edition differs. Inconsistencies *within* a source or a source family are flagged where the extracts record them.
+- "13 sources" means the 13 current sources in the table above, counting SE26 and not SE.
 
 ---
 
 ## Headline figures
 
-| Figure | UK-GOV (web / CHK / PLAN) | BRC | RS (KIT / PLAN / PDF) | DK | NO | SE (2018) | FI | DE | FR | Range | Suggested household figure |
+| Figure | UK-GOV (web / CHK / PLAN) | BRC | RS (KIT / PLAN / PDF) | DK | NO | SE26 (2026) | FI | DE | FR | Range | Suggested household figure |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| **Self-sufficiency duration** | 3 days (091117; CHK p.1); "at least 3 days" (PLAN p.8) | 3 days / 72 hours (091730, 091737) | Not stated | 3 days (p.1, p.2) | 1 week (p.2) | "for some time"; no figure (p.3, pr. 5) | At least 3 days (p.2, p.3) | 10 days at home (p.10, p.34); grab bag 2 days' food (p.21) | 72 hours (p1) | 3–10 days | **SUGGESTION:** 3 days as the fully stocked core, building to 7 days. 3 days is the floor every source that gives a figure meets; 7 days (NO) covers the longer outages several sources mention without the storage burden of 10 days (DE). Matches the decision in `work/PROGRESS.md` ("3-day core with a 7-day-plus column"). |
-| **Drinking water per person per day** | 3 L for drinking; "more would be needed" for cooking and washing, no figure (091126; CHK p.2; PLAN p.8) | "around 2.5 to 3 litres" (091832) | No quantity (RS-PLAN-PDF p.2 "Bottled water") | 3 L for drinking **and food preparation** (p.2) | About 20 L per week (p.5), i.e. about 2.9 L/day (extractor's arithmetic) | At least 3 L per adult (p.6, pr. 10–11) | At least 2 L (p.3, p.5) | About 2 L: "approx. 14 litres ... for each week" (p.11); 20 L drinks for 10 days, including cooking water (p.34) | 2 L, derived from 6 L per person for 72 h (p1) | 2–3 L | **SUGGESTION:** 3 L per person per day for drinking and cooking (the higher figure, and it matches UK-GOV, DK and SE), stored separately from water for washing and flushing. |
-| **Water total stated** | 9 L per person for 3 days (extract's arithmetic from 3 L × "at least 3 days", PLAN p.8) | Not stated as a total | Not stated | 9 L per person for 3 days (p.2, stated) | About 20 L per person per week (p.5) | Not stated | 6 L per person (extractor's arithmetic, p.5) | 14 L per week (p.11); 20 L for 10 days (p.34) | 6 L per person (p1, stated) | 6–20 L | **SUGGESTION:** 9 L per person (3-day core); 21 L per person (7 days); plus water for pets. No source gives a figure for washing or flushing water, so the household must set one. |
-| **Food duration / quantities** | 3 days, non-perishable, no cooking or fridge needed (091126; PLAN p.8 "at least 3 days") | 3 days (091752, 091832) | "Ready to eat food", no duration (RS-PLAN-PDF p.2) | 3 days, no cooking needed (p.2) | 1 week (p.8) | "sufficient calories"; long list, no duration (p.6, pr. 10–11) | At least 3 days, food you can eat as is (p.3, p.5) | 10 days, about 2,200 kcal/day, per-person table (pp.34–35) | 72 h, no-cook, no quantities (p1) | 3–10 days; only DE gives quantities | **SUGGESTION:** 3 days of no-cook food as the core, building to 7 days. For quantities, scale the DE 10-day table to 7 days (× 0.7, my arithmetic): per person about 2.45 kg cereals/potatoes/pasta/rice, 2.8 kg vegetables/pulses, 1.75 kg fruit/nuts, 1.8 kg milk products, 1.05 kg fish/meat/eggs, 0.25 kg fats/oils. |
-| **Cash** | Mix of coins and notes, plus cards; amount "depends on your family's specific needs" (091134/091140) | "Cash for essentials such as food or fuel" (091744) | Not covered | "a small amount of cash in coins and small denomination notes", plus cards and known PINs (p.3) | Some cash in smaller values, amount relative to household size; several cards and banks (p.9) | "cash in small denominations" (p.6, pr. 11) | "A small amount of cash" (p.3) | "sufficient cash reserves" (p.17) | Cash, no amount (p1) | No source gives an amount | **SUGGESTION:** no figure can be drawn from the sources. The household should set an amount to cover essentials (food, fuel, medicines) for the core 3 days, held in coins and small notes, plus at least one physical card with a known PIN. |
-| **Medication supply** | "to last several days" (PLAN p.8); request repeats "up to 5 working days before" (091150) | No figure; "plan for potential disruption" (091832) | No figure (RS-PLAN-PDF p.2 "Medicine") | At least 3 days (p.3) | At least 7 days extra; collect repeats no later than 1 week before running out (p.12) | "extra medicines", no figure (p.6, pr. 11) | "Essential medications", no figure (p.3) | No figure; check expiry regularly (p.14, p.15) | "Medicines", no figure (p1) | "Several days" to 7 days | **SUGGESTION:** at least 7 days' extra supply of regular medicines (NO), with repeats requested at least a week before running out, which also meets UK-GOV's 5 working days. |
-| **Review frequency (kit / plan)** | Kit: every 6 months (091117/091126; CHK p.1). Plan: "regularly", no interval (PLAN p.1). Smoke alarms monthly (091230) | No interval captured | Plan: whenever circumstances change (RS-PLAN 092102/092108) | Rotate stock "on a regular basis"; water by expiry (p.2) | "at regular intervals" (p.10); medicine refill rule (p.12) | No interval (siren tests quarterly, p.8, pr. 15; using these as a reminder is an extractor's note) | Self-assessment questions, no interval (p.6) | "Regularly"; stock rotation (p.11, p.14, p.23) | Kit once a year, plus restock after use (p1) | 6-monthly to annual; plan event-based | **SUGGESTION:** kit check every 6 months (expiry dates, batteries, water); plan review after any change in circumstances and at least once a year; smoke alarms tested monthly. |
+| **Self-sufficiency duration** | 3 days (091117; CHK p.1); "at least 3 days" (PLAN p.8) | 3 days / 72 hours (091730, 091737) | Not stated | 3 days (p.1, p.2) | 1 week (p.2) | "at least a week" / "at least one week" (p.6, p.15); evacuation list "a few days" (p.19). (2018: "for some time", no figure) | At least 3 days (p.2, p.3) | 10 days at home (p.10, p.34); grab bag 2 days' food (p.21) | 72 hours (p1) | 3–10 days | **SUGGESTION:** 3 days as the fully stocked core, building to 7 days. 3 days is the floor every source that gives a figure meets; 7 days is now backed by two sources (NO, SE26) and covers the longer outages several sources mention without the storage burden of 10 days (DE). Matches the decision in `work/PROGRESS.md` ("3-day core with a 7-day-plus column"). |
+| **Drinking water per person per day** | 3 L for drinking; "more would be needed" for cooking and washing, no figure (091126; CHK p.2; PLAN p.8) | "around 2.5 to 3 litres" (091832) | No quantity (RS-PLAN-PDF p.2 "Bottled water") | 3 L for drinking **and food preparation** (p.2) | About 20 L per week (p.5), i.e. about 2.9 L/day (extractor's arithmetic) | "at least three litres of water a day, mainly for drinking and cooking" (p.15). (2018: "at least three litres per adult per day") | At least 2 L (p.3, p.5) | About 2 L: "approx. 14 litres ... for each week" (p.11); 20 L drinks for 10 days, including cooking water (p.34) | 2 L, derived from 6 L per person for 72 h (p1) | 2–3 L | **SUGGESTION:** 3 L per person per day for drinking and cooking (the higher figure, and it matches UK-GOV, DK and SE26), stored separately from water for washing and flushing. |
+| **Water total stated** | 9 L per person for 3 days (extract's arithmetic from 3 L × "at least 3 days", PLAN p.8) | Not stated as a total | Not stated | 9 L per person for 3 days (p.2, stated) | About 20 L per person per week (p.5) | Not stated; 21 L per person for one week is the extract's arithmetic (3 L × "at least one week") | 6 L per person (extractor's arithmetic, p.5) | 14 L per week (p.11); 20 L for 10 days (p.34) | 6 L per person (p1, stated) | 6–20 L stated (21 L derived for SE26) | **SUGGESTION:** 9 L per person (3-day core); 21 L per person (7 days); plus water for pets. No source gives a figure for washing or flushing water, so the household must set one. |
+| **Food duration / quantities** | 3 days, non-perishable, no cooking or fridge needed (091126; PLAN p.8 "at least 3 days") | 3 days (091752, 091832) | "Ready to eat food", no duration (RS-PLAN-PDF p.2) | 3 days, no cooking needed (p.2) | 1 week (p.8) | One week (p.15); "filling, energy-rich", stored at room temperature, quick to prepare or eaten as is; list by food group; no calorie or weight figure (p.17). (2018: "sufficient calories", no duration) | At least 3 days, food you can eat as is (p.3, p.5) | 10 days, about 2,200 kcal/day, per-person table (pp.34–35) | 72 h, no-cook, no quantities (p1) | 3–10 days; only DE gives quantities | **SUGGESTION:** 3 days of no-cook food as the core, building to 7 days. For quantities, scale the DE 10-day table to 7 days (× 0.7, my arithmetic): per person about 2.45 kg cereals/potatoes/pasta/rice, 2.8 kg vegetables/pulses, 1.75 kg fruit/nuts, 1.8 kg milk products, 1.05 kg fish/meat/eggs, 0.25 kg fats/oils. |
+| **Cash** | Mix of coins and notes, plus cards; amount "depends on your family's specific needs" (091134/091140) | "Cash for essentials such as food or fuel" (091744) | Not covered | "a small amount of cash in coins and small denomination notes", plus cards and known PINs (p.3) | Some cash in smaller values, amount relative to household size; several cards and banks (p.9) | "Around 1,000 SEK in cash at home per adult, preferably in different denominations"; "use cash occasionally"; other payment options too (p.17). (2018: "cash in small denominations", no amount) | "A small amount of cash" (p.3) | "sufficient cash reserves" (p.17) | Cash, no amount (p1) | Only SE26 gives an amount (about 1,000 SEK per adult) | **SUGGESTION:** follow SE26's approach of a set amount **per adult**, in mixed notes and coins, but in pounds set by the household to cover essentials (food, fuel, medicines) for the core 3 days. SE26's figure is in Swedish kronor and is not converted here. Keep at least one physical card with a known PIN, and use the cash occasionally so it is not forgotten (SE26 p.17). DECISION 16. |
+| **Medication supply** | "to last several days" (PLAN p.8); request repeats "up to 5 working days before" (091150) | No figure; "plan for potential disruption" (091832) | No figure (RS-PLAN-PDF p.2 "Medicine") | At least 3 days (p.3) | At least 7 days extra; collect repeats no later than 1 week before running out (p.12) | Prescription medicines and disposable products (e.g. for diabetes): "a month's supply at home" (p.18). (2018: "extra medicines", no figure) | "Essential medications", no figure (p.3) | No figure; check expiry regularly (p.14, p.15) | "Medicines", no figure (p1) | "Several days" to a month | **SUGGESTION:** at least 7 days' extra supply of regular medicines (NO) as the floor, working towards a month (SE26) where the prescriber and repeat-prescription rules allow; repeats requested at least a week before running out, which also meets UK-GOV's 5 working days. DECISION 6. |
+| **Pet supplies** | Pet food and bottled water in the kit; no separate duration (091159; CHK p.2; PLAN p.8) | Pet food, water and other items; no duration (091812) | Pet supplies; no duration (RS-PLAN-PDF p.2) | Water and food for pets; no duration (p.2, p.3) | Food and water for pets; no duration (p.10) | Supplies "to last at least a week" (p.29). (2018: pets not covered) | Not covered | "Cover pets' needs"; no duration (p.11) | Pet food; no duration (p1) | Only SE26 gives a duration | **SUGGESTION:** stock pets for the same period as people: 3-day core, building to 7 days (SE26's "at least a week"). |
+| **Review frequency (kit / plan)** | Kit: every 6 months (091117/091126; CHK p.1). Plan: "regularly", no interval (PLAN p.1). Smoke alarms monthly (091230) | No interval captured | Plan: whenever circumstances change (RS-PLAN 092102/092108) | Rotate stock "on a regular basis"; water by expiry (p.2) | "at regular intervals" (p.10); medicine refill rule (p.12) | Stored water: check taste and smell "once or twice a year", change when necessary (p.15); no interval for the whole kit (siren tests quarterly, p.10) | Self-assessment questions, no interval (p.6) | "Regularly"; stock rotation (p.11, p.14, p.23) | Kit once a year, plus restock after use (p1) | 6-monthly to annual; plan event-based | **SUGGESTION:** kit check every 6 months (expiry dates, batteries, water), which also meets SE26's "once or twice a year" water check; plan review after any change in circumstances and at least once a year; smoke alarms tested monthly. |
 
 ---
 
@@ -72,7 +85,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | FM radio powered by battery, solar or wind-up, including car radios; blank for FM frequencies (p.1). |
 | DK | Sirens, S!RENEN mobile system, emergency messages; go indoors and listen to DR or TV 2; battery/wind-up/solar FM radio or car radio (p.4, p.6). |
 | NO | NRK P1 as emergency channel; DAB radio (battery, wind-up or solar) (p.14, p.10); mobile alerts need 4G/5G; siren patterns (p.15); municipal "muster stations" for information (p.14). |
-| SE | IPA signal and outdoor warning: go in, close windows, doors and ventilation, listen to P4 (p.8, pr. 14–15); radio by batteries, solar or winding, car radio (p.6, pr. 11); krisinformation.se (p.11, pr. 20). |
+| SE26 | Public Service Announcement (PSA) siren: go indoors, close windows and doors, "if possible, switch off the ventilation", listen to Sveriges Radio P4 (p.10); PSAs also by TV, teletext, apps (krisinformation.se, SOS Alarm, SR, SVT) and SE-Alert to mobile phones in the area (p.10); radio powered by batteries, solar panels or winding, extra batteries; look up the local P4 frequency at krisinformation.se (p.16); weather-warning apps (p.26); phone accessibility features and PSA notifications for people with hearing or sight loss (p.28). (2018: "IPA" signal, texts to mobiles; car radio listed.) |
 | FI | Warnings read on radio/TV; one-minute rising and falling alarm, go indoors; monthly test (p.7); 112 Suomi app (p.7); battery radio, YLE (p.5). |
 | DE | Radio is "the main warning device"; battery radio with VHF and digital reception or wind-up radio, spare batteries (p.22, p.23, p.36); NINA app, warnung.bund (pp.24–25); loudspeaker vehicles (p.61, p.63). Sirens not mentioned. |
 | FR | "Battery radio (with spare batteries)" to follow the authorities (p1, translated). |
@@ -100,7 +113,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | "Bottled water", no quantity (p.2). |
 | DK | 3 L per person per day for drinking and food preparation; 9 L per person for 3 days; include pets; cool, dark storage; tap water keeps "several months" sealed; food-grade containers; change regularly (p.2). |
 | NO | About 20 L per person covers one week; juice and soft drinks count towards it; container sterilising with "two corks of bleach per 10 litres" for 30 minutes; stored water keeps "for years"; hot-water heater water for hygiene only; rain/river water may be contaminated (p.5, p.13). |
-| SE | At least 3 L per adult per day; be able to boil water if unsure of quality; jerry cans, buckets with lids; freeze water in bottles not filled to the top (p.6, pr. 10–11). |
+| SE26 | "at least three litres of water a day, mainly for drinking and cooking"; the municipality may provide public water tanks, but keep some water at home (p.15); containers or buckets with lids, bottled water; store dark and cool; check taste and smell "once or twice a year" and change when necessary; boil to a rolling boil if unsure; freeze water in plastic bottles not filled to the top, usable as ice packs (p.15). No total and no container-sterilising method. (2018: "per adult"; jerry cans "ideally with a tap".) |
 | FI | At least 2 L per person per day; containers with lids (p.3); 2 L each for 3 days (p.5). |
 | DE | About 14 L of liquid per person per week, including mineral water and juices (p.11); 20 L drinks for 10 days, including water for cooking (p.34); fill bath and containers, water for flushing, sterilisation agents from camping shops (p.13). Boiling not mentioned. |
 | FR | 6 L per person in bottles for the 72-hour kit (p1, translated). |
@@ -130,7 +143,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | "Ready to eat food"; "Baby food/pet supplies" (p.2). |
 | DK | Three days; long-life, no oven or hob needed (tinned food, crispbread); food you like; rotate; store cool, dry and dark; be able to boil water without power (barbecue or camping stove, never indoors, CO risk) (p.2). |
 | NO | One week; eat chilled and frozen food first; long-life and needs-heating examples; special diets; check stove condition (p.8); grill/stove, spare gas or fuel, pet food (p.10). |
-| SE | Food with enough calories, quick to prepare, little water or no preparation; long list (p.6, pr. 10–11); spirit stove and fuel. |
+| SE26 | One week (p.15); filling, energy-rich food stored at room temperature, quick to prepare, little water or eaten as is; list by food group, including high-fat items (oil, pesto, peanut butter, nuts) and food for children; build up "one or two additional items" per shop; grow food if possible (p.17); camping stove, gas burner, fuel; tin opener; matches (p.18). (2018: no duration; spirit stove; no tin opener.) |
 | FI | At least 3 days of food you can eat as is; think how you would cook without power (p.3, p.5). |
 | DE | 10 days, about 2,200 kcal/day; per-person table (pp.34–35); food you normally eat, mostly edible cold, rotate, frozen food first, do not refreeze (p.11); camping stove; never grill indoors (p.17); spirit stove (p.37); provisions calculator (p.35). |
 | FR | Non-perishable, no-cook food (tins, baby food jars, pet food); no quantities (p1, translated). |
@@ -158,7 +171,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | "Blankets/warm clothes" (p.2). |
 | DK | Blankets, duvets, warm clothes; stay mainly in one room; candles and heat sources on a solid surface away from flammables (p.3). |
 | NO | Warm clothing, bedding; approved fireplace and chimney, firewood; indoor-rated gas or paraffin heater; generator or battery unit; stay with others or host them; close doors, blankets between rooms and over windows (pp.6–7); overnight accommodation agreement (p.10). |
-| SE | One room, blankets over windows, rugs, a den under a table; put out candles and heaters before sleep; air the room; LPG or paraffin heaters (p.6, pr. 10–11). |
+| SE26 | Gather in one room, blankets over the windows, rugs on the floor (p.16); wool clothing, thick socks, hats, gloves, scarves; blankets, sleeping mats, sleeping bags; gas or paraffin heater; candles, tea lights, fuel; matches, fire-starters and a fire extinguisher; "Open a window to let in breathable air" and switch off heat sources before sleep (p.16). (2018: also "a den under a table" and LPG heaters; "air the room regularly".) |
 | FI | Keep one space warm and stay in it; warm blankets (p.6). |
 | DE | Warm clothing as a substitute for heating; fuel for a fireplace or stove (p.17); "Heater" and "Fuel" (p.37); heating via emergency power (p.31); blanket, sleeping bag (p.39). |
 | FR | Warm clothes and survival blanket (p1, translated). |
@@ -185,7 +198,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Torch, batteries; phone fully charged (p.2). |
 | DK | Power bank; torch, candles, matches, batteries; candle safety (p.3, p.6); grills never indoors, carbon monoxide named (p.2). |
 | NO | Candles, matches or lighter; torches or head lamps and batteries; generator or 230V battery unit with safety caveat (p.6); power banks (p.10, p.14). No explicit CO warning. |
-| SE | Torch, head torch, batteries, candles, tea lights, power bank, car charger, fuel in the tank (p.6, pr. 10–11). No generator. |
+| SE26 | Torch, headlamp; fuel in the car tank "or a charged battery" (p.18); candles, tea lights, extra batteries, phone and charged power bank, car phone charger (p.16). Generators not covered; carbon monoxide not named. |
 | FI | Torch or headlamp, batteries (p.6); backup power supply (p.3). |
 | DE | Candles, torches (twist, solar, LED), spare lamps, batteries, matches (p.17, p.37); solar chargers (p.17); generator for floodplain homes (p.30); no grilling indoors, risk of suffocation (p.17); avoid candles when sealed in (p.64); never leave naked flames unattended (p.47). CO not named; power banks not named. |
 | FR | Torch and batteries, candles, lighter or matches; phone charger (p1, translated); replace batteries yearly. |
@@ -213,7 +226,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Meeting place close to home; important numbers (p.1); phone charged (p.2). |
 | DK | Mobile phone essential; networks may fail; write numbers down and keep on the fridge (pp.3–4). |
 | NO | Paper list of numbers; Wi-Fi calling; a neighbour on a different network (p.14); list contents (p.10); 14 12 and text service for deaf people (p.20). |
-| SE | Contact relatives (p.3, pr. 5); phone on silent and avoid calls in a terror attack (p.4, pr. 7); 112 without credit or SIM (p.10, pr. 18); write down numbers, addresses, nearest shelter (p.10, pr. 19). |
+| SE26 | Keep a mobile phone with a charged power bank, a car charger and phone numbers written on paper (p.16); "Only call if you need to request help, so as not to overload the network"; "Do not call anyone who may be in danger" (p.24); national numbers (p.31). (2018: also 112 works without credit or SIM, and write down the nearest shelter.) |
 | FI | Call 112 for urgent help (p.4). |
 | DE | Discuss escape routes and meeting points, as not everyone may be home (p.33); phone list on back cover (p.68); "Where? What? Who? Wait for questions!" (pp.26–27, p.68); communication with neighbours if networks fail, signals, roles (p.56); calls only in emergencies (p.64). |
 | FR | Phone charger only (p1, translated). |
@@ -240,7 +253,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered. |
 | DK | Physical cards, know your PINs; small amount of cash in coins and small notes (p.3, p.6). |
 | NO | Several cards from different banks; cash in smaller values, amount relative to household; accounts at several banks (p.9). |
-| SE | Cash in small denominations (p.6, pr. 11); payment cards and cash machines may not work (p.3, pr. 4). |
+| SE26 | "Around 1,000 SEK in cash at home per adult, preferably in different denominations"; "You should use cash occasionally"; other payment options such as cards and digital services (p.17); photo ID, card and cash in the evacuation list (p.19). (2018: "cash in small denominations", no amount.) |
 | FI | A small amount of cash (p.3). |
 | DE | Sufficient cash reserves, as cash machines fail in a power cut (p.17); money in the grab bag (p.21). |
 | FR | Cash, as cash machines may not work (p1, translated). |
@@ -264,7 +277,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered beyond numbers. |
 | DK | Not covered. |
 | NO | Take ID when leaving at short notice (p.18). |
-| SE | Paper printouts of insurance policies, bank details, registration certificates (p.6, pr. 11); ID when ready to leave (p.9, pr. 16). |
+| SE26 | Phone numbers and insurance information written on paper, photo ID (evacuation list, p.19); for pets, vet's number, insurance and ID number (p.29); "regular backups of important information to an external hard drive, USB drive or cloud service" (p.23); a personal crisis plan listing medicines and aids for anyone needing assistance (p.28). (2018: paper printouts of insurance policies, bank details and registration certificates; this home item is dropped in 2026.) |
 | FI | Not covered. |
 | DE | Document briefcase in one known place; duplicates with friends, relatives, solicitors or banks (p.18); tiered list of originals, certified copies and simple copies (p.19); checklist (p.38); photos of property (p.41). |
 | FR | Photocopies of essential documents (ID, prescriptions) in a waterproof pouch (p1, translated). |
@@ -291,7 +304,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | First aid kit; medicine (p.2). |
 | DK | At least 3 days of medicines and a first aid kit, with contents (p.3); larger stock for special needs (p.4). |
 | NO | At least 7 days extra; collect new supplies no later than a week before running out; learn first aid; kit in the car; first aid steps (p.12). |
-| SE | Medicine cabinet and extra medicines (p.6, pr. 11); learn first aid (p.10, pr. 18). |
+| SE26 | "Home pharmacy, first aid kit"; prescription medicines or disposables (e.g. diabetes): "keep a month's supply at home" (p.18); medicines and aids such as hearing aids in the evacuation list (p.19); take a CPR course (p.6); how to stop severe bleeding (p.25). (2018: "medicine cabinet and extra medicines"; learn first aid.) |
 | FI | Essential medications (p.3); first aid skills, Finnish Red Cross courses (p.8). |
 | DE | Check medicines regularly, bin expired ones (p.14); storage away from children, not in the bathroom (p.15); full home medicine list (p.15, p.36); first aid courses (pp.26–27); medication in grab bag (p.21, p.39). |
 | FR | Medicines; first aid kit; spare glasses; prescriptions with documents; check medicine dates yearly (p1, translated). |
@@ -318,7 +331,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | "Toiletries" (p.2). |
 | DK | Toilet paper, sanitiser, wipes, sanitary products, nappies (p.3, p.5). No toilet-without-water advice. |
 | NO | Wipes, sanitiser, disposable gloves, toilet paper, waste bags; hygiene rules; emergency toilet with double carrier bags in the toilet or a bucket; hot-water heater and rain water for washing (p.13). |
-| SE | Strong plastic bags in the toilet bowl; hand hygiene; buckets with lids, wipes, sanitiser, nappies, menstrual products (p.6, pr. 10–11). |
+| SE26 | Full dry-toilet method: urinate in the unflushed toilet, bin the toilet paper, bag the bowl or use a portable toilet or bucket with a lid, cover excrement with compost litter or sawdust, keep urine and excrement apart to cut odour; the municipality says where to discard waste (p.18); toilet paper, wet wipes, sanitiser, nappies, menstrual pads, bags, compost litter or sawdust, bucket with a lid (p.18). (2018: one sentence, bags in the toilet bowl.) |
 | FI | Wet wipes and hand sanitiser (p.3). |
 | DE | Hand washing; collect water for flushing; soap, toothpaste, wipes, toilet paper; camping toilet; gloves; disinfectant; kitchen paper; rubbish bags; disposable crockery (pp.12–13, p.37); camping toilet for floods (p.55). |
 | FR | Not covered. |
@@ -344,7 +357,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Vet in numbers (p.1); pet supplies (p.2). |
 | DK | Water and food for pets (p.2, p.3, p.5). |
 | NO | Food and water for pets; vet numbers (p.10). |
-| SE | Not covered. |
+| SE26 | Supplies "to last at least a week": dry food and water in storage containers, medicines, a cage or other transport, handwritten vet's number, insurance and ID number; pets may be taken into protective structures in an air raid; if a pet must be left at home, leave extra food and water (p.29); guide and service dogs allowed in civil defence shelters (p.28). (2018: not covered.) |
 | FI | Not covered. |
 | DE | Cover pets' needs (p.11); calm pets in severe weather (p.43); plan pet evacuation (p.56). |
 | FR | Pet food (p1, translated). |
@@ -368,7 +381,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Look out for vulnerable neighbours once safe (p.1). |
 | DK | Plan for infants, elderly or sick people; check on neighbours; prepare together if budget, space or mobility are limited (pp.3–5). |
 | NO | "Preparedness buddy" and a list of ways to help (p.16); host neighbours without heating (p.6); joint stocks via housing associations (p.16). |
-| SE | Help goes first to those most in need; share and borrow; get involved (p.3, p.6, p.10). |
+| SE26 | Help goes first to those most in need, so most people must manage "for at least a week"; talk to neighbours about collective preparedness; volunteering, CPR course, blood donation (p.6); share with neighbours (p.15); people needing special assistance: talk to family, carers and neighbours, make a personal crisis plan listing medicines and aids, prepare transport to a shelter (p.28); help for those who cannot evacuate alone (p.19). |
 | FI | Community and helping others; volunteering (p.2, p.4, p.8). |
 | DE | Help neighbours (p.7); support with evacuation for disabled people (p.48); visual or vibrating smoke alarms for deaf people (p.49); care of the sick, roles, signals (p.56); take in passers-by (p.63). |
 | FR | Not covered (beyond baby food). |
@@ -392,7 +405,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Same (p.1). |
 | DK | Nuclear accident: stay indoors; iodine tablets for under-40s and pregnant or breastfeeding women, follow authorities (p.3, p.5). |
 | NO | Iodine tablets at home for under-40s and pregnant or breastfeeding, only on instruction (p.12); often safest at home; in war, basement or central room away from windows (p.18). |
-| SE | Go in, close windows, doors and ventilation, listen to P4 (p.8, pr. 15). Iodine not covered. |
+| SE26 | PSA: go indoors, close windows and doors, switch off ventilation if possible, listen to P4 (p.10, p.32); better protection indoors, "preferably in a room without windows" (p.11–12); ranked protection graphic, from a ditch up to a civil defence shelter (p.13); for nuclear, chemical or biological weapons, take cover as in an air raid; "Radiation levels will lower drastically after a couple of days" (p.12). Iodine and sealing with tape not covered. |
 | FI | Go in, stop ventilation, seal doors, windows and vents, follow warnings, stay in until told (p.7); iodine tablets as recommended; duct tape (p.3). |
 | DE | CBRN: avoid cellars for chemicals (gases heavier than air), cellars best for radiation (pp.61–62, p.64); close windows and doors, turn off fans and air conditioning, internal room (p.63); avoid candles; radio; respiratory protection (p.64); outdoor and decontamination steps (p.64); in a car, ventilation off (p.65). Iodine not covered. |
 | FR | Not covered. |
@@ -420,7 +433,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Meeting place; take kit in a waterproof bag (p.1). |
 | DK | Alternative transport, arrangements with others if remote (p.4, p.6). |
 | NO | Plan where to go and how (relatives, friends, cabin); evacuation and family contact centres; take-list; enough fuel or charge; transport may be slow (p.18). |
-| SE | On emergency alarm, be ready to leave with warm clothes, food, drink and ID (p.9, pr. 16). |
+| SE26 | Evacuation may be needed quickly; instructions via PSA and P4, follow the authorities (p.19, p.26); list of essential belongings to take (p.19); help and emergency accommodation for those unable to evacuate alone (p.19). Utility shut-off, routes and destinations not covered. (2018: on the emergency alarm, be ready to leave; in 2026 the emergency alarm means "Go indoors".) |
 | FI | Not covered. |
 | DE | Pack before you need it (p.8, p.20); routes and meeting points (p.33); evacuating sick people and pets, roles (p.56); move valuables upstairs, secure oil tank (p.55); turn off appliances and power, move the car (p.57). Gas and water shut-off not covered. |
 | FR | Kit useful if you have to leave in a hurry; spare keys (p1, translated). |
@@ -446,7 +459,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered. |
 | DK | Candles and heaters on solid surfaces away from flammables (p.3); grills indoors (p.2). |
 | NO | Approved chimney and fireplace; check stoves (p.6, p.8); 110 for fire (p.20). |
-| SE | Put out candles and heaters before sleep (p.6, pr. 10). |
+| SE26 | Fire extinguisher on the checklist; switch off heat sources before sleep (p.16); check for a fire ban before lighting a fire or grill (p.26). Smoke alarms and escape plans not covered. |
 | FI | 112 for fires (p.4). |
 | DE | Smoke alarms in all rooms except kitchen and bathroom; extinguisher, also in the car (p.47); escape routes, doors closed not locked (p.48); alarm standards and placement (p.49); extinguishing equipment (p.50); seven-step fire response, never water on fat fires (pp.51–53); checklist (p.38). |
 | FR | Not covered. |
@@ -473,7 +486,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Floodline Scotland 0345 988 1188 (p.1). |
 | DK | Coastal and low-lying areas; find out where to get sandbags (p.3, p.6). |
 | NO | Not covered as advice. |
-| SE | Flooding may become more common; is your area at risk? (p.3, pr. 4–5). |
+| SE26 | Floods increasingly common; check the municipality's website or mcf.se for the risk of landslides, erosion and flooding where you live (p.26). No flood-response steps. |
 | FI | Floods named as a risk (p.2). |
 | DE | Before: sandbags, boards, move valuables upstairs, secure oil tank, know high-water mark (p.55); during: do not stay in the cellar, switch off power, do not drive through floodwater, basement garages are "death traps" (p.57); after: photograph damage, dry rooms, have services checked, do not eat produce from flooded areas (pp.58–59); structural measures (pp.30–31). |
 | FR | Not covered. |
@@ -497,7 +510,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered. |
 | DK | Extreme weather increasing (p.1); cold, see topic 4. |
 | NO | Extreme weather named (p.2); winter power-cut cold (p.6). |
-| SE | Flooding and forest fires (p.3, pr. 4); cold time of year (p.6). |
+| SE26 | Extreme weather a named threat (p.5); heavy rain, floods and heatwaves increasingly common; weather-warning apps; listen to P4 in extreme weather, e.g. for boil-water notices; forest fires and fire bans (p.26); cold through the winter power-cut advice (p.16). Heat-coping advice not covered. |
 | FI | Storms named; alarm may be used for a storm (p.2, p.7). |
 | DE | Storms and thunderstorms in detail: stay indoors, secure garden items, lightning safety, 50 m from power lines (pp.41–43); after the storm (pp.44–45); roof and tree measures (p.29). Cold only indirectly; heat not covered. |
 | FR | Not covered (warm clothes and survival blanket in kit). |
@@ -521,7 +534,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Insurance in example numbers (p.1). |
 | DK | Assess exposure; bigger stock if you have time, space and resources (pp.3–4). |
 | NO | Water storage locations; chimney approval; firewood; joint stocks (p.5, p.6, p.16). |
-| SE | Know local risks, including hazardous industry (p.3, pr. 5); paper copies of insurance policies (p.6, pr. 11). |
+| SE26 | Adapt the checklists to your needs; prepare ahead (p.15); check local risk of landslides, erosion and flooding (p.26); locate shelters near home, school and workplace (p.21). Insurance only as information to keep on paper (p.19, p.29). (2018: also hazardous industry; paper copies of insurance policies.) |
 | FI | Not covered beyond supplies. |
 | DE | Structural resilience: roof, trees, backflow valves, pumps, RCDs, surge and lightning protection, generator, fuel tanks (pp.28–31); photo record of property and damage for insurance (p.41, p.44, p.59); old extension leads (p.47). Choosing cover not discussed. |
 | FR | Not covered. |
@@ -545,7 +558,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Car radio (p.1). |
 | DK | Car FM radio (p.4). |
 | NO | First aid equipment in the car (p.12); radio and charging (p.14); fuel or charge for evacuation (p.18). |
-| SE | Car radio, car charger, fuel in the tank (p.6, pr. 11). |
+| SE26 | Car phone charger (p.16); fuel in the car tank or a charged battery (p.18). No car kit list. (2018: also a car radio.) |
 | FI | Not covered. |
 | DE | Fire extinguisher in the car (p.47); car first aid kit standard (p.15); car radio (p.23); car safe in thunderstorms (p.43); flood driving (p.57); ventilation off in a chemical release (p.65). No car kit list. |
 | FR | Spare car keys (p1, translated). |
@@ -569,7 +582,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Baby food (p.2). |
 | DK | Baby formula, nappies (p.3, p.6). |
 | NO | Nappies; iodine eligibility includes children (p.10, p.12). |
-| SE | Nappies only (p.6, pr. 11). |
+| SE26 | Talking to children: be present, explain, listen, only verified information, admit what you don't know, plan activities (p.30); food for children (gruel, infant formula, oatmeal, baby food) (p.17); nappies, games and books (p.18); locate shelters near school (p.21); children's website lilla.krisinformation.se (p.31). (2018: nappies only.) |
 | FI | Games, books, paper and pens for everyone (p.6). |
 | DE | Neck pouch or SOS capsule with name, date of birth and address (p.21); medicines out of reach (p.15); smoke alarms in children's rooms (p.49); children out of the floodplain first (p.58); children's website and worksheets (p.66). |
 | FR | Baby food jars; games (p1, translated). |
@@ -593,7 +606,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered. |
 | DK | Not covered. |
 | NO | Anxiety, poor sleep and strong emotions are normal; focus on what you can do; keep routines; stay in contact (p.17). |
-| SE | Many may feel anxiety (p.2, pr. 3). |
+| SE26 | "If you are worried": talk to family, friends, neighbours or a mental health organisation; get involved in helping others; good food, sleep and exercise; "Restrict your news intake"; seek professional help for severe anxiety (p.30); games, puzzles, books (p.18). (2018: only that many may feel anxiety.) |
 | FI | Mental capacity part of preparedness; keep calm; do not stay alone; games, books, paper and pens; recall what helped before (p.2, p.4, p.6). |
 | DE | Brief: do not panic, remain calm, relax once prepared (p.39, p.51, p.57). |
 | FR | Stay home "more calmly"; games (p1, translated). |
@@ -617,7 +630,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not stated. |
 | DK | 3 days, based on the National Risk Assessment; longer is a good idea for exposed areas or special needs (p.1, p.2, pp.4–5). |
 | NO | One week (p.2). |
-| SE | "for some time"; no figure in the 2018 edition (p.3, pr. 5). Check the current MSB edition. |
+| SE26 | "at least a week" (p.6) / "at least one week" (p.15); pets at least a week (p.29); prescription medicines a month (p.18); evacuation food and water "to last a few days" (p.19); shelter stay "a few days" (p.20). (2018: "for some time", no figure.) |
 | FI | At least 3 days (p.2, p.3). |
 | DE | 10 days (p.10, p.34); grab bag for "the first few days", food for 2 days (p.21). |
 | FR | 72 hours (p1, translated). |
@@ -641,7 +654,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Take emergency items in a waterproof bag (p.1). |
 | DK | Not covered. |
 | NO | Take-list (not a pre-packed bag): warm clothes or blankets, phone, cards and cash, food and drink, ID, medicines, glasses, contact lenses, walking frames, hearing aids (p.18). |
-| SE | Most important things, warm clothes, food and drink, ID (p.9, pr. 16). |
+| SE26 | List to prepare (not explicitly a pre-packed bag): food and water "to last a few days", photo ID, card and cash, medicines and aids (hearing aids), radio, warm and water-resistant clothing plus spare sets, toiletries, phone and charger, **map and compass**, phone numbers and insurance information on paper (p.19); for a shelter, food, warm clothes and toiletries if there is time (p.20). (2018: warm clothes, food and drink, ID only.) |
 | FI | Not covered. |
 | DE | One rucksack per person, hands free; first aid and medication, radio, document briefcase, 2 days' food, water bottle, cutlery, torch, sleeping bag or blanket, clothes and hygiene items, camera; waterproofs and wellingtons; dust mask; ID, money, valuables; child ID capsule (p.21); checklist adds helmet, gloves, mask, penknife, thermos (p.39). |
 | FR | Battery radio, medicines, first aid kit, multi-tool and tin opener, no-cook food, warm clothes and survival blanket, torch, candles, lighter, phone charger, spare glasses, cash, 6 L water per person, document photocopies in a waterproof pouch, spare keys, games; keep the bag easy to reach (p1, translated). |
@@ -669,7 +682,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered. |
 | DK | Share verified information; check credibility before sharing (p.4); cyber attacks a threat (p.1). |
 | NO | False information spread deliberately; be sceptical of surprising, frightening or angering content; check who is behind it; media can be manipulated (p.15); digital attacks on payments (p.9). |
-| SE | Six questions to appraise a source; do not spread rumours (p.4, pr. 6); any claim that resistance is to cease is false (p.7, pr. 13). |
+| SE26 | Disinformation methods, including fake images, video and voice recordings; be wary of content that provokes a strong reaction, share only from reliable sources, check several sources, confirm with official sources (p.22); strong passwords, no unknown links or attachments, prompt security updates, regular backups (p.23); do not spread rumours (p.24); "we will never surrender. Any suggestion to the contrary is false" (p.5). (2018: six source-checking questions.) |
 | FI | Reliable information from authorities and YLE (p.4). |
 | DE | Not covered (official channels only, pp.23–25). |
 | FR | Not covered (follow authorities). |
@@ -693,7 +706,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | Not covered. |
 | DK | Water by expiry; change stored water regularly; rotate food (p.2). |
 | NO | Stock up before you run out; review at regular intervals (p.8, p.10); medicine refill rule (p.12); charge power bank, check stoves regularly (p.14, p.8). |
-| SE | Keep the brochure (p.2); keep up to date via dinsäkerhet.se (p.9). No interval. |
+| SE26 | Stored water: check taste and smell "once or twice a year", change when necessary (p.15); build up gradually, use cash occasionally (p.17); quarterly siren tests (p.10); keep the brochure (p.2); security updates and backups (p.23). No interval for the whole kit. |
 | FI | Self-assessment questions (p.6). |
 | DE | Rotate food, check dates (p.11); check medicines (p.14); replace batteries (p.23); plan together, agree where things are kept (p.33); service extinguisher (p.47); test smoke alarms (p.49). |
 | FR | Once a year, check medicine and food dates and replace batteries; restock after use (p1, translated). |
@@ -717,7 +730,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | RS-PLAN-PDF | 999; 101; NHS 24 111; Floodline Scotland 0345 988 1188; loss of power 105; gas 0800 111 999; Scottish Water 0800 077 8778; ready.scot (p.1). |
 | DK | 1-1-2; alternatives announced if 1-1-2 fails (p.4). |
 | NO | 110 fire, 112 police, 113 medical, 14 12 for deaf or hard of hearing; nodsms.no (p.20). |
-| SE | 112, usable without credit or SIM (p.10, pr. 18). |
+| SE26 | 112 for emergencies; 114 14 police non-emergency; 113 13 information about serious accidents and crises; 1177 medical advice (p.31). (2018: also that 112 works without credit or SIM.) |
 | FI | 112 (p.4). |
 | DE | 112 fire and rescue, 110 police, 115 public authorities; blanks for poison centre, pharmacy, utility company (p.68). |
 | FR | None. |
@@ -735,7 +748,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | UK sources | No such topic in the UK extract; no war content recorded. |
 | DK | Cyber attacks and sabotage serious due to the security situation (p.1). |
 | NO | War and sabotage; shelters, basement or central room; kart.dsb.no (p.2, pp.18–19). |
-| SE | Total defence; duty for ages 16–70; list of attack types; shelters marked "SKYDDSRUM"; terror-attack advice (pp.5–9, pr. 7–17). |
+| SE26 | Armed attack and hybrid threats (p.3, p.5); total defence and NATO (p.7); total defence duty from 16 to 70 (p.8–9); shelter hierarchy, nearest shelter, online map, 48-hour readiness, sign "a blue triangle inside an orange rectangle" ("SKYDDSRUM") (p.12–14, p.20–21); terror attacks: **Run, Hide, Tell**, phone on silent, do not call anyone who may be hiding (p.24). |
 | FI | Not covered beyond general framing. |
 | DE | Little: WWII ammunition as an evacuation trigger (p.20); armed forces as support (p.7); CBRN framed as accidents (pp.60–65). |
 | FR | Not covered. |
