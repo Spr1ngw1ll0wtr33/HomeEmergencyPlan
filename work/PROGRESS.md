@@ -17,7 +17,7 @@ This file is the record of where things stand, so work can be picked up again at
 | # | Workstream | Output | Status |
 |---|---|---|---|
 | 0a | Evidence: UK sources | `work/evidence/uk-sources.md` | In progress |
-| 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | In progress |
+| 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1); Swedish guide is the 2018 edition – check for a newer one |
 | 0c | Evidence: Germany and France | `work/evidence/germany-france-sources.md` | In progress |
 | 0d | Evidence matrix (combined) | `work/evidence-matrix.md` | Waiting for 0a–0c |
 | 0e | Research into known gaps | `work/research/gap-research.md` | In progress |
