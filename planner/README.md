@@ -14,6 +14,16 @@ You can use it from the web address or from a copy of the folder on your compute
 2. Go to **spr1ngw1ll0wtr33.github.io/HomeEmergencyPlan/planner/**
 3. Bookmark the page (press **Ctrl** and **D** together) so you can find it again.
 
+The web address only works once GitHub Pages has been switched on for this repository. Until then, use a copy on your computer.
+
+**Getting a copy onto your computer**
+
+1. In Firefox, go to **github.com/spr1ngw1ll0wtr33/HomeEmergencyPlan** and sign in.
+2. Above the list of files there is a button showing the branch name (it may say **main**). Click it and choose the branch that holds the latest work (at present **claude/loving-sagan-4g1chj**).
+3. Click the green **Code** button, then **Download ZIP**.
+4. Open your **Downloads** folder in the Files app, right-click the ZIP file and choose **Extract Here**.
+5. Open the new folder. Inside it is the **planner** folder.
+
 **From a copy on your computer**
 
 1. Open the **planner** folder in the Files app.
