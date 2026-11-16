@@ -8,7 +8,7 @@ Draft v0.2, 16/11/2026. Compiled only from the four evidence extracts below; not
   - **Sweden now uses SE26**, the June 2026 booklet *In case of crisis or war* (MCF0180, `work/evidence/sweden-2026.md`), in every topic table, the headline figures and the conflicts list. It replaces the 2018 edition (SE, in `work/evidence/nordic-sources.md`). Where 2018 said something different, a short "(2018: …)" note is kept.
   - **Headline figures changed by SE26:** self-sufficiency is now "at least one week" (2018 gave no figure), so 7 days is backed by two sources (NO, SE26); water is "at least three litres of water a day, mainly for drinking and cooking" (2018: "per adult"); prescription medicines "a month's supply" (new, the longest of any source); cash "around 1,000 SEK in cash at home per adult" (new, the only amount in any source); pets supplied for "at least a week" (new row); stored water checked "once or twice a year" (new).
   - Other SE26 changes recorded: a fire extinguisher and a tin opener on the checklist; a full dry-toilet method (sawdust or compost litter); an evacuation list with map and compass; digital backups; talking to children; coping tips; stop-the-bleed steps; Run, Hide, Tell. Iodine is still not mentioned.
-  - Conflicts list updated (items 1, 2, 3, 5, 6, 8, 11, 12, 15) and a new item 16 (how much cash). The cross-source gaps table now shows what `work/research/gap-research.md` v0.2 verified, corrected or left unverified.
+  - Conflicts list updated (items 1–6, 8, 11, 12, 14 and 15) and a new item 16 (how much cash). The cross-source gaps table now shows what `work/research/gap-research.md` v0.2 verified, corrected or left unverified.
 - **v0.1 (16/11/2026).** First draft from the UK, Nordic (with SE 2018) and DE/FR extracts.
 
 ## Purpose
@@ -45,13 +45,13 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 ## How to read this matrix
 
 - **Headline figures** gives the key numbers first. The "Suggested household figure" column is **my suggestion, not a source claim**, and is marked "SUGGESTION" each time.
-- **Topics 1–26** follow the numbering used in all three extracts. Each topic has a table with one row per source ID, giving the source's position briefly and the page or screenshot reference used in the extract, so every entry can be traced back. Then:
+- **Topics 1–26** follow the numbering used in all four extracts. Each topic has a table with one row per source ID, giving the source's position briefly and the page or screenshot reference used in the extract, so every entry can be traced back. Then:
   - **Agreement:** what most or all sources that cover the topic say.
   - **Differences:** where sources say different things or emphasise different things.
   - **Gaps (no source covers):** sub-topics none of the 13 sources address, as far as the extracts record.
 - "Not covered" means the extract records nothing on that topic for that source. "Not captured" means the part of the source that might cover it was not captured (mainly RS-KIT, and UK-GOV's and BRC's linked pages). Absence in this matrix is absence in the extracts, not necessarily in the source.
 - Where an extract adds its own comment rather than reporting the source, this matrix labels it "extractor's note".
-- **Topic 26 is numbered differently.** In the UK extract, topic 26 is "Useful phone numbers"; in the Nordic and DE/FR extracts, topic 26 is "War, military and civil defence (context only)". This matrix keeps both, as 26A and 26B.
+- **Topic 26 is numbered differently.** In the UK extract, topic 26 is "Useful phone numbers"; in the Nordic, SE26 and DE/FR extracts, topic 26 is "War, military and civil defence (context only)". This matrix keeps both, as 26A and 26B.
 - **No source appears in more than one extract**, so the extracts never disagree about what the same source says. The one exception is the Swedish booklet: SE (2018, Nordic extract) and SE26 (2026, SE26 extract) are two editions of the same publication. SE26 is used throughout; "(2018: …)" notes record only where the old edition differs. Inconsistencies *within* a source or a source family are flagged where the extracts record them.
 - "13 sources" means the 13 current sources in the table above, counting SE26 and not SE.
 
@@ -94,9 +94,10 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Differences:**
 - FM (UK-GOV, UK-GOV-PLAN, RS-PLAN-PDF, DK) versus DAB (NO) versus both (RS-PLAN "try both digital and FM"; DE "VHF and digital").
-- Phone alerts: UK-GOV (Emergency Alerts), DK (S!RENEN), NO (4G/5G alert), SE (text messages), FI (112 Suomi app), DE (NINA app). BRC, RS-PLAN and FR do not mention them.
-- Sirens are covered by DK, NO, SE and FI only. The Nordic extract notes that siren patterns are not transferable to the UK, which has no national siren system (extractor's note, not a source claim).
-- Within Ready Scotland: RS-PLAN cautions that using a car radio may be less safe in severe weather; RS-PLAN-PDF simply lists car radios.
+- Phone alerts: UK-GOV (Emergency Alerts), DK (S!RENEN), NO (4G/5G alert), SE26 (SE-Alert to phones in the area, plus apps), FI (112 Suomi app), DE (NINA app). BRC, RS-PLAN and FR do not mention them.
+- Sirens are covered by DK, NO, SE26 and FI only. The Nordic extract notes that siren patterns are not transferable to the UK, which has no national siren system (extractor's note, not a source claim).
+- Within Ready Scotland: RS-PLAN cautions that using a car radio may be less safe in severe weather; RS-PLAN-PDF simply lists car radios. SE26 no longer lists a car radio (2018 did).
+- Weather-warning apps: SE26 only (p.26).
 
 **Gaps (no source covers):** actual frequencies to use; a named UK app; what to do if a phone alert is missed or the phone is off.
 
@@ -121,11 +122,12 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 **Agreement:** Store bottled or container water for drinking for the whole self-sufficiency period, between 2 and 3 L per person per day, kept cool and dark and rotated.
 
 **Differences:**
-- 3 L (UK-GOV, DK, SE "per adult"); 2.5–3 L (BRC); about 2.9 L (NO); 2 L (FI, DE, FR).
-- What the figure covers: drinking only (UK-GOV, FI, FR); drinking and food preparation (DK); DE p.34 says its 20 L includes cooking water.
+- 3 L (UK-GOV, DK, SE26); 2.5–3 L (BRC); about 2.9 L (NO); 2 L (FI, DE, FR). SE26 dropped the 2018 wording "per adult".
+- What the figure covers: drinking only (UK-GOV, FI, FR); drinking and food preparation (DK); "mainly for drinking and cooking" (SE26); DE p.34 says its 20 L includes cooking water.
 - **Possible inconsistency within DE (flagged, not resolved by the extract):** p.11 gives about 14 L a week (2 L/day) for drinking, and p.34 gives 20 L for 10 days (also 2 L/day) while saying an *additional* amount was added for cooking. The two daily figures are the same.
-- Storage life: "several months" for sealed tap water (DK) versus "for years" for clean water in clean containers (NO).
-- Treatment: boil (SE); sterilisation agents (DE); bleach for containers only (NO). UK sources say nothing.
+- Storage life: "several months" for sealed tap water (DK) versus "for years" for clean water in clean containers (NO). SE26 gives a check instead: taste and smell stored water "once or twice a year" and change it when necessary.
+- Treatment: boil (SE26); sterilisation agents (DE); bleach for containers only (NO). UK sources say nothing.
+- Public supply: SE26 says the municipality may provide water tanks, but households should still keep water at home (p.15). No UK source in the extracts says how emergency water is supplied (see gap research section 5).
 - NO counts juice and soft drinks towards the total; DE counts juices.
 
 **Gaps (no source covers):** a figure for washing and flushing water (UK-GOV says only "more"); a water allowance for pets (DK and NO say include pets but give no amount); how much to fill when a supply cut is forecast (DE says fill containers, but no amount). See `work/research/gap-research.md` section 5 (loss of water supply).
@@ -148,11 +150,12 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | DE | 10 days, about 2,200 kcal/day; per-person table (pp.34–35); food you normally eat, mostly edible cold, rotate, frozen food first, do not refreeze (p.11); camping stove; never grill indoors (p.17); spirit stove (p.37); provisions calculator (p.35). |
 | FR | Non-perishable, no-cook food (tins, baby food jars, pet food); no quantities (p1, translated). |
 
-**Agreement:** Long-life food you normally eat, mostly edible without cooking, rotated through normal use, plus a tin opener.
+**Agreement:** Long-life food you normally eat, mostly edible without cooking, rotated through normal use, plus a tin opener (UK-GOV-PLAN, BRC, FR, DE, SE26).
 
 **Differences:**
-- Duration: 3 days (UK, DK, FI, FR), 1 week (NO), 10 days (DE), unspecified (SE, Ready Scotland).
-- Cooking: UK sources and FR choose no-cook food and give no cooking advice; DK, NO, SE and DE recommend a non-electric means of cooking (camping or spirit stove, grill), used outdoors (DK, DE).
+- Duration: 3 days (UK, DK, FI, FR), 1 week (NO, SE26), 10 days (DE), unspecified (Ready Scotland). (SE 2018 gave no duration.)
+- Cooking: UK sources and FR choose no-cook food and give no cooking advice; DK, NO, SE26 and DE recommend a non-electric means of cooking (camping stove, gas burner, spirit stove or grill), used outdoors (DK, DE).
+- Nutrition: SE26 groups its list by nutrient (high-protein, high-fat, energy boosts) and has a separate line for children's food; DE gives calories; others give examples only.
 - Quantities: only DE gives weights and calories.
 - **Inconsistency within UK-GOV:** web and checklist say "fish", PLAN says "fruit"; the tin opener appears in PLAN (and BRC) but not in the web page or checklist.
 
@@ -180,7 +183,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Differences:**
 - Blankets are core for UK-GOV but "not essential" for BRC (which still recommends them for power cuts and snow).
-- Alternative heaters: NO and SE endorse indoor-rated gas, paraffin or LPG heaters; DE lists "Heater" and solid fuel; DK and FI do not mention heaters; UK sources say nothing.
+- Alternative heaters: NO (indoor-rated gas or paraffin) and SE26 (gas or paraffin heater, with a window open for air and switched off before sleep) endorse them; DE lists "Heater" and solid fuel; DK and FI do not mention heaters; UK sources say nothing. (SE 2018 also named LPG heaters.)
 - Staying with others (NO) is the only "where to go if the house is too cold" option.
 
 **Gaps (no source covers):** UK-specific advice on safe indoor heaters; warning signs of hypothermia; how long a home stays habitable without heating. See `work/research/gap-research.md` section 4 (long power cuts).
@@ -206,10 +209,10 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 **Agreement:** Torch with spare batteries, and a way to keep phones charged.
 
 **Differences:**
-- Candles: UK-GOV and UK-GOV-PLAN prefer torches ("safer than candles"); DK, NO, SE, DE and FR all list candles (with safety rules in DK, SE, DE).
+- Candles: UK-GOV and UK-GOV-PLAN prefer torches ("safer than candles"); DK, NO, SE26, DE and FR all list candles (with safety rules in DK, SE26, DE).
 - Generators: NO (with safety caveat) and DE (floodplain homes) only.
 - Carbon monoxide: named only by DK.
-- Power banks: UK, DK, NO, SE, FI (as "backup power supply"); not named by DE or FR.
+- Power banks: UK, DK, NO, SE26, FI (as "backup power supply"); not named by DE or FR.
 
 **Gaps (no source covers):** carbon monoxide alarms (no source); power bank size; candle safety in UK sources. See `work/research/gap-research.md` section 4.
 
@@ -236,9 +239,9 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 **Differences:**
 - Meeting place: "close to home" (RS-PLAN, RS-PLAN-PDF) versus a public place, a relative's home or a community hub (UK-GOV, UK-GOV-PLAN).
 - No Nordic source sets out a household meeting point (NO's "muster stations" are for information).
-- ICE / Medical ID: UK-GOV only. Network diversity and Wi-Fi calling: NO only. Neighbour signals if networks fail: DE only.
+- ICE / Medical ID: UK-GOV only. Network diversity and Wi-Fi calling: NO only. Neighbour signals if networks fail: DE only. Not calling people who may be hiding: SE26 only (p.24).
 
-**Gaps (no source covers):** an out-of-area contact; a second (fallback) meeting place; texting rather than calling when networks are busy (SE and DE say to limit calls, but none suggests texting).
+**Gaps (no source covers):** an out-of-area contact; a second (fallback) meeting place; texting rather than calling when networks are busy (SE26 and DE say to limit calls, but none suggests texting).
 
 ## 7. Cash and payments
 
@@ -260,9 +263,12 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Keep some cash at home in small denominations, plus cards.
 
-**Differences:** DK and NO add payment resilience (known PINs; cards and accounts at more than one bank). DK and FI say "small amount"; DE says "sufficient".
+**Differences:**
+- Amount: SE26 is the only source with a figure, "Around 1,000 SEK in cash at home per adult" (p.17). DK and FI say "small amount"; DE says "sufficient"; UK-GOV says it depends on the family's needs. (SE 2018 gave no amount.)
+- Denominations: small (DK, NO; SE 2018) versus "different denominations" (SE26).
+- Payment resilience: DK and NO add known PINs and cards or accounts at more than one bank; SE26 adds "use cash occasionally" and other payment options, including digital services.
 
-**Gaps (no source covers):** an amount. No source suggests one.
+**Gaps (no source covers):** a UK amount. The only figure (SE26) is in Swedish kronor and is per adult; DECISION 16.
 
 ## 8. Documents and records
 
@@ -289,7 +295,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 - Storage: waterproof bag or pouch (BRC, FR) versus a briefcase (DE).
 - Off-site duplicates: DE only.
 
-**Gaps (no source covers):** digital or cloud backups; proof of address.
+**Gaps (no source covers):** proof of address. Digital backups are now covered by SE26 only ("external hard drive, USB drive or cloud service", p.23). SE26 also dropped the 2018 advice to keep paper copies of bank details and registration certificates at home.
 
 ## 9. Medication and first aid
 
@@ -312,9 +318,10 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 **Agreement:** Keep a supply of essential medicines and a first aid kit, check expiry dates, and learn first aid.
 
 **Differences:**
-- Supply: "several days" (UK-GOV-PLAN), at least 3 days (DK), at least 7 days extra (NO); others give no figure.
+- Supply: "several days" (UK-GOV-PLAN), at least 3 days (DK), at least 7 days extra (NO), "a month's supply" of prescription medicines and disposables (SE26 p.18); others give no figure.
 - Repeat timing: up to 5 working days ahead (UK-GOV) versus no later than a week before running out (NO).
 - Contents lists: UK-GOV (first aid), DK (first aid), DE (full home pharmacy) are the most detailed.
+- Skills: first aid (UK-GOV, NO, FI, DE); CPR course and stop-the-bleed steps (SE26 p.6, p.25).
 
 **Gaps (no source covers):** keeping medicines cool in a power cut outside a heatwave (BRC mentions heat only); powered medical equipment in a long power cut beyond "power bank if compatible".
 
@@ -339,10 +346,10 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 **Agreement:** Hand sanitiser, wet wipes, toilet paper and sanitary products.
 
 **Differences:**
-- Toilets without water: covered by NO and SE (bags in the bowl or a bucket) and DE (camping toilet, flushing water). No UK source covers it.
+- Toilets without water: covered by NO (bags in the bowl or a bucket), SE26 (the fullest method: urinate in the unflushed toilet, bag or bucket for solids, cover with compost litter or sawdust, keep urine and solids apart) and DE (camping toilet, flushing water). No UK source covers it.
 - BRC is internally inconsistent: toiletries "not essential" in one list and recommended in another.
 
-**Gaps (no source covers):** none of the UK sources covers sanitation; how long bagged waste can be kept, or what to do if bin collections stop (DE mentions rubbish bags help "if the waste is not taken away for some time").
+**Gaps (no source covers):** none of the UK sources covers sanitation; how long bagged waste can be kept, or what to do if bin collections stop (DE mentions rubbish bags help "if the waste is not taken away for some time"; SE26 says the municipality will say where to discard waste).
 
 ## 11. Pets
 
@@ -364,9 +371,9 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Include pet food and water in the store.
 
-**Differences:** BRC has the fullest kit list. Only DE mentions evacuating pets. SE and FI do not cover pets.
+**Differences:** BRC has the fullest kit list. SE26 is the only source with a duration ("at least a week") and the only one to say what to leave if a pet must stay at home. DE mentions planning pet evacuation; SE26 mentions transport (a cage) and taking pets into shelters in an air raid. FI does not cover pets. (SE 2018 did not cover pets.)
 
-**Gaps (no source covers):** a water amount for pets; vaccination or microchip records; pets in rest centres or emergency accommodation; dog-specific advice. See `work/research/gap-research.md` section 6 (dogs) and section 1 (pets in fire escape).
+**Gaps (no source covers):** a water amount for pets; vaccination or microchip records (SE26 lists only the pet's "ID number", p.29); pets in UK rest centres or emergency accommodation; dog-specific advice. See `work/research/gap-research.md` section 6 (dogs) and section 1 (pets in fire escape).
 
 ## 12. Vulnerable people, neighbours and community
 
@@ -388,7 +395,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Look out for neighbours and vulnerable people, once your own household is safe; preparing yourself frees help for those who need it most.
 
-**Differences:** The PSR is UK-only (UK-GOV, RS-PLAN; Ready Scotland's eligibility list is fuller). The Herbert Protocol is Scotland-only. NO's "preparedness buddy" is the most concrete mutual-aid model.
+**Differences:** The PSR is UK-only (UK-GOV, RS-PLAN; Ready Scotland's eligibility list is fuller). The Herbert Protocol is Scotland-only. NO's "preparedness buddy" is the most concrete mutual-aid model. SE26 alone suggests a personal crisis plan, agreed with carers and neighbours, for anyone needing special assistance (p.28).
 
 **Gaps (no source covers):** none significant beyond the uncaptured UK-GOV page for disabled people and carers (091246).
 
@@ -413,10 +420,10 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 **Agreement:** Go in, close windows and doors, stay in, tune in, and stay in until told.
 
 **Differences:**
-- Switching off ventilation: SE, FI, DE (not UK sources).
+- Switching off ventilation: SE26 ("if possible"), FI, DE (not UK sources).
 - Sealing gaps: FI (duct tape), DE (ventilation slots).
-- Room choice: DE internal room, cellar for radiation but not for chemicals; NO central room or basement (war context).
-- Iodine: DK, NO, FI recommend keeping tablets; UK sources, SE (2018), DE and FR do not mention them.
+- Room choice: DE internal room, cellar for radiation but not for chemicals; NO central room or basement (war context); SE26 a room without windows, with a ranked list up to a civil defence shelter (p.11–13).
+- Iodine: DK, NO, FI recommend keeping tablets; UK sources, SE26 (and SE 2018), DE and FR do not mention them. SE26 discusses nuclear weapons and fallout but still says nothing on iodine.
 
 **Gaps (no source covers):** UK arrangements for iodine and for living near a nuclear site. See `work/research/gap-research.md` section 2 (Sizewell). No UK source covers CBRN at all.
 
@@ -442,7 +449,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Differences:**
 - Utility shut-off: UK-GOV and UK-GOV-PLAN cover gas, electricity and water (with the gas warning); DE covers electricity only; Nordic sources and FR do not cover it.
-- Destination: NO (relatives, friends, cabin; contact centres) and UK-GOV-PLAN (community hub); DE asks "Where to?" without answering.
+- Destination: NO (relatives, friends, cabin; contact centres) and UK-GOV-PLAN (community hub); DE asks "Where to?" without answering; SE26 promises emergency accommodation only for those who cannot evacuate on their own (p.19).
 
 **Gaps (no source covers):** rest centres in the UK; planning several routes; leaving a note or securing the house; registering where you have gone. See `work/research/gap-research.md` section 3 (flood routes).
 
@@ -468,7 +475,8 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Differences:**
 - Smoke alarms: UK-GOV (monthly testing) and DE (placement and standards) only.
-- Extinguishers: DE only. Fighting a small fire is described only by DE; UK-GOV-PLAN says only "get out, stay out".
+- Extinguishers: DE and SE26 (on the heating checklist, p.16; not in SE 2018). Fighting a small fire is described only by DE; UK-GOV-PLAN says only "get out, stay out".
+- Fire bans before lighting a fire or barbecue: SE26 only (p.26).
 - DE advises no smoke alarms in kitchens. The DE/FR extract notes that UK practice is to fit a heat alarm there (extractor's note, not a source claim).
 
 **Gaps (no source covers):** carbon monoxide alarms; escape from upper floors and escape ladders; a night-time routine of closing doors; where keys are kept. See `work/research/gap-research.md` section 1 (fire escape).
@@ -517,7 +525,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Storms bring power cuts and flooding; stay indoors in severe weather.
 
-**Differences:** DE covers storms in depth; BRC is the only source with heatwave items; cold is covered mainly through heating advice (topic 4).
+**Differences:** DE covers storms in depth; BRC is the only source with heatwave items (SE26 names heatwaves as a growing risk but gives no coping advice); cold is covered mainly through heating advice (topic 4); weather-warning apps and fire-ban checks are SE26 only.
 
 **Gaps (no source covers):** warning signs of heat illness and hypothermia; ways to keep the home cool; heatwave advice beyond BRC's short list.
 
@@ -565,7 +573,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** First aid kit in the car; the car as a radio and charger.
 
-**Differences:** Only UK-GOV and BRC give a car kit list. Fuel in the tank: SE and NO only. Car fire extinguisher: DE only.
+**Differences:** Only UK-GOV and BRC give a car kit list. Fuel in the tank (or a charged battery for an electric car): SE26 and NO only. Car fire extinguisher: DE only.
 
 **Gaps (no source covers):** blocked exhaust risk when running the engine while stranded.
 
@@ -589,7 +597,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Baby supplies (formula, nappies, wipes); things to keep children occupied.
 
-**Differences:** UK-GOV specifies ready-to-feed formula; BRC says "formula milk or baby food" without specifying. Teaching children what to do is covered by UK-GOV, RS-PLAN and DE (resources); Nordic sources treat children only as supply needs. Child ID capsule: DE only.
+**Differences:** UK-GOV specifies ready-to-feed formula; BRC says "formula milk or baby food" without specifying. Teaching children what to do is covered by UK-GOV, RS-PLAN and DE (resources); talking to children about a crisis by RS-PLAN and SE26 (p.30, the fullest); children's websites by DE and SE26. Other Nordic sources treat children only as supply needs. Child ID capsule: DE only.
 
 **Gaps (no source covers):** school pick-up arrangements if a parent cannot get there, and who is authorised to collect.
 
@@ -613,9 +621,9 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Being prepared reduces stress; have low-tech activities to hand.
 
-**Differences:** Only NO and FI give practical coping advice (routines, contact, normalising anxiety).
+**Differences:** Only NO, FI and SE26 give practical coping advice (routines, contact, normalising anxiety; SE26 adds limiting news intake, food, sleep and exercise, and helping others).
 
-**Gaps (no source covers):** helplines; adult stress and sleep advice in UK sources; support after an event.
+**Gaps (no source covers):** helplines (SE26 says to seek a mental health organisation or professional help, but gives no numbers); adult stress and sleep advice in UK sources; support after an event.
 
 ## 22. Recommended period of self-sufficiency
 
@@ -637,7 +645,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** 3 days is the minimum in every source that states a figure.
 
-**Differences:** 3 days (UK-GOV, BRC, DK, FI, FR) versus 1 week (NO) versus 10 days (DE); SE (2018) and Ready Scotland give none. DE separates a 10-day home stock from a 2-day grab bag; FR uses one 72-hour kit for both.
+**Differences:** 3 days (UK-GOV, BRC, DK, FI, FR) versus 1 week (NO, SE26) versus 10 days (DE); Ready Scotland gives none (SE 2018 gave none either). DE separates a 10-day home stock from a 2-day grab bag; SE26 separates a one-week home stock from an evacuation list with "a few days" of food and water, and asks for a month of prescription medicines; FR uses one 72-hour kit for both.
 
 **Gaps (no source covers):** UK guidance on scaling up beyond 3 days.
 
@@ -659,13 +667,13 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 | DE | One rucksack per person, hands free; first aid and medication, radio, document briefcase, 2 days' food, water bottle, cutlery, torch, sleeping bag or blanket, clothes and hygiene items, camera; waterproofs and wellingtons; dust mask; ID, money, valuables; child ID capsule (p.21); checklist adds helmet, gloves, mask, penknife, thermos (p.39). |
 | FR | Battery radio, medicines, first aid kit, multi-tool and tin opener, no-cook food, warm clothes and survival blanket, torch, candles, lighter, phone charger, spare glasses, cash, 6 L water per person, document photocopies in a waterproof pouch, spare keys, games; keep the bag easy to reach (p1, translated). |
 
-**Agreement:** Where a list exists (DE, FR, NO, SE), it overlaps heavily: medicines and first aid, radio, torch, food, water, documents, money, warm clothing.
+**Agreement:** Where a list exists (DE, FR, NO, SE26), it overlaps heavily: medicines and first aid, radio, torch, food, water, documents, money, warm clothing.
 
 **Differences:**
 - No UK source gives a grab bag list.
-- Pre-packed bag (DE, FR, UK-GOV) versus a list of things to take (NO, SE).
-- Water in the bag: 6 L per person (FR) versus a water bottle (DE).
-- Distinctive items: glasses, hearing aids and mobility aids (NO, FR glasses); helmet, mask, gloves, camera (DE); spare keys, charger, games (FR).
+- Pre-packed bag (DE, FR, UK-GOV) versus a list of things to take (NO, SE26).
+- Water in the bag: 6 L per person (FR) versus a water bottle (DE) versus water "to last a few days" (SE26).
+- Distinctive items: glasses, hearing aids and mobility aids (NO, FR glasses, SE26 hearing aids); helmet, mask, gloves, camera (DE); spare keys, charger, games (FR); map and compass, spare sets of clothing (SE26).
 
 **Gaps (no source covers):** a UK grab bag list; how heavy a bag a person can carry; a bedside kit for fire (see `work/research/gap-research.md` section 1).
 
@@ -689,9 +697,9 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Use official and trusted sources; check before sharing.
 
-**Differences:** Crisis scams are mentioned only by RS-PLAN. Misinformation checking is detailed only in SE and NO.
+**Differences:** Crisis scams are mentioned only by RS-PLAN. Misinformation checking is detailed only in SE26 and NO; SE26 alone names fake images, video and voice recordings. Digital security (passwords, phishing links, updates, backups) is SE26 only (p.23).
 
-**Gaps (no source covers):** specific scam tips (fake alerts, bogus officials at the door); digital resilience (offline copies, saving phone battery).
+**Gaps (no source covers):** specific scam tips (fake alerts, bogus officials at the door); offline copies and saving phone battery.
 
 ## 25. Keeping the plan and kit up to date
 
@@ -713,7 +721,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Check expiry dates and batteries and rotate stock through normal use.
 
-**Differences:** Fixed interval: 6 months (UK-GOV) versus once a year (FR); others say "regularly". Plan review: event-based (RS-PLAN) versus "regularly" (UK-GOV-PLAN). Restock after use: FR only.
+**Differences:** Fixed interval: 6 months (UK-GOV) versus once a year (FR); others say "regularly". Stored water: "once or twice a year" (SE26), the only interval for water other than expiry dates (DK). Plan review: event-based (RS-PLAN) versus "regularly" (UK-GOV-PLAN). Restock after use: FR only.
 
 **Gaps (no source covers):** a practice or drill routine for adults (UK-GOV mentions children practising; DE says take practice alarms seriously, p.53).
 
@@ -741,7 +749,7 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Gaps (no source covers):** a gas emergency number from UK-GOV (only Ready Scotland gives one); an England and Wales Floodline number; a water supplier number outside Scotland; emergencySMS in UK-GOV or BRC. The European sources' numbers are not usable in the UK.
 
-## 26B. War, military and civil defence (topic 26 in the Nordic and DE/FR extracts)
+## 26B. War, military and civil defence (topic 26 in the Nordic, SE26 and DE/FR extracts)
 
 | Source | Position (reference) |
 |---|---|
@@ -755,76 +763,78 @@ This matrix puts the UK, Nordic, German and French guidance side by side, topic 
 
 **Agreement:** Not applicable; context only.
 
-**Differences:** SE and NO cover war in detail; DK, FI and DE barely; FR not at all.
+**Differences:** SE26 and NO cover war in detail; DK, FI and DE barely; FR not at all.
 
-**Gaps (no source covers):** UK shelter arrangements. Mostly not transferable; SE's terror-attack advice (phone on silent, keep lines free, do not share unconfirmed information, p.4, pr. 7) is the generally applicable part.
+**Gaps (no source covers):** UK shelter arrangements. Mostly not transferable; SE26's terror-attack advice (Run, Hide, Tell; phone on silent; do not call anyone who may be in danger; do not spread rumours, p.24) is the generally applicable part, and Run, Hide, Tell matches UK counter-terrorism advice (SE26 extractor's note).
 
 ---
 
 ## Cross-source gaps
 
-Topics that are thin or absent in all 13 sources, as recorded in the extracts. These need other sources. Where `work/research/gap-research.md` covers the gap, the section is given; its content has not been copied here and is itself provisional (drawn from search summaries, to be verified).
+Topics that are thin or absent in all 13 sources, as recorded in the extracts. These need other sources. Where `work/research/gap-research.md` covers the gap, the section is given with its v0.2 status in brief (✅ verified on the official page, ✏️ corrected, ❓ still unverified). Its content is not copied into the topic tables above.
 
-| Gap | Coverage in the extracts | Gap research |
+| Gap | Coverage in the extracts | Gap research (v0.2 status) |
 |---|---|---|
-| Fire escape from upper floors, escape ladders, bedside kit, pets in a fire | UK-GOV: plan a route, test alarms. DE: detailed fire response, but no upper-floor escape. | Section 1 |
-| Nuclear site (Sizewell) arrangements and iodine in the UK | DK, NO, FI mention iodine; no UK source covers CBRN at all. | Section 2 |
-| Flood routes and being cut off | No source covers routes. DE: do not drive through floodwater. | Section 3 |
-| Long power cuts (rural, overhead lines) | Partial: Nordic warm-room advice, NO generator, DE heater. Nothing UK-specific beyond 3 days. | Section 4 |
-| Loss of water supply | DE p.13 (fill containers, sterilisation); NO and SE emergency toilet. No UK source. | Section 5 |
-| Dogs and pets in evacuation | DE p.56 (plan pet evacuation); BRC kit list. | Section 6 (dogs) |
-| Carbon monoxide alarms | No source. DK names CO; DE warns of "suffocation". | Not covered |
-| Water for washing and flushing (amount) | No source gives a figure. | Section 5 may help |
-| Cash amount | No source. | Not covered |
-| Heatwave and heat illness | Only BRC's short list. | Not covered |
-| Hypothermia signs; safe indoor heaters in the UK | NO and SE endorse heaters; no UK source. | Section 4 may help |
-| Cooking without power (UK) | Nordic and DE only. | Not covered |
-| UK grab bag list | No UK source; DE and FR lists exist. | Section 1 (bedside kit) only |
+| Fire escape from upper floors, escape ladders, bedside kit, pets in a fire | UK-GOV: plan a route, test alarms. DE: detailed fire response, but no upper-floor escape. SE26: fire extinguisher only. | Section 1. ✅ Fire Kills and GOV.UK "Fire safety in the home" (ground or first floor: cushion the fall with bedding, lower yourself, don't jump); never go back for pets (PDSA, Suffolk FRS). ✏️ NFCC alarm advice corrected (smoke alarm on every floor as a minimum, heat alarm in the kitchen, interlinked "where possible"). ❓ No UK or EN standard for domestic escape ladders found. |
+| Nuclear site (Sizewell) arrangements and iodine in the UK | DK, NO, FI mention iodine; SE26 discusses fallout but not iodine; no UK source covers CBRN at all. | Section 2. ✅ UKHSA "go in, stay in, tune in", one to two days indoors, iodine only when officially advised; tablets pre-issued only within 1.35 km of Sizewell B. ✏️ Phone warning only for registered residents within 1.35 km. ❓ Tablet formulation and dose. |
+| Flood routes and being cut off | No source covers routes. DE: do not drive through floodwater. | Section 3. ✅ Floodline 0345 988 1188; no warnings for surface-water flooding; EA: 30 cm of flowing water can float a car, about 15 cm can knock a person over, about 60 cm can carry away a vehicle. ✏️ The 10 cm driving limit is the AA's, not the EA's. |
+| Long power cuts (rural, overhead lines) | Partial: Nordic warm-room advice, NO generator, DE heater. Nothing UK-specific beyond 3 days. | Section 4. ✅ 105; Priority Services Register (Ofgem); landline battery backup of at least one hour for landline-only customers (GOV.UK); FSA fridge 4 h, full freezer 48 h, half-full 24 h. ❓ Mobile mast backup figures (Ofcom blocked). |
+| Loss of water supply | DE p.13 (fill containers, sterilisation); NO and SE26 emergency toilet; SE26 public water tanks. No UK source. | Section 5. ✏️ GOV.UK "Be ready": 3 L per person per day for 3 days for drinking, more for other tasks and pets; Essex & Suffolk Water: free delivery to Priority Services customers who cannot collect if the water is expected to be off for more than six hours. ❓ Anglian Water (blocked). |
+| Dogs and pets in evacuation | DE p.56 (plan pet evacuation); BRC kit list; SE26 one week of supplies, cage, vet details. | Section 6. ✏️ RSPCA page wording corrected; "sturdy leads" and "food, water, bowls and bedding" are Blue Cross. ✅ Rest centres may not take pets (Stroud DC); Suffolk guide says only "consider requirements for pet care". |
+| Carbon monoxide alarms | No source. DK names CO; DE warns of "suffocation"; SE26 says only "Open a window to let in breathable air". | Section 4. ✅ HSENI (Northern Ireland regulator): install battery-powered CO alarms; generators outdoors only. ❓ No GB (HSE or GOV.UK) page found. |
+| Water for washing and flushing (amount) | No source gives a figure. | Section 5. ✏️ GOV.UK now says only that more is needed; the old 10 L per person per day figure is no longer on the site. Still no official figure. |
+| Cash amount | Only SE26 (about 1,000 SEK per adult, p.17). No UK amount. | Not covered |
+| Heatwave and heat illness | Only BRC's short list; SE26 names heatwaves only. | Not covered |
+| Hypothermia signs; safe indoor heaters in the UK | NO and SE26 endorse heaters; no UK source. | Not covered (section 4 covers generators only) |
+| Cooking without power (UK) | Nordic (including SE26) and DE only. | Not covered (section 4: FSA says most camping stoves and barbecues are for outdoor use only) |
+| UK grab bag list | No UK source; DE, FR and SE26 lists exist. | Section 1 (bedside kit) and section 6 (pet grab bag, Medway Council) only |
 | Out-of-area contact; fallback meeting place; texting rather than calling | No source. | Not covered |
-| School pick-up and authorised collectors | No source. | Not covered |
-| UK rest centres and where to go | No UK source; NO mentions contact centres. | Section 3 may help |
-| Psychological support and helplines | NO and FI give coping tips only; no helplines. | Not covered |
-| Crisis scams and fake alerts | RS-PLAN one paragraph. | Not covered |
-| Digital resilience (cloud backups, offline copies, phone battery) | No source. | Not covered |
-| England and Wales Floodline; gas emergency number in UK-GOV; water supplier outside Scotland | Missing from UK-GOV and BRC. | Section 3 / 5 may help |
-| Current Swedish guidance | SE is the 2018 edition. | Check the current MSB edition |
+| School pick-up and authorised collectors | No source. | Section 2 touches it: near Sizewell, DEPZ schools may close as a precaution so families collect children early |
+| UK rest centres and where to go | No UK source; NO mentions contact centres; SE26 accommodation only for those who cannot evacuate alone. | Section 6 (Suffolk evacuation guide; Stroud DC) |
+| Psychological support and helplines | NO, FI and SE26 give coping tips; no helplines. | Not covered |
+| Crisis scams and fake alerts | RS-PLAN one paragraph; SE26 disinformation and phishing advice. | Not covered |
+| Digital resilience (offline copies, phone battery) | SE26 covers backups, passwords and updates (p.23); nothing on offline copies or saving phone battery. | Section 4 (GOV.UK: download or print maps in advance) |
+| England and Wales Floodline; gas emergency number in UK-GOV; water supplier outside Scotland | Missing from UK-GOV and BRC. | Section 3 (✅ Floodline 0345 988 1188) and section 5 (✅ Essex & Suffolk Water). Gas number not covered. |
 | Uncaptured pages | UK-GOV linked pages (weather, disabled people, trauma, local risks, rest of Alerts page); BRC "only a few items" and FAQ; most of RS-KIT. | Recapture before treating these gaps as real |
+
+The v0.1 row "Current Swedish guidance" is closed: SE26 (June 2026) is now used throughout.
 
 ---
 
 ## Conflicts needing a household decision
 
-Real disagreements between sources. Each lists the options with the sources behind them. Suggestions are mine, not source claims.
+Real disagreements between sources. Each lists the options with the sources behind them. Suggestions are mine, not source claims. v0.2 uses SE26 for Sweden; items changed in v0.2 are 1–6, 8, 11, 12, 14 and 15, and item 16 is new. The numbers 1–15 are unchanged from v0.1, so references such as "DECISION 6" in the checklists still point to the same question.
 
 1. **How many days to prepare for.**
    - 3 days (UK-GOV, BRC, DK, FI, FR).
-   - 7 days (NO).
+   - 7 days (NO, SE26 "at least one week"; SE 2018 gave no figure).
    - 10 days (DE).
-   - SUGGESTION: 3-day core, building to 7 days (already the programme decision in `work/PROGRESS.md`).
+   - SUGGESTION: 3-day core, building to 7 days (already the programme decision in `work/PROGRESS.md`). The 7-day column now has two sources behind it.
 
 2. **Drinking water per person per day, and what it covers.**
    - 2 L (FI, DE, FR).
    - 2.5–3 L (BRC); about 2.9 L (NO).
-   - 3 L drinking only (UK-GOV) or 3 L drinking and food preparation (DK); 3 L per adult (SE).
+   - 3 L drinking only (UK-GOV) or 3 L drinking and food preparation (DK); 3 L "mainly for drinking and cooking" (SE26; SE 2018 said "per adult").
    - SUGGESTION: 3 L for drinking and cooking, plus a separate household-set amount for washing and flushing.
 
 3. **Cooking: no-cook food only, or a non-electric stove.**
    - No-cook food, no cooking equipment (UK-GOV, BRC, FI, FR).
-   - Camping or spirit stove or grill, used outdoors only (DK, NO, SE, DE).
+   - Camping stove, gas burner, spirit stove or grill, used outdoors only (DK, NO, SE26, DE).
    - Decision also depends on outdoor space and carbon monoxide safety.
 
 4. **Candles.**
    - Avoid: "Torches are safer than candles" (UK-GOV, UK-GOV-PLAN).
-   - Keep candles as backup with safety rules (DK, NO, SE, DE, FR).
+   - Keep candles as backup with safety rules (DK, NO, SE26, DE, FR).
 
 5. **Alternative heating.**
    - Blankets and warm clothing only (UK sources, FI, FR).
-   - Indoor-rated gas, paraffin or LPG heater, or a wood stove (NO, SE; DE "Heater" and solid fuel).
+   - Indoor-rated gas or paraffin heater, or a wood stove (NO; SE26 gas or paraffin heater with a window open and switched off before sleep; DE "Heater" and solid fuel). (SE 2018 also named LPG heaters.)
    - Arrange to stay with others if the home gets too cold (NO).
 
 6. **Medication buffer.**
-   - "Several days" (UK-GOV-PLAN); at least 3 days (DK); at least 7 days extra (NO).
+   - "Several days" (UK-GOV-PLAN); at least 3 days (DK); at least 7 days extra (NO); "a month's supply" of prescription medicines and disposables (SE26 p.18).
    - Repeats requested up to 5 working days ahead (UK-GOV) or no later than a week before running out (NO).
+   - SUGGESTION: 7 days' extra as the floor, working towards a month where the prescriber allows.
 
 7. **Meeting place.**
    - Close to home, sheltered and accessible (RS-PLAN, RS-PLAN-PDF).
@@ -833,8 +843,9 @@ Real disagreements between sources. Each lists the options with the sources behi
 
 8. **Grab bag: separate bag, or one kit for staying and leaving.**
    - Separate grab bag plus home stock (UK-GOV mentions one; DE: one rucksack per person, 2 days' food).
+   - A prepared list of things to take, not a packed bag (NO; SE26, with food and water "to last a few days").
    - One 72-hour kit used for both (FR).
-   - Water in the bag: 6 L per person (FR) or a water bottle (DE).
+   - Water in the bag: 6 L per person (FR), a water bottle (DE) or "to last a few days" (SE26).
 
 9. **Documents: originals or copies.**
    - Copies only, in a waterproof bag or pouch (UK-GOV, BRC, FR).
@@ -849,10 +860,11 @@ Real disagreements between sources. Each lists the options with the sources behi
     - FM (UK-GOV, UK-GOV-PLAN, RS-PLAN-PDF, DK).
     - DAB (NO).
     - Both digital and FM (RS-PLAN, DE).
+    - SE26 names the channel (P4) but not the band.
 
 12. **Iodine tablets.**
     - Keep them for under-40s and pregnant or breastfeeding women, taken only on instruction (DK, NO; FI "as recommended").
-    - Not mentioned (all UK sources, SE 2018, DE, FR). UK arrangements need checking (see `work/research/gap-research.md` section 2).
+    - Not mentioned (all UK sources, SE26 and SE 2018, DE, FR). For UK arrangements see `work/research/gap-research.md` section 2 (v0.2, verified): UKHSA says take stable iodine only when officially advised, and near Sizewell B tablets are pre-issued only within 1.35 km.
 
 13. **Blankets and toiletries: core or optional.**
     - Core items (UK-GOV, UK-GOV-CHK, UK-GOV-PLAN).
@@ -860,9 +872,17 @@ Real disagreements between sources. Each lists the options with the sources behi
 
 14. **Baby formula type.**
     - Ready-to-feed, as water may not be safe to boil (UK-GOV).
-    - "Formula milk or baby food", type not specified (BRC); "baby formula" (DK).
+    - "Formula milk or baby food", type not specified (BRC); "baby formula" (DK); "infant formula" (SE26).
 
 15. **How long stored water keeps.**
     - Bottled: to the expiry date (DK). Sealed tap water: "several months" (DK).
     - Clean water in clean containers: "for years" (NO).
+    - Check taste and smell "once or twice a year" and change when necessary (SE26).
     - Six-monthly expiry check (UK-GOV, general).
+    - SUGGESTION: check own-container water at the 6-monthly kit check, which meets SE26's "once or twice a year".
+
+16. **How much cash (new in v0.2).**
+    - An amount set by need: "depends on your family's specific needs" (UK-GOV); enough for essentials (BRC).
+    - "A small amount" (DK, FI); "sufficient" (DE); "relative to household size" (NO).
+    - A fixed amount per adult: "Around 1,000 SEK" (SE26 p.17), in different denominations, used occasionally.
+    - SUGGESTION: set a per-adult amount in pounds (the household's choice; SE26's kronor figure is not converted here), in mixed notes and coins.

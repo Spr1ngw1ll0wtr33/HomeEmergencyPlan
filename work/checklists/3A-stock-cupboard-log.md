@@ -1,6 +1,11 @@
 # 3A Stock cupboard log: specification
 
-Draft v0.1 (content only), 16/11/2026. This file specifies the log. It will later be built as a printable LibreOffice Calc spreadsheet (decision in `work/PROGRESS.md`). Source IDs are those in `work/evidence-matrix.md`.
+Draft v0.2 (content only), 16/11/2026. This file specifies the log. It will later be built as a printable LibreOffice Calc spreadsheet (decision in `work/PROGRESS.md`). Source IDs are those in `work/evidence-matrix.md` (v0.2); GAP §n refers to `work/research/gap-research.md` v0.2, with ✅ = verified on the named official page.
+
+## Change log
+
+- **v0.2 (16/11/2026).** Sweden now cited as SE26 (June 2026). Review table: stored tap water now has SE26's "once or twice a year" check (met by the 6-monthly check); new rows for cash (SE26: "use cash occasionally") and the fridge thermometer; the medicines row notes SE26's month's supply; the smoke alarm row cites GOV.UK (GAP §1 ✅). One fictional row added to the worked example (stored tap water), making 11 rows. This file had no "(gap research – verification pending)" labels. No quantities changed.
+- **v0.1 (16/11/2026).** First content draft.
 
 ## Purpose
 
@@ -45,15 +50,17 @@ These rules are **SUGGESTIONS**. No source sets a "nearing expiry" window.
 | After any use of the store | Restock straight away | FR p1 ("If you use it, don't forget to restock it!", translated) **[1 source]** |
 | Batteries | At each 6-monthly check: use up and replace regularly | DE p.23; FR p1 (replace yearly) |
 | Power banks | Recharge at each check, or more often | NO p.14 ("charge it regularly") |
-| Regular medicines | Order repeats at least 5 working days ahead (UK-GOV) / collect no later than a week before running out (NO) | UK-GOV 091150; NO p.12 |
+| Regular medicines | Order repeats at least 5 working days ahead (UK-GOV) / collect no later than a week before running out (NO). Target is the household's DECISION 6 buffer (7 days' extra, working towards SE26's "month's supply") | UK-GOV 091150; NO p.12; SE26 p.18 |
 | Medicine cabinet and first aid kit | At each check; bin expired items | DE p.14; FR p1 |
-| Stored tap water in own containers | Household to decide: "regularly" / "several months" (DK p.2) or "for years" (NO p.5). DECISION 15 | DK p.2; NO p.5 |
+| Stored tap water in own containers | At each 6-monthly check (SUGGESTION): check whether it "tastes or smells unusual" and change it when necessary, which meets SE26's "once or twice a year". How often to replace it regardless is DECISION 15: "several months" (DK p.2) or "for years" (NO p.5) | SE26 p.15; DK p.2; NO p.5 |
 | Bottled water | By the date on the bottle | DK p.2 |
 | Camping stove, gas cooker, grill (if held) | Check condition regularly | NO p.8 |
-| Smoke alarms | At least once a month (not part of the store, but a natural reminder) | UK-GOV 091230 |
+| Cash | At each check: count it against the target (DECISION 16); spend some and replace it, so it is used now and then | SE26 p.17 ("You should use cash occasionally") **[1 source]** |
+| Fridge thermometer (if held) | At each check: still working | GAP §4 ✅ (FSA "Food safety in a power cut": "Use a fridge thermometer") |
+| Smoke alarms | At least once a month (not part of the store, but a natural reminder) | UK-GOV 091230; GAP §1 ✅ (Home Office "Fire safety in the home": "Test your smoke alarms at least monthly") |
 | Household plan | Whenever circumstances change, and at least once a year (SUGGESTION from the matrix) | RS-PLAN 092102/092108; UK-GOV-PLAN p.1 |
 
-**Rotation rule:** newly bought supplies go to the back of the shelf; use the older food first (DE p.11). Rotate the store through normal use (DK p.2; DE p.11).
+**Rotation rule:** newly bought supplies go to the back of the shelf; use the older food first (DE p.11). Rotate the store through normal use (DK p.2; DE p.11). Build the store up gradually by "buying one or two additional items when doing your regular shopping" (SE26 p.17).
 
 ## Worked example (fictional)
 
@@ -70,9 +77,11 @@ All dates are fictional. "Today" for this example is 16/11/2026, so the amber wi
 | Paracetamol (pack) | Medication and first aid | 1 | 2 | Bedroom medicine box | 05/01/2027 | 14/11/2026 | Adult 2 | Buy 2 new; bin old pack after expiry | | **Nearing expiry**, below target (amber) |
 | Hand sanitiser | Hygiene and sanitation | 2 | 2 | Bathroom cupboard | 01/09/2027 | 14/11/2026 | Adult 2 | None | | OK |
 | Dog food (kg) | Dogs | 1.5 | 1.5 (daily ration × 1 dog × 3 days) | Utility room bin | 20/04/2027 | 14/11/2026 | Adult 1 | None | | OK |
+| Tap water in own containers, 5 L (filled 10/05/2026) | Water | 4 | 4 | Garage shelf | | 14/11/2026 | Adult 1 | Taste and smell checked: fine | 14/11/2026 | OK |
 | Strong plastic bags (emergency toilet) | Hygiene and sanitation | 20 | 24 (fictional household figure) | Garage shelf | | 02/05/2026 | Adult 1 | Buy 1 roll | | Below target (amber); **check overdue** (grey: last checked more than 6 months ago) |
 
 Notes on the example:
 - The bottled-water target in the Target column is 9 bottles of 2 L, i.e. 18 L for 2 people for 3 days.
 - The emergency-toilet bag target is a made-up household figure; no source gives one.
+- The own-container water row leaves the expiry column blank (so the Status formula does not mark it expired) and puts the fill date in the item name. The 6-monthly taste-and-smell check follows SE26 p.15.
 - "Adult 1" and "Adult 2" stand in for real names, which belong only in the private household copy.
