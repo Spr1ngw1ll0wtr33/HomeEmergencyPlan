@@ -19,12 +19,12 @@ This file is the record of where things stand, so work can be picked up again at
 | 0a | Evidence: UK sources | `work/evidence/uk-sources.md` | Done (v0.1) |
 | 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1); Swedish guide is the 2018 edition – check for a newer one |
 | 0c | Evidence: Germany and France | `work/evidence/germany-france-sources.md` | Done (v0.1) |
-| 0d | Evidence matrix (combined) | `work/evidence-matrix.md` | In progress |
+| 0d | Evidence matrix (combined) | `work/evidence-matrix.md` | Done (v0.1); 15 conflicts for household decision |
 | 0e | Research into known gaps | `work/research/gap-research.md` | v0.1 done (from search summaries); verification against official pages in progress |
 | 1 | Guidance booklet | A4 PDF + editable .docx | Not started (needs 0d, 0e) |
 | 2 | Household plan question set | `planner/questions.js` | Draft placeholder only |
-| 3A | Stay-put supplies checklist + stock cupboard log | Cards + LibreOffice Calc spreadsheet | Not started (needs 0d) |
-| 3B | Leave-with-notice packing cards | A5/A6 cards | Not started (needs 0d) |
+| 3A | Stay-put supplies checklist + stock cupboard log | Cards + LibreOffice Calc spreadsheet | Content draft v0.1 in progress |
+| 3B | Leave-with-notice packing cards | A5/A6 cards | Content draft v0.1 in progress |
 | 3C | Fire escape card + chuck bag list | A5/A6 cards | Not started (needs 0e) |
 | 4 | Household planner tool | `planner/` web page | v0.1 built and tested; ready for Kathryn to try |
 
