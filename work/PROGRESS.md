@@ -17,7 +17,7 @@ This file is the record of where things stand, so work can be picked up again at
 | # | Workstream | Output | Status |
 |---|---|---|---|
 | 0a | Evidence: UK sources | `work/evidence/uk-sources.md` | Done (v0.1) |
-| 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1) from the 2018 Swedish edition; 2026 edition (`sources/europe/sweden/in-case-of-crisis-or-war-2026.pdf`, MCF) added – extraction in progress |
+| 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1) from the 2018 Swedish edition; 2026 edition (MCF0180, June 2026) extracted to `work/evidence/sweden-2026.md` (ID SE26) |
 | 0c | Evidence: Germany and France | `work/evidence/germany-france-sources.md` | Done (v0.1) |
 | 0d | Evidence matrix (combined) | `work/evidence-matrix.md` | Done (v0.1); 15 conflicts for household decision |
 | 0e | Research into known gaps | `work/research/gap-research.md` | v0.1 done (from search summaries); verification against official pages in progress |
@@ -38,6 +38,10 @@ This file is the record of where things stand, so work can be picked up again at
 1. Work through the household decisions, a few at a time (15 conflicts listed at the end of `work/evidence-matrix.md`, plus open questions from the checklist drafts).
 2. Review the checklist drafts in `work/checklists/` (open questions listed in `work/checklists/README.md`).
 3. Try the planner tool (instructions in `planner/README.md`).
+
+## To do (coordinator)
+- Update `work/evidence-matrix.md` to use SE26 instead of the 2018 SE edition (Sweden now: at least one week; 3 L per person per day; a month's prescription medicines; about 1,000 SEK cash per adult).
+- Draft 3C fire cards once `work/research/gap-research.md` v0.2 (verification) is done.
 
 ## Waiting on Kathryn
 - Household decisions (see above).
