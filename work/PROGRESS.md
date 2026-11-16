@@ -20,7 +20,7 @@ This file is the record of where things stand, so work can be picked up again at
 | 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1) from the 2018 Swedish edition; 2026 edition (MCF0180, June 2026) extracted to `work/evidence/sweden-2026.md` (ID SE26) |
 | 0c | Evidence: Germany and France | `work/evidence/germany-france-sources.md` | Done (v0.1) |
 | 0d | Evidence matrix (combined) | `work/evidence-matrix.md` | Done (v0.1); 15 conflicts for household decision |
-| 0e | Research into known gaps | `work/research/gap-research.md` | v0.1 done (from search summaries); verification against official pages in progress |
+| 0e | Research into known gaps | `work/research/gap-research.md` | v0.2 done – verified against official pages; some items still unverified (Ofcom, UKPN, Anglian Water blocked automated access) |
 | 1 | Guidance booklet | A4 PDF + editable .docx | Not started (needs 0d, 0e) |
 | 2 | Household plan question set | `planner/questions.js` | Draft placeholder only |
 | 3A | Stay-put supplies checklist + stock cupboard log | Cards + LibreOffice Calc spreadsheet | Content draft v0.1 done – for review |
