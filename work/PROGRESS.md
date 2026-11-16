@@ -23,8 +23,8 @@ This file is the record of where things stand, so work can be picked up again at
 | 0e | Research into known gaps | `work/research/gap-research.md` | v0.1 done (from search summaries); verification against official pages in progress |
 | 1 | Guidance booklet | A4 PDF + editable .docx | Not started (needs 0d, 0e) |
 | 2 | Household plan question set | `planner/questions.js` | Draft placeholder only |
-| 3A | Stay-put supplies checklist + stock cupboard log | Cards + LibreOffice Calc spreadsheet | Content draft v0.1 in progress |
-| 3B | Leave-with-notice packing cards | A5/A6 cards | Content draft v0.1 in progress |
+| 3A | Stay-put supplies checklist + stock cupboard log | Cards + LibreOffice Calc spreadsheet | Content draft v0.1 done – for review |
+| 3B | Leave-with-notice packing cards | A5/A6 cards | Content draft v0.1 done – for review |
 | 3C | Fire escape card + chuck bag list | A5/A6 cards | Not started (needs 0e) |
 | 4 | Household planner tool | `planner/` web page | v0.1 built and tested; ready for Kathryn to try |
 
@@ -36,7 +36,7 @@ This file is the record of where things stand, so work can be picked up again at
 
 ## Next session – start here
 1. Work through the household decisions, a few at a time (15 conflicts listed at the end of `work/evidence-matrix.md`, plus open questions from the checklist drafts).
-2. Review the checklist drafts in `work/checklists/`.
+2. Review the checklist drafts in `work/checklists/` (open questions listed in `work/checklists/README.md`).
 3. Try the planner tool (instructions in `planner/README.md`).
 
 ## Waiting on Kathryn
