@@ -25,7 +25,7 @@ This file is the record of where things stand, so work can be picked up again at
 | 2 | Household plan question set | `planner/questions.js` | Draft placeholder only |
 | 3A | Stay-put supplies checklist + stock cupboard log | Cards + LibreOffice Calc spreadsheet | Content draft v0.1 done – for review |
 | 3B | Leave-with-notice packing cards | A5/A6 cards | Content draft v0.1 done – for review |
-| 3C | Fire escape card + chuck bag list | A5/A6 cards | Not started (needs 0e) |
+| 3C | Fire escape card + chuck bag list | A5/A6 cards | Content draft v0.1 done – for review (14 questions for the household) |
 | 4 | Household planner tool | `planner/` web page | v0.1 built and tested; ready for Kathryn to try |
 
 ## Decisions made
@@ -41,7 +41,6 @@ This file is the record of where things stand, so work can be picked up again at
 
 ## To do (coordinator)
 - Update `work/evidence-matrix.md` to use SE26 instead of the 2018 SE edition (Sweden now: at least one week; 3 L per person per day; a month's prescription medicines; about 1,000 SEK cash per adult).
-- Draft 3C fire cards once `work/research/gap-research.md` v0.2 (verification) is done.
 
 ## Waiting on Kathryn
 - Household decisions (see above).
