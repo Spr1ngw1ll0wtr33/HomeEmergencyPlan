@@ -35,9 +35,13 @@
         "table"     rows people can add and remove. "columns" lists the
                     boxes in each row. Optional "defaultRows" pre-fills rows,
                     "rowLabel" names one row (e.g. "Person"), and "addLabel"
-                    is the words on the add button.
-  - Optional on any question: "help" (a hint shown under the question) and
-    "placeholder" (faint example text inside an empty box).
+                    is the words on the add button. Pre-filled rows are
+                    only printed once someone edits the table, unless
+                    the table has printDefaults: true.
+  - Optional on any question: "help" (a hint shown under the question),
+    "placeholder" (faint example text inside an empty box) and
+    hideInPlan: true (ask it, but leave it out of the printed plan, for
+    example because it already appears in the plan's heading).
   - Column types in tables: "text" (default), "date" or "textarea".
   - Remember the commas between items, and keep quotation marks in pairs.
     If the planner shows a blank page after an edit, a comma or quotation
@@ -55,7 +59,7 @@ window.PLANNER_QUESTIONS = {
       questions: [
         { id: "plan_title", type: "text", label: "Name of this plan",
           help: "This appears at the top of the printed plan.",
-          placeholder: "For example: Our household emergency plan" },
+          placeholder: "For example: Our household emergency plan", hideInPlan: true },
         { id: "household_members", type: "table", label: "Who lives here",
           rowLabel: "Person", addLabel: "Add another person",
           columns: [
@@ -73,7 +77,8 @@ window.PLANNER_QUESTIONS = {
             { id: "vet", label: "Vet (name and phone)" }
           ] },
         { id: "plan_last_reviewed", type: "date", label: "Date this plan was last reviewed",
-          help: "This appears at the top of the printed plan. Review it at least once a year." },
+          help: "This appears at the top of the printed plan. Review it at least once a year.",
+          hideInPlan: true },
         { id: "plan_next_review", type: "date", label: "Date we will next review it" },
         { id: "plan_copies_kept", type: "textarea", label: "Where printed copies of this plan are kept",
           placeholder: "For example: kitchen drawer, in the car, with a relative" }
@@ -98,7 +103,7 @@ window.PLANNER_QUESTIONS = {
           label: "Someone outside our area we would all contact if separated" },
         { id: "key_numbers", type: "table", label: "Key numbers",
           help: "These are filled in with common UK numbers. Check them, change them or add your own.",
-          rowLabel: "Number", addLabel: "Add another number",
+          rowLabel: "Number", addLabel: "Add another number", printDefaults: true,
           columns: [
             { id: "service", label: "Service" },
             { id: "number", label: "Number" },
