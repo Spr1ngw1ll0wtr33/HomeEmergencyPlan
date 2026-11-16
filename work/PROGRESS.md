@@ -17,7 +17,7 @@ This file is the record of where things stand, so work can be picked up again at
 | # | Workstream | Output | Status |
 |---|---|---|---|
 | 0a | Evidence: UK sources | `work/evidence/uk-sources.md` | Done (v0.1) |
-| 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1); Swedish guide is the 2018 edition – check for a newer one |
+| 0b | Evidence: Nordic sources | `work/evidence/nordic-sources.md` | Done (v0.1) from the 2018 Swedish edition; 2026 edition (`sources/europe/sweden/in-case-of-crisis-or-war-2026.pdf`, MCF) added – extraction in progress |
 | 0c | Evidence: Germany and France | `work/evidence/germany-france-sources.md` | Done (v0.1) |
 | 0d | Evidence matrix (combined) | `work/evidence-matrix.md` | Done (v0.1); 15 conflicts for household decision |
 | 0e | Research into known gaps | `work/research/gap-research.md` | v0.1 done (from search summaries); verification against official pages in progress |
@@ -34,5 +34,14 @@ This file is the record of where things stand, so work can be picked up again at
 - Booklet: print-ready A4 PDF plus editable .docx.
 - Planner tool: used on a PC in Firefox or Chrome; answers stay on the computer; save and open backup files; print the final plan.
 
+## Next session – start here
+1. Work through the household decisions, a few at a time (15 conflicts listed at the end of `work/evidence-matrix.md`, plus open questions from the checklist drafts).
+2. Review the checklist drafts in `work/checklists/`.
+3. Try the planner tool (instructions in `planner/README.md`).
+
 ## Waiting on Kathryn
-- Nothing yet.
+- Household decisions (see above).
+
+## Housekeeping
+- The `main` branch still has the original upload layout; the sorted work is on branch `claude/loving-sagan-4g1chj`. Merge into `main` via a pull request when Kathryn is ready.
+- The 2026 Swedish booklet was uploaded to `main` as `31523.pdf` (16/11/2026); a renamed copy is in `sources/europe/sweden/`.
