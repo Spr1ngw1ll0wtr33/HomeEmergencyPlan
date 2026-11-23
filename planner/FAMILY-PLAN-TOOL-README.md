@@ -27,13 +27,14 @@ The Family plan tool is one file, **family-plan-tool.html**. It opens in Firefox
 3. Each section has the same parts:
    1. **About this section** and **What the guidance says** (the guidance opens the first time; click its heading to open or close it).
    2. **Your plan**: questions, each with **Things to think about** to help you work out the answer. Some sections also have their own tables, such as the risk register, information sources, contacts, documents, medicines, the dogs and escape routes.
-   3. **What you have**: one table of everything the guidance recommends. Tick one box per row: **Yes**, **In progress**, **No** or **Not sure**. Click a ticked box again to clear it. Add your own rows with **Add your own item**. There is one **Notes** box for the whole section.
+   3. **What you have**: one table of everything the guidance recommends. Tick one box per row: **Yes**, **In progress**, **No**, **Not sure** or **✕ Not relevant**. Click a ticked box again to clear it. Add your own rows with **Add your own item**. There is one **Notes** box for the whole section.
    4. **Where it is kept, and how you will check it.**
-   5. **Mark this section**: **Done for now** (counts towards the progress bar) or **Not relevant to you** (left out of the plan and the to-do list; untick it to bring it back, nothing is lost).
-4. In tables you can add your own rows, and remove rows that don't apply (**Show removed rows** brings them back). In the risk register, number the risks (1 = most likely) and press **Sort by rank**.
-5. Answers are saved on this computer as you type. The words under the title show when.
-6. Write dates as dd/mm/yyyy, for example 23/11/2026.
-7. The tool loads its fonts from the internet when it can. Without the internet it still works fully; it just uses the computer's own fonts.
+   5. **Mark this section**: it shows how many items are answered. The section counts as done when everything that applies is answered, or when you tick **Done for now**. Below that, in smaller print, you can leave out the whole section if none of it applies (untick it to bring it back, nothing is lost).
+4. **"Not relevant" for single items and questions.** Nearly every section applies to us, but some items in it may not (a generator we don't own, say). Tick the **✕** box in a row's **Not relevant** column, or press **✕ Not relevant** beside a question: the row or question is greyed out and struck through, and is left out of the family plan and the to-do list and not counted. It never stops a section counting as done. Anything already typed is kept but hidden, so clicking it again (or **Marked not relevant — click to include again**) brings it back as it was. These marks are kept in the saved file; files saved before this feature still open, with nothing marked.
+5. In tables you can add your own rows, and remove rows that don't apply (**Show removed rows** brings them back). In the risk register, number the risks (1 = most likely) and press **Sort by rank**.
+6. Answers are saved on this computer as you type. The words under the title show when.
+7. Write dates as dd/mm/yyyy, for example 23/11/2026.
+8. The tool loads its fonts from the internet when it can. Without the internet it still works fully; it just uses the computer's own fonts.
 
 ## 4. Saving our progress to a file
 
@@ -64,7 +65,7 @@ Use this to carry on from a backup, or to carry on using the other computer.
 
 The **family plan** starts with About this plan, then for each relevant section: About this section, General guidance and the Household response (answers, your tables such as the risk register sorted by rank, and the What you have table with status).
 
-The **to-do list** shows every row of every What you have table, plus rows in other tables that still need doing (risks not yet assessed, information sources not set up, documents without a hard copy, and so on), grouped by section, with each section's notes. Status cells are coloured **green** for Yes, **amber** for In progress and **red** for No or Not sure; white means not answered yet. A colour key and counts are at the top. Work through the list, update the tool, then download a fresh list.
+The **to-do list** shows every row of every What you have table (except rows marked not relevant), plus rows in other tables that still need doing (risks not yet assessed, information sources not set up, documents without a hard copy, and so on), grouped by section, with each section's notes. Status cells are coloured **green** for Yes, **amber** for In progress and **red** for No or Not sure; white means not answered yet. A colour key and counts are at the top. Work through the list, update the tool, then download a fresh list.
 
 ## 7. Opening them in LibreOffice Writer
 
@@ -100,4 +101,4 @@ This clears only the Family plan tool's answers on this computer. Saved files, t
 5. To add a question, item or table row, copy an existing one, paste it underneath, and give it a new `id`.
 6. Keep the commas between items and the quotation marks in pairs. Save the file and reload Firefox (press **F5**).
 
-Version 2 saves files in format version 2 and still opens version 1 files. The tool keeps its answers under its own name (`FamilyPlanTool`), so it cannot clash with the older Household Emergency Planner or other apps.
+Version 2 saves files in format version 2.1 (2.1 adds the "not relevant" marks) and still opens format 2.0 and version 1 files. The tool keeps its answers under its own name (`FamilyPlanTool`), so it cannot clash with the older Household Emergency Planner or other apps.

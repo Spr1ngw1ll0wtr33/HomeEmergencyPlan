@@ -41,6 +41,7 @@
   font-size: 19px;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { background: var(--paper); }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
@@ -251,6 +252,48 @@ table.grid tbody tr:hover { background: rgba(220, 203, 170, .25); }
 .mark .mark-help { display: block; font-weight: 400; font-size: .9rem; }
 .mark.is-on { border-color: var(--olive); box-shadow: inset 0 0 0 1px var(--olive); }
 .mark.nr.is-on { border-color: var(--crimson); box-shadow: inset 0 0 0 1px var(--crimson); }
+/* the section-level "not relevant" option is secondary now */
+.mark-secondary { display: inline-flex; gap: .6rem; align-items: center; margin: 1rem 0 0; padding: .35rem .2rem; cursor: pointer; font-size: .9rem; }
+.mark-secondary input { appearance: none; -webkit-appearance: none; -moz-appearance: none; margin: 0; width: 1.2rem; height: 1.2rem; border: 1.5px solid var(--khaki); border-radius: var(--radius); background: var(--linen); display: inline-grid; place-content: center; flex: none; cursor: pointer; }
+.mark-secondary input::before { content: "✕"; font-size: .8rem; line-height: 1; color: transparent; }
+.mark-secondary input:checked { background: var(--parchment); border-color: var(--ink); }
+.mark-secondary input:checked::before { color: var(--ink); }
+.mark-secondary .mark-help { font-size: .85rem; }
+.item-progress { margin: 0 0 1rem; font-size: .95rem; }
+
+/* ---------- "Not relevant" for single items and questions ---------- */
+.res col.c-na { width: 7.6rem; }
+.res thead th.na, .data thead th.na { text-align: center; border-left: 1px dashed var(--khaki); }
+.res td.na, .data td.na { text-align: center; border-left: 1px dashed var(--khaki); padding: .25rem; }
+.tick input.s-na, .tick input.nr-box { border: 2px solid var(--khaki); background: var(--linen); }
+.tick input.s-na::before, .tick input.nr-box::before { content: "✕"; width: auto; height: auto; border: 0; transform: none; font-size: .95rem; line-height: 1; font-weight: 600; color: rgba(153, 140, 90, .55); }
+.tick input.s-na:checked, .tick input.nr-box:checked { background: var(--parchment); border-color: var(--ink); }
+.tick input.s-na:checked::before, .tick input.nr-box:checked::before { color: var(--ink); }
+.tick input.nr-box { appearance: none; -webkit-appearance: none; -moz-appearance: none; margin: 0; cursor: pointer; width: 1.55rem; height: 1.55rem; border-radius: var(--radius); display: inline-grid; place-content: center; }
+.tick input.nr-box:hover, .tick input.s-na:hover { box-shadow: 0 0 0 4px rgba(153, 140, 90, .25); }
+.tick input.nr-box:focus-visible { outline: 3px solid var(--forest); outline-offset: 3px; }
+table.grid tbody tr.is-nr, table.grid tbody tr.is-nr:hover { background-color: var(--parchment); background-image: repeating-linear-gradient(135deg, transparent 0 9px, rgba(153, 140, 90, .16) 9px 11px); }
+tr.is-nr th, tr.is-nr td { color: rgba(46, 51, 34, .72); }
+.res tr.is-nr th { box-shadow: inset 6px 0 0 var(--khaki); }
+tr.is-nr .row-text { text-decoration: line-through; text-decoration-color: rgba(46, 51, 34, .55); }
+tr.is-nr td.st .tick input { opacity: .45; }
+tr.is-nr td .cell, tr.is-nr .own-label { background: transparent; border-color: rgba(153, 140, 90, .5); color: rgba(46, 51, 34, .72); text-decoration: line-through; }
+.nr-tag { font-style: italic; font-weight: 400; font-size: .85rem; margin-left: .45rem; text-decoration: none; display: inline-block; }
+.q-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: .4rem 1rem; margin: 0 0 .55rem; }
+.q-head .q-label { margin: 0; flex: 1 1 20rem; }
+.nr-toggle {
+  font-family: var(--body); font-weight: 600; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2;
+  min-height: 2rem; padding: .45rem .7rem .35rem; border: 1.5px solid var(--khaki); border-radius: var(--radius);
+  background: var(--paper); color: var(--ink); cursor: pointer; flex: none; white-space: nowrap;
+}
+.nr-toggle:hover { border-color: var(--ink); background: var(--parchment); }
+.nr-toggle[aria-pressed="true"] { background: var(--parchment); border-color: var(--ink); }
+.q.is-nr .q-label { color: rgba(46, 51, 34, .72); text-decoration: line-through; text-decoration-color: rgba(46, 51, 34, .55); }
+.q-nr-note {
+  display: block; width: 100%; text-align: left; font: inherit; font-size: .95rem; font-style: italic; cursor: pointer;
+  background: var(--parchment); color: rgba(46, 51, 34, .8); border: 1.5px dashed var(--khaki); border-radius: var(--radius); padding: .6rem .8rem .5rem;
+}
+.q-nr-note:hover { border-color: var(--ink); color: var(--ink); }
 
 .prev-next { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; margin: .5rem 0 0; }
 
@@ -282,7 +325,7 @@ table.grid tbody tr:hover { background: rgba(220, 203, 170, .25); }
 .dialog-title { margin: 0 0 .7rem; font-size: 1.25rem; }
 .dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .75rem; margin-top: 1.2rem; }
 .noscript { padding: 2rem; font-size: 1.2rem; }
-@media print { .topbar, .prev-next, .table-tools, .marks { display: none; } .card { box-shadow: none; border: 1px solid var(--khaki); } }
+@media print { .topbar, .prev-next, .table-tools, .marks, .mark-secondary, .nr-toggle { display: none; } .card { box-shadow: none; border: 1px solid var(--khaki); } }
 </style>
 </head>
 <body>
@@ -395,9 +438,10 @@ var FAMILY_PLAN_CONTENT = {
         heading: "How the tool works",
         bullets: [
           "The plan is split into sections, one for each heading in the guidance. Each section starts with **About this section** and **What the guidance says**, then asks about **your plan**, with *Things to think about* under each question to help you reason it through.",
-          "**What you have** is a table of everything the guidance recommends for that section. Tick one box on each row: **Yes**, **In progress**, **No** or **Not sure**. Add your own rows, and use the one notes box under the table for anything else.",
+          "**What you have** is a table of everything the guidance recommends for that section. Tick one box on each row: **Yes**, **In progress**, **No** or **Not sure**, or **✕ Not relevant** if it doesn't apply to you (a generator you don't own, say). Add your own rows, and use the one notes box under the table for anything else.",
           "Some sections have their own tables, such as the risk register, your information sources, contacts, documents, medicines, the dogs and escape routes from each room.",
-          "When you have done enough on a section, mark it **Done for now**. If it does not apply to you, mark it **Not relevant to you** and it is left out of the plan and the to-do list. The bar at the top shows how many sections are done.",
+          "Any question or table row that doesn't apply to you can be marked **✕ Not relevant**: it is greyed out and left out of the plan and the to-do list, and anything you typed is kept in case you include it again.",
+          "A section counts as done when everything in it that applies has been answered, or when you mark it **Done for now**. Items marked not relevant never hold a section up. In the rare case a whole section does not apply, you can leave it all out at the bottom of the page. The bar at the top shows how many sections are done.",
           "Use the drop-down list at the top, or **Previous** and **Next**, to move between sections.",
           "**Nothing leaves this computer.** Answers are kept in this browser as you type. Press **Save to file** at the end of every session: the saved file is your backup, and it is how you move the plan to another computer.",
           "When you are ready, download your **family plan** and a separate colour-coded **to-do list**, as documents that open in LibreOffice Writer."
@@ -3224,6 +3268,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
   var APP_NAME = "Family plan tool";
   var FORMAT = "FamilyPlanTool";
   var FORMAT_VERSION = 2;
+  var FORMAT_MINOR = 1;                // 2.1 adds "not relevant" for single items and questions; 2.0 files still open
   var DB_NAME = "FamilyPlanTool";      // unique to this tool
   var DB_STORE = "plan";
   var DB_KEY = "current";
@@ -3342,9 +3387,21 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
 
   function emptyState() { return { sections: {}, ui: { guideOpen: {} }, savedAt: null }; }
   function emptySection() {
-    return { answers: {}, res: {}, own: [], notes: "", stored: "", checkHow: "", checkOften: "", tables: {}, done: false, notRelevant: false };
+    return { answers: {}, res: {}, own: [], notes: "", stored: "", checkHow: "", checkOften: "", tables: {}, done: false, notRelevant: false, resNR: {}, qNR: {} };
   }
-  function emptyTable() { return { cells: {}, own: [], removed: [], order: [] }; }
+  function emptyTable() { return { cells: {}, own: [], removed: [], order: [], nr: [] }; }
+
+  /* "Not relevant" for single items (format 2.1). Keys for the fixed questions: */
+  var QK = { notes: "_notes", stored: "_stored", checkHow: "_checkHow", checkOften: "_checkOften" };
+  function isResNR(d, id) { return !!(d && d.resNR && d.resNR[id]); }
+  function isQNR(d, key) { return !!(d && d.qNR && d.qNR[key]); }
+  function setQNR(d, key, on) { if (!d.qNR) d.qNR = {}; if (on) d.qNR[key] = true; else delete d.qNR[key]; }
+  function isRowNR(ts, rowId) { return !!(ts && ts.nr && ts.nr.indexOf(rowId) >= 0); }
+  function setRowNR(ts, rowId, on) {
+    if (!ts.nr) ts.nr = [];
+    ts.nr = ts.nr.filter(function (x) { return x !== rowId; });
+    if (on) ts.nr.push(rowId);
+  }
 
   var state = emptyState();
   var currentView = "about"; // "about" | section id | "downloads"
@@ -3464,15 +3521,42 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     if (!d) return false;
     if (Object.keys(d.answers).some(function (k) { return !isBlank(d.answers[k]); })) return true;
     if (Object.keys(d.res).some(function (k) { return !!d.res[k]; })) return true;
+    if (Object.keys(d.resNR || {}).length || Object.keys(d.qNR || {}).length) return true;
     if (d.own.length || !isBlank(d.notes) || !isBlank(d.stored) || !isBlank(d.checkHow) || !isBlank(d.checkOften)) return true;
     return Object.keys(d.tables).some(function (k) {
       var ts = d.tables[k];
-      return ts.own.length || ts.removed.length || Object.keys(ts.cells).some(function (r) {
+      return ts.own.length || ts.removed.length || (ts.nr && ts.nr.length) || Object.keys(ts.cells).some(function (r) {
         return Object.keys(ts.cells[r]).some(function (c) { return !isBlank(ts.cells[r][c]); });
       });
     });
   }
-  function isFinished(s) { var d = peek(s.id); return !!(d && (d.done || d.notRelevant)); }
+  /* Items in a section that count towards completion. Items marked not relevant never count. */
+  function sectionItems(s) {
+    var d = peek(s.id) || emptySection();
+    var c = { total: 0, answered: 0, excluded: 0 };
+    function count(excluded, answered) { if (excluded) c.excluded++; else { c.total++; if (answered) c.answered++; } }
+    resourcesOf(s).forEach(function (r) { count(isResNR(d, r.id), !!d.res[r.id]); });
+    d.own.forEach(function (o) { count(!!o.nr, !!o.status); });
+    tablesOf(s).forEach(function (t) {
+      if (!t.todo) return;
+      var ts = d.tables[t.id];
+      tableRows(t, ts).forEach(function (row) {
+        var ans = t.todo.assess ? t.todo.assess.every(function (col) { return !isBlank(cellVal(ts, row.id, col)); }) : !isBlank(cellVal(ts, row.id, t.todo.col));
+        count(isRowNR(ts, row.id), ans);
+      });
+    });
+    questionsOf(s).forEach(function (q) { count(isQNR(d, q.id), !isBlank(d.answers[q.id])); });
+    count(isQNR(d, QK.stored), !isBlank(d.stored));
+    count(isQNR(d, QK.checkHow), !isBlank(d.checkHow));
+    count(isQNR(d, QK.checkOften), !isBlank(d.checkOften));
+    return c;
+  }
+  /* Complete when everything that applies has been answered (excluded items don't block it). */
+  function isComplete(s) {
+    var c = sectionItems(s);
+    return c.total ? c.answered === c.total : c.excluded > 0;
+  }
+  function isFinished(s) { var d = peek(s.id); return !!(d && (d.done || d.notRelevant || isComplete(s))); }
   function hasAnyAnswers() {
     return SECTIONS.some(function (s) { var d = peek(s.id); return (d && (d.done || d.notRelevant)) || sectionHasContent(s); });
   }
@@ -3481,7 +3565,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     SECTIONS.forEach(function (s) {
       var d = peek(s.id);
       if (d && d.notRelevant) { done++; nr++; }
-      else if (d && d.done) done++;
+      else if (d && (d.done || isComplete(s))) done++;
     });
     return { done: done, nr: nr, total: SECTIONS.length };
   }
@@ -3491,6 +3575,8 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     $("progress-text").textContent = o.done + " of " + o.total + " sections done" + (o.nr ? " (" + o.nr + " not relevant)" : "");
     $("pfill").style.width = pct + "%";
     $("pbar").setAttribute("aria-valuenow", String(pct));
+    var ipEl = $("item-progress");
+    if (ipEl) ipEl.textContent = itemProgressText();
     updateSelectLabels();
   }
 
@@ -3612,6 +3698,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     var data = clone(state);
     data.format = FORMAT;
     data.formatVersion = FORMAT_VERSION;
+    data.formatMinorVersion = FORMAT_MINOR;
     data.lastView = currentView;
     return storage.save(data).then(function () { showSavedTime(); })
       .catch(function () { setSaveStatus("Could not save on this computer. Please use “Save to file”.", true); });
@@ -3690,7 +3777,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
   function optionText(s, i) {
     var d = peek(s.id), mark = "";
     if (d && d.notRelevant) mark = "  – not relevant";
-    else if (d && d.done) mark = "  – done";
+    else if (d && (d.done || isComplete(s))) mark = "  – done";
     return (i + 1) + ". " + s.title + mark;
   }
   function buildSelect() {
@@ -3793,17 +3880,42 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
       el("ul", null, items.map(function (t) { return el("li", null, inlineEls(t)); })));
   }
   /* A question: label, helper prompts, answer box. */
-  function questionEl(fid, label, think, rows, value, onValue) {
+  /* nr (optional): { on: bool, set: function (bool) } adds the "✕ Not relevant" toggle.
+     When on, the answer is hidden (not deleted) and left out of the plan. */
+  function questionEl(fid, label, think, rows, value, onValue, nr) {
     var helpId = think && think.length ? fid + "-think" : null;
     var input;
     if (rows === 1) input = el("input", { type: "text", className: "field", id: fid, value: value || "", "aria-describedby": helpId });
     else input = el("textarea", { className: "field", id: fid, rows: String(rows || 3), "aria-describedby": helpId }, value || "");
     input.addEventListener("input", function () { onValue(input.value); changed(); });
-    return el("div", { className: "q" },
-      el("label", { className: "q-label", "for": fid, text: label }),
-      thinkBox(think, helpId),
-      input);
+    var tb = thinkBox(think, helpId);
+    var lab = el("label", { className: "q-label", "for": fid, text: label });
+    if (!nr) return el("div", { className: "q" }, lab, tb, input);
+    var wrap = el("div", { className: "q" });
+    var toggle = el("button", { type: "button", className: "nr-toggle", id: fid + "-nr", "aria-pressed": "false", "aria-label": "Not relevant: " + label }, "✕ Not relevant");
+    var note = el("button", { type: "button", className: "q-nr-note", id: fid + "-nrnote", "aria-label": "Marked not relevant. Include again: " + label }, "Marked not relevant — click to include again");
+    function paint(on) {
+      wrap.classList.toggle("is-nr", on);
+      toggle.setAttribute("aria-pressed", on ? "true" : "false");
+      toggle.title = on ? "Click to include this question again" : "Leave this question out of your plan";
+      input.hidden = on; input.disabled = on;
+      if (tb) tb.hidden = on;
+      note.hidden = !on;
+    }
+    function setOn(on, focusEl) {
+      nr.set(on); paint(on); changed();
+      if (focusEl) focusEl.focus();
+    }
+    toggle.addEventListener("click", function () { setOn(toggle.getAttribute("aria-pressed") !== "true"); });
+    note.addEventListener("click", function () { setOn(false, input); });
+    wrap.appendChild(el("div", { className: "q-head" }, lab, toggle));
+    if (tb) wrap.appendChild(tb);
+    wrap.appendChild(input);
+    wrap.appendChild(note);
+    paint(!!nr.on);
+    return wrap;
   }
+  function qnr(d, key) { return { on: isQNR(d, key), set: function (on) { setQNR(d, key, on); } }; }
 
   /* ------------------------------------------------------------------ */
   /* About this plan                                                    */
@@ -3900,7 +4012,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     tablesOf(s).forEach(function (t) { plan.appendChild(dataTableBlock(s, t)); });
     var qwrap = el("div");
     questionsOf(s).forEach(function (q) {
-      qwrap.appendChild(questionEl("f-" + s.id + "-" + q.id, q.label, q.think, q.rows, d.answers[q.id], function (v) { d.answers[q.id] = v; }));
+      qwrap.appendChild(questionEl("f-" + s.id + "-" + q.id, q.label, q.think, q.rows, d.answers[q.id], function (v) { d.answers[q.id] = v; }, qnr(d, q.id)));
     });
     plan.appendChild(qwrap);
     frag.appendChild(plan);
@@ -3910,16 +4022,16 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
 
     /* (f) Where kept, how checked */
     var kc = el("section", { className: "card" }, cardHead("Where it is kept, and how you will check it"));
-    kc.appendChild(questionEl("f-" + s.id + "-stored", keepLabel(s), s.keep && s.keep.think, 3, d.stored, function (v) { d.stored = v; }));
-    kc.appendChild(questionEl("f-" + s.id + "-checkhow", checkLabel(s), s.check && s.check.think, 3, d.checkHow, function (v) { d.checkHow = v; }));
-    kc.appendChild(questionEl("f-" + s.id + "-checkoften", OFTEN_LABEL, (s.often && s.often.think) || ["For example every month, or twice a year when the clocks change."], 1, d.checkOften, function (v) { d.checkOften = v; }));
+    kc.appendChild(questionEl("f-" + s.id + "-stored", keepLabel(s), s.keep && s.keep.think, 3, d.stored, function (v) { d.stored = v; }, qnr(d, QK.stored)));
+    kc.appendChild(questionEl("f-" + s.id + "-checkhow", checkLabel(s), s.check && s.check.think, 3, d.checkHow, function (v) { d.checkHow = v; }, qnr(d, QK.checkHow)));
+    kc.appendChild(questionEl("f-" + s.id + "-checkoften", OFTEN_LABEL, (s.often && s.often.think) || ["For example every month, or twice a year when the clocks change."], 1, d.checkOften, function (v) { d.checkOften = v; }, qnr(d, QK.checkOften)));
     frag.appendChild(kc);
 
     /* (g) Mark section */
     function mark(cls, key, title, help) {
       var id = "mark-" + key;
       var box = el("input", { type: "checkbox", id: id, checked: d[key] });
-      var lab = el("label", { className: "mark " + cls + (d[key] ? " is-on" : ""), "for": id }, box,
+      var lab = el("label", { className: cls + (d[key] ? " is-on" : ""), "for": id }, box,
         el("span", null, title, el("span", { className: "mark-help", text: help })));
       box.addEventListener("change", function () {
         d[key] = box.checked;
@@ -3932,10 +4044,12 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
       });
       return lab;
     }
+    var icText = itemProgressText();
     frag.appendChild(el("section", { className: "card" }, cardHead("Mark this section"),
+      el("p", { className: "item-progress", id: "item-progress" }, icText),
       el("div", { className: "marks" },
-        mark("done", "done", "Done for now", "You have done what you can for the moment. You can come back and change it at any time."),
-        mark("nr", "notRelevant", "Not relevant to you", "Leaves this section out of the plan and the to-do list."))));
+        mark("mark done", "done", "Done for now", "You have done what you can for the moment. You can come back and change it at any time.")),
+      mark("mark-secondary", "notRelevant", "Leave out this whole section (not relevant to you).", " To leave out single items or questions, use their ✕ Not relevant boxes instead.")));
 
     var prev = VIEWS[VIEWS.indexOf(s.id) - 1], next = VIEWS[VIEWS.indexOf(s.id) + 1];
     frag.appendChild(el("div", { className: "prev-next" },
@@ -3947,50 +4061,70 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
   /* ---- (e) the resources table ---- */
   function resourcesCard(s, d) {
     var card = el("section", { className: "card" }, cardHead("What you have"));
-    card.appendChild(el("p", { className: "table-intro", text: "Everything the guidance recommends for this section. Tick one box on each row. Click a ticked box again to clear it." }));
+    card.appendChild(el("p", { className: "table-intro", text: "Everything the guidance recommends for this section. Tick one box on each row. Click a ticked box again to clear it. Tick ✕ Not relevant for anything that doesn't apply to you: it is left out of your plan and to-do list." }));
+    var CHOICES = STATUSES.concat([{ value: "na", label: "Not relevant" }]);
     var tbody = el("tbody");
     var table = el("table", { className: "grid res" },
       el("caption", { className: "visually-hidden", text: "What you have: " + s.title }),
-      el("colgroup", null, el("col", { className: "c-item" }), STATUSES.map(function () { return el("col", { className: "c-st" }); })),
+      el("colgroup", null, el("col", { className: "c-item" }), STATUSES.map(function () { return el("col", { className: "c-st" }); }), el("col", { className: "c-na" })),
       el("thead", null, el("tr", null, el("th", { scope: "col", text: "Item or action" }),
-        STATUSES.map(function (st) { return el("th", { scope: "col", className: "st", text: st.label }); }))),
+        CHOICES.map(function (st) { return el("th", { scope: "col", className: st.value === "na" ? "na" : "st", text: st.label }); }))),
       tbody);
-    function addRowEl(key, label, getStatus, setStatus, own) {
+    /* getNR/setNR: the "Not relevant" flag. It is the fifth choice on the row (one choice per row);
+       the status underneath is kept, so unticking ✕ brings the row back as it was. */
+    function addRowEl(key, label, getStatus, setStatus, getNR, setNR, own) {
       var tr = el("tr");
-      function paint() { var st = getStatus(); tr.className = st ? "st-" + st : ""; }
+      var radios = [];
+      function current() { return getNR() ? "na" : getStatus(); }
+      function paint() {
+        var st = current();
+        tr.className = st === "na" ? "is-nr" : (st ? "st-" + st : "");
+        radios.forEach(function (r) { r.checked = r.value === st; });
+        nrTag.hidden = st !== "na";
+      }
       var labelId = uid("rl");
       var th = el("th", { scope: "row", id: labelId });
+      var nrTag = el("span", { className: "nr-tag", text: "(not relevant)" });
       if (own) {
         th.appendChild(el("div", { className: "row-label-flex" },
-          el("span", null, label, el("span", { className: "own-tag", text: "(your own item)" })),
+          el("span", null, el("span", { className: "row-text", text: label }), el("span", { className: "own-tag", text: "(your own item)" }), nrTag),
           el("button", { type: "button", className: "btn btn-small", "aria-label": "Remove your item: " + label, onclick: own.remove }, "Remove")));
-      } else th.appendChild(document.createTextNode(label));
+      } else th.appendChild(el("span", null, el("span", { className: "row-text", text: label }), nrTag));
       tr.appendChild(th);
       var name = "r-" + s.id + "-" + key;
-      STATUSES.forEach(function (st) {
-        var r = el("input", { type: "radio", name: name, value: st.value, className: "s-" + st.value, checked: getStatus() === st.value, "aria-label": label + ": " + st.label });
+      CHOICES.forEach(function (st) {
+        var isNa = st.value === "na";
+        var r = el("input", { type: "radio", name: name, value: st.value, className: "s-" + st.value, checked: current() === st.value,
+          "aria-label": isNa ? "Not relevant: " + label : label + ": " + st.label });
+        radios.push(r);
         var was = false;
         r.addEventListener("pointerdown", function () { was = r.checked; });
-        r.addEventListener("keydown", function (e) { if (e.key === " ") was = r.checked; });
-        r.addEventListener("click", function () {
-          if (was) { r.checked = false; setStatus(""); } else setStatus(st.value);
+        function choose() {
+          if (isNa) setNR(!was);
+          else if (was) { setNR(false); setStatus(""); }
+          else { setNR(false); setStatus(st.value); }
           was = false; paint(); changed();
-        });
-        tr.appendChild(el("td", { className: "st" }, el("label", { className: "tick", title: st.label }, r)));
+        }
+        /* Space on a ticked box clears it (browsers send no click for an already-ticked radio). */
+        r.addEventListener("keydown", function (e) { if (e.key === " " && r.checked) { e.preventDefault(); was = true; choose(); } });
+        r.addEventListener("click", choose);
+        tr.appendChild(el("td", { className: isNa ? "na" : "st" }, el("label", { className: "tick", title: isNa ? "Not relevant (click again to include it)" : st.label }, r)));
       });
       paint();
       tbody.appendChild(tr);
     }
     (s.resources || []).forEach(function (r) {
       if (!r.id && r.heading) {
-        tbody.appendChild(el("tr", { className: "group-row" }, el("th", { scope: "rowgroup", colspan: "5", className: "label", text: r.heading })));
+        tbody.appendChild(el("tr", { className: "group-row" }, el("th", { scope: "rowgroup", colspan: "6", className: "label", text: r.heading })));
         return;
       }
-      addRowEl(r.id, r.label, function () { return d.res[r.id] || ""; }, function (v) { if (v) d.res[r.id] = v; else delete d.res[r.id]; });
+      addRowEl(r.id, r.label, function () { return d.res[r.id] || ""; }, function (v) { if (v) d.res[r.id] = v; else delete d.res[r.id]; },
+        function () { return isResNR(d, r.id); }, function (on) { if (!d.resNR) d.resNR = {}; if (on) d.resNR[r.id] = true; else delete d.resNR[r.id]; });
     });
-    if (d.own.length) tbody.appendChild(el("tr", { className: "group-row" }, el("th", { scope: "rowgroup", colspan: "5", className: "label", text: "Your own items" })));
+    if (d.own.length) tbody.appendChild(el("tr", { className: "group-row" }, el("th", { scope: "rowgroup", colspan: "6", className: "label", text: "Your own items" })));
     d.own.forEach(function (o) {
-      addRowEl(o.id, o.label, function () { return o.status || ""; }, function (v) { o.status = v; }, {
+      addRowEl(o.id, o.label, function () { return o.status || ""; }, function (v) { o.status = v; },
+        function () { return !!o.nr; }, function (on) { if (on) o.nr = true; else delete o.nr; }, {
         remove: function () {
           ask({ title: "Remove this item?", message: "“" + o.label + "” will be removed from this section.", okText: "Remove it", danger: true }).then(function (yes) {
             if (!yes) return;
@@ -4018,10 +4152,19 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
         el("button", { type: "button", className: "btn", onclick: addItem }, "Add item"))));
 
     card.appendChild(el("div", { className: "part-block", style: "margin-top:1.6rem" },
-      questionEl("f-" + s.id + "-notes", NOTES_LABEL, ["Anything about these items that matters: what still needs buying, who is doing it, where you will get it, or why something doesn't apply."], 4, d.notes, function (v) { d.notes = v; })));
+      questionEl("f-" + s.id + "-notes", NOTES_LABEL, ["Anything about these items that matters: what still needs buying, who is doing it, where you will get it, or why something doesn't apply."], 4, d.notes, function (v) { d.notes = v; }, qnr(d, QK.notes))));
     return card;
   }
 
+  function itemProgressText() {
+    var s = sectionById(currentView);
+    if (!s) return "";
+    var d = peek(s.id) || emptySection(), ic = sectionItems(s);
+    var t = ic.answered + " of " + ic.total + (ic.total === 1 ? " item" : " items") + " answered" +
+      (ic.excluded ? " (" + ic.excluded + " marked not relevant, which don't count)" : "") + ".";
+    if (!d.notRelevant && isComplete(s)) t += " Everything that applies has been answered, so this section counts as done.";
+    return t;
+  }
   function rerenderKeepScroll() {
     var y = window.scrollY;
     renderView(); updateNav();
@@ -4040,10 +4183,11 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
       t.columns.map(function (c) {
         return el("th", { scope: "col", className: "c-" + c.type }, c.head, c.hint ? el("span", { className: "col-hint", text: c.hint }) : null);
       }),
+      el("th", { scope: "col", className: "na" }, "Not relevant"),
       el("th", { scope: "col" }, el("span", { className: "visually-hidden", text: "Remove" })));
     var tbody = el("tbody");
     if (!rows.length) {
-      tbody.appendChild(el("tr", null, el("td", { colspan: String(t.columns.length + 2), style: "padding:.9rem 1rem;font-style:italic" },
+      tbody.appendChild(el("tr", null, el("td", { colspan: String(t.columns.length + 3), style: "padding:.9rem 1rem;font-style:italic" },
         "No rows yet. Use “" + (t.addLabel || "Add a row") + "” below.")));
     }
     rows.forEach(function (row) {
@@ -4054,9 +4198,11 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
         var li = el("input", { type: "text", className: "cell own-label", value: row.label, "aria-label": (t.labelHead || "Item") + " (your own row)" });
         li.addEventListener("input", function () { ownRec.label = li.value; changed(); });
         th.appendChild(li);
-      } else th.appendChild(document.createTextNode(row.label));
+      } else th.appendChild(el("span", { className: "row-text", text: row.label }));
+      var nrTag = el("span", { className: "nr-tag", text: "(not relevant)" });
+      th.appendChild(nrTag);
       tr.appendChild(th);
-      var calcCells = [];
+      var calcCells = [], ctls = row.own ? [th.querySelector("input")] : [];
       t.columns.forEach(function (c) {
         var td = el("td", { className: c.type === "calc" ? "calc" : null });
         var aria = c.head + ": " + row.label;
@@ -4090,9 +4236,21 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
           ctl = el("input", { type: "text", className: "cell", value: v, "aria-label": aria });
           ctl.addEventListener("input", function () { set(ctl.value); });
         }
-        if (ctl) td.appendChild(ctl);
+        if (ctl) { td.appendChild(ctl); ctls.push(ctl); }
         tr.appendChild(td);
       });
+      /* ✕ Not relevant: the row stays visible but greyed, and is left out of the plan and to-do list. */
+      var nrBox = el("input", { type: "checkbox", className: "nr-box", checked: isRowNR(ts, row.id), "aria-label": "Not relevant: " + row.label,
+        title: "Not relevant (untick to include it again)" });
+      function paintNR() {
+        var on = isRowNR(ts, row.id);
+        tr.classList.toggle("is-nr", on);
+        nrTag.hidden = !on;
+        ctls.forEach(function (x) { x.disabled = on; });
+      }
+      nrBox.addEventListener("change", function () { setRowNR(ts, row.id, nrBox.checked); paintNR(); changed(); });
+      tr.appendChild(el("td", { className: "na" }, el("label", { className: "tick" }, nrBox)));
+      paintNR();
       tr.appendChild(el("td", { className: "rm" }, el("button", {
         type: "button", className: "btn btn-small", "aria-label": "Remove row: " + row.label,
         onclick: function () {
@@ -4101,7 +4259,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
             : ask({ title: "Remove this row?", message: ["“" + row.label + "” will be hidden from the table, the plan and the to-do list.", "Anything typed in it is kept, and you can bring it back with “Show removed rows”."], okText: "Remove it" });
           q.then(function (yes) {
             if (!yes) return;
-            if (row.own) { ts.own = ts.own.filter(function (o) { return o.id !== row.id; }); delete ts.cells[row.id]; }
+            if (row.own) { ts.own = ts.own.filter(function (o) { return o.id !== row.id; }); delete ts.cells[row.id]; setRowNR(ts, row.id, false); }
             else if (ts.removed.indexOf(row.id) < 0) ts.removed.push(row.id);
             ts.order = ts.order.filter(function (x) { return x !== row.id; });
             changed(); rerenderKeepScroll();
@@ -4159,12 +4317,13 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
   function todoFor(s) {
     var d = peek(s.id) || emptySection();
     var items = [];
-    resourcesOf(s).forEach(function (r) { items.push({ label: r.label, status: d.res[r.id] || "" }); });
-    d.own.forEach(function (o) { items.push({ label: o.label, status: o.status || "", own: true }); });
+    resourcesOf(s).forEach(function (r) { if (!isResNR(d, r.id)) items.push({ label: r.label, status: d.res[r.id] || "" }); });
+    d.own.forEach(function (o) { if (!o.nr) items.push({ label: o.label, status: o.status || "", own: true }); });
     tablesOf(s).forEach(function (t) {
       if (!t.todo) return;
       var ts = d.tables[t.id];
       tableRows(t, ts).forEach(function (row) {
+        if (isRowNR(ts, row.id)) return;
         var label = (t.todo.prefix || t.title) + ": " + row.label;
         if (t.todo.assess) {
           var missing = t.todo.assess.some(function (c) { return isBlank(cellVal(ts, row.id, c)); });
@@ -4182,6 +4341,22 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     relevantSections().forEach(function (s) { todoFor(s).forEach(function (it) { c[it.status || "none"]++; c.total++; }); });
     return c;
   }
+  /* How many rows in the relevant sections are marked not relevant (and so left off the to-do list). */
+  function excludedRowCount() {
+    var n = 0;
+    relevantSections().forEach(function (s) {
+      var d = peek(s.id);
+      if (!d) return;
+      resourcesOf(s).forEach(function (r) { if (isResNR(d, r.id)) n++; });
+      d.own.forEach(function (o) { if (o.nr) n++; });
+      tablesOf(s).forEach(function (t) {
+        var ts = d.tables[t.id];
+        if (t.todo) tableRows(t, ts).forEach(function (row) { if (isRowNR(ts, row.id)) n++; });
+      });
+    });
+    return n;
+  }
+  function nrLine(n) { return n + (n === 1 ? " item" : " items") + " marked not relevant (not shown)."; }
 
   function renderDownloads() {
     var frag = document.createDocumentFragment();
@@ -4208,6 +4383,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
             return el("tr", null, el("td", null, el("span", { className: "sw sw-" + r[0], "aria-hidden": "true" }), r[1]), el("td", { className: "n", text: String(r[2]) }));
           }),
           el("tr", null, el("td", null, el("strong", { text: "Total" })), el("td", { className: "n", text: String(t.total) })))),
+      excludedRowCount() ? el("p", { id: "nr-count" }, nrLine(excludedRowCount())) : null,
       el("p", null, "Save the documents in your Family plan folder, never on GitHub or any other website. To keep working, press “Save to file” as well.")));
     var last = SECTIONS[SECTIONS.length - 1];
     frag.appendChild(el("div", { className: "prev-next" },
@@ -4234,6 +4410,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     return {
       format: FORMAT,
       formatVersion: FORMAT_VERSION,
+      formatMinorVersion: FORMAT_MINOR,
       appName: APP_NAME,
       contentVersion: C.contentVersion || "",
       savedAt: now.toISOString(),
@@ -4267,7 +4444,15 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     if (isPlainObject(v.answers)) questionsOf(s).forEach(function (q) { var a = cleanString(v.answers[q.id]); if (a) d.answers[q.id] = a; });
     if (isPlainObject(v.res)) resourcesOf(s).forEach(function (r) { var st = cleanStatus(v.res[r.id]); if (st) d.res[r.id] = st; });
     if (Array.isArray(v.own)) d.own = v.own.filter(function (x) { return isPlainObject(x) && typeof x.label === "string" && x.label.trim(); })
-      .map(function (x) { return { id: typeof x.id === "string" && x.id ? x.id : newId("own"), label: x.label.trim(), status: cleanStatus(x.status) }; });
+      .map(function (x) {
+        var o = { id: typeof x.id === "string" && x.id ? x.id : newId("own"), label: x.label.trim(), status: cleanStatus(x.status) };
+        if (x.nr === true) o.nr = true;
+        return o;
+      });
+    /* "Not relevant" flags (format 2.1; files from 2.0 simply have none) */
+    if (isPlainObject(v.resNR)) resourcesOf(s).forEach(function (r) { if (v.resNR[r.id] === true) d.resNR[r.id] = true; });
+    if (isPlainObject(v.qNR)) questionsOf(s).map(function (q) { return q.id; }).concat([QK.notes, QK.stored, QK.checkHow, QK.checkOften])
+      .forEach(function (k) { if (v.qNR[k] === true) d.qNR[k] = true; });
     ["notes", "stored", "checkHow", "checkOften"].forEach(function (k) { d[k] = cleanString(v[k]); });
     d.done = v.done === true;
     d.notRelevant = v.notRelevant === true;
@@ -4281,6 +4466,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
       var known = (t.rows || []).map(function (r) { return r.id; }).concat(ts.own.map(function (o) { return o.id; }));
       if (Array.isArray(src.removed)) ts.removed = src.removed.filter(function (x) { return (t.rows || []).some(function (r) { return r.id === x; }); });
       if (Array.isArray(src.order)) ts.order = src.order.filter(function (x) { return known.indexOf(x) >= 0; });
+      if (Array.isArray(src.nr)) ts.nr = src.nr.filter(function (x, i) { return known.indexOf(x) >= 0 && src.nr.indexOf(x) === i; });
       if (isPlainObject(src.cells)) known.forEach(function (rid) {
         var row = src.cells[rid];
         if (!isPlainObject(row)) return;
@@ -4788,7 +4974,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
   }
 
   function dataTableToOdf(doc, t, ts) {
-    var rows = tableRows(t, ts).filter(function (r) { return rowHasData(t, ts, r.id); });
+    var rows = tableRows(t, ts).filter(function (r) { return !isRowNR(ts, r.id) && rowHasData(t, ts, r.id); });
     if (!rows.length) return false;
     if (t.sortCol) rows = rowsSortedBy(rows, ts.cells, t.sortCol);
     doc.add(P("Label", xmlEsc(t.title + (t.sortCol ? " (sorted by " + t.columns.filter(function (c) { return c.id === t.sortCol; })[0].head.toLowerCase() + ")" : ""))));
@@ -4810,15 +4996,17 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
     var d = peek(s.id) || emptySection();
     var any = false;
     tablesOf(s).forEach(function (t) { if (dataTableToOdf(doc, t, d.tables[t.id])) any = true; });
-    questionsOf(s).forEach(function (q) { if (qa(doc, q.label, d.answers[q.id])) any = true; });
+    questionsOf(s).forEach(function (q) { if (!isQNR(d, q.id) && qa(doc, q.label, d.answers[q.id])) any = true; });
 
     var rows = [], unanswered = 0;
     resourcesOf(s).forEach(function (r) {
+      if (isResNR(d, r.id)) return;
       var st = d.res[r.id];
       if (!st) { unanswered++; return; }
       rows.push({ cells: [xmlEsc(r.label), xmlEsc(statusLabel(st))], cellStyles: ["CellBody", statusCellStyle(st)] });
     });
     d.own.forEach(function (o) {
+      if (o.nr) return;
       if (!o.status) { unanswered++; return; }
       rows.push({ cells: [xmlEsc(o.label) + ' <text:span text:style-name="Emphasis">(your own item)</text:span>', xmlEsc(statusLabel(o.status))], cellStyles: ["CellBody", statusCellStyle(o.status)] });
     });
@@ -4828,10 +5016,10 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
       doc.table([13, 4], ["Item or action", "Status"], rows);
       if (unanswered) doc.add(P("Empty", unanswered + (unanswered === 1 ? " item has" : " items have") + " not been answered yet. See the to-do list."));
     }
-    if (qa(doc, NOTES_LABEL, d.notes)) any = true;
-    if (qa(doc, keepLabel(s), d.stored)) any = true;
-    if (qa(doc, checkLabel(s), d.checkHow)) any = true;
-    if (qa(doc, OFTEN_LABEL, d.checkOften)) any = true;
+    if (!isQNR(d, QK.notes) && qa(doc, NOTES_LABEL, d.notes)) any = true;
+    if (!isQNR(d, QK.stored) && qa(doc, keepLabel(s), d.stored)) any = true;
+    if (!isQNR(d, QK.checkHow) && qa(doc, checkLabel(s), d.checkHow)) any = true;
+    if (!isQNR(d, QK.checkOften) && qa(doc, OFTEN_LABEL, d.checkOften)) any = true;
     if (!any) doc.add(P("Empty", "This section has not been filled in yet."));
   }
 
@@ -4852,12 +5040,15 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
       { cells: ["White", "Not answered yet", String(t.none)], cellStyle: statusCellStyle("none") },
       { cells: ["", boldX("Total"), boldX(String(t.total))] }
     ]);
-    if (!t.total) doc.add(P("Empty", "There are no items: every section has been marked as not relevant."));
+    var nx = excludedRowCount();
+    if (nx) doc.add(P("Text_20_body", xmlEsc(nrLine(nx))));
+    if (!t.total) doc.add(P("Empty", nx ? "There are no items to show." : "There are no items: every section has been marked as not relevant."));
     relevantGroups().forEach(function (x) {
       var started = false;
       x.sections.forEach(function (s) {
         var items = todoFor(s), d = peek(s.id) || emptySection();
-        if (!items.length && isBlank(d.notes)) return;
+        var notes = isQNR(d, QK.notes) ? "" : d.notes;
+        if (!items.length && isBlank(notes)) return;
         if (!started) { doc.add(H(1, xmlEsc(x.group.title))); started = true; }
         if (!isSolo(x.group)) doc.add(H(2, xmlEsc(s.title)));
         if (items.length) {
@@ -4869,7 +5060,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
             };
           }));
         }
-        if (!isBlank(d.notes)) { doc.add(P("Label", "Notes")); doc.add(P("Answer", odfText(d.notes.trim()))); }
+        if (!isBlank(notes)) { doc.add(P("Label", "Notes")); doc.add(P("Answer", odfText(notes.trim()))); }
       });
     });
     return makeOdt(doc, "To-do list", "To-do list, generated on " + formatDate(now), now);
@@ -4934,6 +5125,7 @@ Closing internal doors at night slows a fire's spread, if that suits the househo
   window.FamilyPlanTool = {
     ready: false,
     version: FORMAT_VERSION,
+    minorVersion: FORMAT_MINOR,
     storageBackend: function () { return storage.backend; },
     flushSave: function () { return saveNow(); },
     buildPlanOdt: buildPlanOdt,
