@@ -22,18 +22,18 @@ The Family plan tool is one file, **family-plan-tool.html**. It opens in Firefox
 
 ## 3. Filling it in
 
-1. Choose a section from the list on the left, or press **Begin with the first section**.
-2. Each section has an introduction, the general guidance, and four parts to fill in:
-   1. **Our plan**: type our answers in the boxes.
-   2. **Resources, tools and equipment**: for each "Do we have …?" item, click **Yes**, **In progress**, **No** or **Not sure**. You can type a note under any item.
-   3. **Where it is stored.**
-   4. **How we check it works**, and how often.
-3. To add our own item, type it in the box called **Add our own item** and press **Add item**.
-4. If a section does not apply to us, tick **Not relevant to us**. It is left out of the plan and the to-do list. Untick it to bring it back; nothing typed is lost.
-5. Use the **Next** and **Previous** buttons at the bottom of each section to move through.
-6. The list on the left shows each section as **Not started**, **Part done**, **Complete** or **Not relevant**. Overall progress is shown at the top of the list.
-7. Answers are saved on this computer as we type. The words under the title show when, for example "Saved on 23/11/2026 at 6:20 pm".
-8. Write dates as dd/mm/yyyy, for example 23/11/2026.
+1. The tool opens on **About this plan**, which explains what the plan is for, how the tool works and the three scenarios (A staying at home, B leaving with notice, C leaving instantly). Press **Start with: Know your risks**.
+2. To move around, use the drop-down list of sections at the top, or the **Previous** and **Next** buttons (at the top and at the bottom of each section). The bar at the top shows overall progress, for example "12 of 35 sections done".
+3. Each section has the same parts:
+   1. **About this section** and **What the guidance says** (the guidance opens the first time; click its heading to open or close it).
+   2. **Your plan**: questions, each with **Things to think about** to help you work out the answer. Some sections also have their own tables, such as the risk register, information sources, contacts, documents, medicines, the dogs and escape routes.
+   3. **What you have**: one table of everything the guidance recommends. Tick one box per row: **Yes**, **In progress**, **No** or **Not sure**. Click a ticked box again to clear it. Add your own rows with **Add your own item**. There is one **Notes** box for the whole section.
+   4. **Where it is kept, and how you will check it.**
+   5. **Mark this section**: **Done for now** (counts towards the progress bar) or **Not relevant to you** (left out of the plan and the to-do list; untick it to bring it back, nothing is lost).
+4. In tables you can add your own rows, and remove rows that don't apply (**Show removed rows** brings them back). In the risk register, number the risks (1 = most likely) and press **Sort by rank**.
+5. Answers are saved on this computer as you type. The words under the title show when.
+6. Write dates as dd/mm/yyyy, for example 23/11/2026.
+7. The tool loads its fonts from the internet when it can. Without the internet it still works fully; it just uses the computer's own fonts.
 
 ## 4. Saving our progress to a file
 
@@ -52,16 +52,19 @@ Use this to carry on from a backup, or to carry on using the other computer.
 3. Find the file ending in **.json** (for example **family-plan-23-11-2026.json**), click it once, then press **Open**.
 4. If the tool already has answers in it, it asks first. Press **Yes, open the file** to replace them, or **Cancel** to keep what is there.
 5. A part-finished file opens fine; just carry on where you left off.
-6. If the file is the wrong kind, the tool says so and changes nothing.
+6. Files saved by version 1 of the tool also open. Answers that match version 2 are carried over (ticks, your own items, where kept, how checked); notes typed against single items are moved into the section's **Notes** box. Anything that no longer matches is left out, so look through each section afterwards. Save to file again to keep a version 2 copy.
+7. If the file is the wrong kind, the tool says so and changes nothing.
 
 ## 6. Downloading the plan and the to-do list
 
-1. Click **Download our plan and to-do list** at the bottom of the list on the left.
-2. Press **Download our family plan (.odt)**. A file called something like **family-plan-23-11-2026.odt** goes into **Downloads**.
-3. Press **Download our to-do list (.odt)**. A file called something like **family-plan-to-do-23-11-2026.odt** goes into **Downloads**.
+1. Press **Download plan** at the top (or choose **Download your plan and to-do list** at the end of the drop-down list).
+2. Press **Download your family plan (.odt)**. A file called something like **family-plan-23-11-2026.odt** goes into **Downloads**.
+3. Press **Download your to-do list (.odt)**. A file called something like **family-plan-to-do-23-11-2026.odt** goes into **Downloads**.
 4. Move both files into the **Family plan** folder.
 
-The **to-do list** shows every "Do we have …?" item with its section and note. Rows are coloured **green** for Yes, **amber** for In progress and **red** for No or Not sure; white rows have not been answered yet. Work through the list, update the tool, then download a fresh list.
+The **family plan** starts with About this plan, then for each relevant section: About this section, General guidance and the Household response (answers, your tables such as the risk register sorted by rank, and the What you have table with status).
+
+The **to-do list** shows every row of every What you have table, plus rows in other tables that still need doing (risks not yet assessed, information sources not set up, documents without a hard copy, and so on), grouped by section, with each section's notes. Status cells are coloured **green** for Yes, **amber** for In progress and **red** for No or Not sure; white means not answered yet. A colour key and counts are at the top. Work through the list, update the tool, then download a fresh list.
 
 ## 7. Opening them in LibreOffice Writer
 
@@ -76,7 +79,7 @@ The **to-do list** shows every "Do we have …?" item with its section and note.
 
 1. Press **Save to file** first, just in case.
 2. Press **Start again** at the top.
-3. Read the message, then press **Delete our answers and start again**.
+3. Read the message, then press **Delete the answers and start again**.
 
 This clears only the Family plan tool's answers on this computer. Saved files, the older Household Emergency Planner and everything else are not affected.
 
@@ -91,10 +94,10 @@ This clears only the Family plan tool's answers on this computer. Saved files, t
 ## For editors: changing the sections and questions
 
 1. Open **family-plan-tool.html** with the **Text Editor** (right-click, **Open With**, **Text Editor**).
-2. Near the top of the script is a block headed **FAMILY PLAN TOOL: CONTENT**. The notes at the top of that block explain what each part means.
-3. Changing the wording of an introduction, guidance text, question or item is always safe.
+2. Near the top of the script is a block headed **FAMILY PLAN TOOL: CONTENT**. The notes at the top of that block explain what each part means: the About this plan page, and for each section its introduction (`about`), guidance, `think` prompts, `tables`, `questions`, `resources` and the `keep` / `check` / `often` prompts.
+3. Changing the wording of an introduction, guidance text, question, prompt or item is always safe.
 4. **Never change an `id`** once answers have been saved, or the saved answer will no longer show.
-5. To add a question or item, copy an existing one, paste it underneath, and give it a new `id`.
+5. To add a question, item or table row, copy an existing one, paste it underneath, and give it a new `id`.
 6. Keep the commas between items and the quotation marks in pairs. Save the file and reload Firefox (press **F5**).
 
-The tool keeps its answers under its own name (`FamilyPlanTool`), so it cannot clash with the older Household Emergency Planner or other apps.
+Version 2 saves files in format version 2 and still opens version 1 files. The tool keeps its answers under its own name (`FamilyPlanTool`), so it cannot clash with the older Household Emergency Planner or other apps.
