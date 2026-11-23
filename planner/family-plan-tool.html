@@ -1,0 +1,2874 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Family plan tool</title>
+<!--
+  Family plan tool, version 1.
+  One self-contained file: no libraries, no internet, nothing is sent anywhere.
+  Answers are kept in this browser (IndexedDB "FamilyPlanTool", with the
+  localStorage key "FamilyPlanTool.v1" as a fallback) and in files you save.
+  To change the sections or questions, edit the CONTENT block near the top
+  of the <script> section below.
+-->
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f6f3ec;
+  --panel: #ffffff;
+  --text: #1a1a1a;
+  --muted: #444444;
+  --line: #8a8a8a;
+  --soft-line: #d6d0c4;
+  --primary: #0b4f8a;
+  --primary-dark: #083a66;
+  --primary-tint: #e3eef8;
+  --ok: #1d6b2f;
+  --ok-tint: #e5f3e8;
+  --amber: #8a5a00;
+  --amber-tint: #fff1cc;
+  --danger: #9e1b1b;
+  --danger-tint: #fbe9e9;
+  --guide-bg: #fbf8f1;
+  --focus: #ffbf47;
+  --radius: 8px;
+  font-size: 19px;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Segoe UI", Ubuntu, Cantarell, "Noto Sans", "DejaVu Sans", Arial, sans-serif;
+  font-size: 1rem; line-height: 1.5;
+}
+h1, h2, h3, h4 { line-height: 1.25; }
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 2px; box-shadow: 0 0 0 6px var(--text); }
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--focus); color: var(--text); padding: 0.5rem 1rem; z-index: 100; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* top bar */
+.topbar {
+  background: var(--primary-dark); color: #fff; padding: 0.6rem 1.25rem;
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 10;
+}
+.app-title { font-size: 1.3rem; margin: 0; }
+.save-status { margin: 0.1rem 0 0; font-size: 0.9rem; color: #e8f0f8; }
+.save-status.is-error { color: #fff; background: var(--danger); padding: 0.1rem 0.5rem; border-radius: 4px; }
+.topbar-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.topbar .btn { background: #fff; color: var(--primary-dark); border-color: #fff; }
+.topbar .btn:hover { background: var(--primary-tint); }
+.topbar .btn-danger-outline { color: var(--danger); }
+
+/* buttons */
+.btn {
+  font: inherit; font-size: 0.95rem; font-weight: 600; min-height: 2.5rem; padding: 0.4rem 1rem;
+  border: 2px solid var(--primary); border-radius: var(--radius); background: var(--panel); color: var(--primary); cursor: pointer;
+}
+.btn:hover { background: var(--primary-tint); }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn-danger:hover { background: #7a1414; }
+.btn-large { font-size: 1.05rem; padding: 0.6rem 1.3rem; }
+.btn-small { font-size: 0.85rem; min-height: 2rem; padding: 0.2rem 0.7rem; }
+.btn-quiet { border-color: var(--line); color: var(--text); }
+.btn-quiet:hover { background: #eee; }
+
+/* layout */
+.layout { display: grid; grid-template-columns: 19rem minmax(0, 1fr); gap: 1.25rem; max-width: 84rem; margin: 0 auto; padding: 1.1rem; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; padding: 0.75rem; } .topbar { position: static; } }
+.sidebar { background: var(--panel); border: 1px solid var(--soft-line); border-radius: var(--radius); padding: 0.9rem; align-self: start; }
+@media (min-width: 901px) { .sidebar { position: sticky; top: 5.6rem; max-height: calc(100vh - 6.4rem); overflow-y: auto; } }
+
+.progress-text { margin: 0 0 0.35rem; font-weight: 700; font-size: 0.95rem; }
+.progress-bar { display: flex; height: 0.85rem; background: #e6e1d6; border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+.progress-fill { height: 100%; width: 0; background: var(--ok); }
+.progress-part { height: 100%; width: 0; background: #e0a800; }
+.progress-key { list-style: none; margin: 0.45rem 0 0; padding: 0; font-size: 0.85rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.1rem 0.5rem; }
+
+.nav-group { margin: 0.9rem 0 0.2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 700; }
+.section-list { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+.section-list li { margin: 0 0 0.1rem; }
+.nav-btn {
+  width: 100%; text-align: left; font: inherit; font-size: 0.92rem; background: transparent; color: var(--text);
+  border: 2px solid transparent; border-radius: var(--radius); padding: 0.25rem 0.5rem; cursor: pointer;
+  display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.3;
+}
+.nav-btn:hover { background: var(--primary-tint); }
+.nav-btn[aria-current="page"] { border-color: var(--primary); background: var(--primary-tint); font-weight: 700; }
+.nav-btn .nav-label { flex: 1; }
+.nav-special { margin-top: 0.4rem; border-color: var(--primary); font-weight: 700; color: var(--primary-dark); }
+
+/* status badges (symbol + words, never colour alone) */
+.badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; font-weight: 700; padding: 0.05rem 0.45rem; border-radius: 99px; border: 1.5px solid; white-space: nowrap; flex: none; margin-top: 0.1rem; }
+.badge-notstarted { color: #444; border-color: #888; background: #fff; }
+.badge-part { color: var(--amber); border-color: #c58a00; background: var(--amber-tint); }
+.badge-complete { color: var(--ok); border-color: var(--ok); background: var(--ok-tint); }
+.badge-notrelevant { color: #555; border-color: #aaa; background: #eee; text-decoration: none; }
+
+.main { background: var(--panel); border: 1px solid var(--soft-line); border-radius: var(--radius); padding: 1.4rem 2rem 2rem; min-width: 0; }
+.main:focus { outline: none; }
+@media (max-width: 600px) { .main { padding: 1rem; } }
+.main h2 { font-size: 1.6rem; margin: 0.1rem 0 0.5rem; }
+.main h2:focus { outline: none; }
+.crumb { margin: 0; color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+.section-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; align-items: flex-start; }
+.part-title { font-size: 1.25rem; margin: 2rem 0 0.4rem; padding-top: 0.75rem; border-top: 3px solid var(--primary); color: var(--primary-dark); }
+.part-title .num { display: inline-block; min-width: 1.6rem; }
+.lead { font-size: 1.05rem; margin: 0.25rem 0 1rem; }
+
+.nr-box { border: 2px solid var(--line); border-radius: var(--radius); padding: 0.5rem 1rem; margin: 0.5rem 0 1rem; display: flex; align-items: center; gap: 0.75rem; background: #faf9f6; }
+.nr-box input { width: 1.5rem; height: 1.5rem; margin: 0; accent-color: var(--primary); flex: none; }
+.nr-box label { font-weight: 700; cursor: pointer; }
+.nr-note { background: #eee; border-left: 6px solid #777; padding: 0.75rem 1rem; border-radius: 4px; }
+
+/* notices */
+.notice { border-left: 6px solid var(--primary); background: var(--primary-tint); padding: 0.75rem 1rem; margin: 0 0 1.25rem; border-radius: 4px; }
+.notice-ok { border-color: var(--ok); background: var(--ok-tint); }
+.notice-error { border-color: var(--danger); background: var(--danger-tint); font-weight: 600; }
+
+/* guidance */
+.guidance { background: var(--guide-bg); border: 1px solid var(--soft-line); border-radius: var(--radius); margin: 0 0 1rem; }
+.guidance > summary { cursor: pointer; font-weight: 700; padding: 0.6rem 1rem; font-size: 1.05rem; }
+.guidance-body { padding: 0 1.25rem 0.75rem; }
+.guidance-body ul { margin: 0.25rem 0 0.6rem; padding-left: 1.4rem; }
+.guidance-body li { margin: 0.15rem 0; }
+.guidance-body p { margin: 0.3rem 0 0.6rem; }
+.guidance-body .g-sub { font-weight: 700; margin-top: 0.8rem; }
+.g-table { border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.95rem; }
+.g-table th, .g-table td { border: 1px solid #888; padding: 0.3rem 0.55rem; text-align: left; vertical-align: top; }
+.g-table th { background: #ece6d8; }
+
+/* questions */
+.q { margin: 0 0 1.25rem; padding: 0; border: 0; min-width: 0; }
+.q-label { display: block; font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; padding: 0; }
+legend.q-label { float: left; width: 100%; }
+legend.q-label + * { clear: both; }
+.help { color: var(--muted); margin: 0 0 0.4rem; font-size: 0.92rem; }
+.help-warn { color: var(--danger); font-weight: 600; }
+.field { font: inherit; width: 100%; padding: 0.45rem 0.6rem; border: 2px solid var(--line); border-radius: 6px; background: #fff; color: var(--text); }
+.field:focus { border-color: var(--primary); }
+textarea.field { resize: vertical; min-height: 4.2rem; }
+
+/* status choices */
+.choices { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin: 0.15rem 0 0.35rem; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip label {
+  display: inline-block; cursor: pointer; border: 2px solid var(--line); border-radius: 99px;
+  padding: 0.2rem 0.85rem; font-weight: 600; font-size: 0.92rem; background: #fff; min-height: 2.1rem; line-height: 1.5;
+}
+.chip input:focus-visible + label { outline: 4px solid var(--focus); outline-offset: 2px; box-shadow: 0 0 0 6px var(--text); }
+.chip label:hover { background: var(--primary-tint); }
+.chip input:checked + label::before { content: "✓ "; }
+.chip input:checked + label { color: #fff; border-color: var(--text); }
+.chip.s-yes input:checked + label { background: var(--ok); }
+.chip.s-progress input:checked + label { background: #8a5a00; }
+.chip.s-no input:checked + label, .chip.s-unsure input:checked + label { background: var(--danger); }
+.chip.s-plain input:checked + label { background: var(--primary); }
+.clear-btn { font: inherit; font-size: 0.85rem; background: none; border: 0; color: var(--primary); text-decoration: underline; cursor: pointer; padding: 0.2rem 0.3rem; }
+
+.have-list { list-style: none; margin: 0; padding: 0; }
+.have-item { border: 2px solid var(--soft-line); border-left-width: 8px; border-radius: var(--radius); padding: 0.55rem 0.9rem 0.6rem; margin: 0 0 0.6rem; background: #fff; }
+.have-item.st-yes { border-left-color: var(--ok); }
+.have-item.st-progress { border-left-color: #e0a800; }
+.have-item.st-no, .have-item.st-unsure { border-left-color: var(--danger); }
+.have-item fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.have-item legend { font-weight: 700; padding: 0; float: left; width: 100%; margin-bottom: 0.2rem; }
+.have-item legend + * { clear: both; }
+.have-item .custom-tag { font-weight: 400; font-style: italic; color: var(--muted); }
+.note-row { display: flex; gap: 0.5rem; align-items: center; }
+.note-row label { font-size: 0.88rem; color: var(--muted); white-space: nowrap; }
+.note-row .field { padding: 0.3rem 0.5rem; font-size: 0.95rem; }
+.add-box { border: 2px dashed var(--line); border-radius: var(--radius); padding: 0.6rem 0.9rem; margin: 0.5rem 0 1rem; }
+.add-box label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
+.add-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.add-controls .field { flex: 1; min-width: 14rem; }
+
+.prev-next { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--soft-line); }
+
+/* start and documents pages */
+.panel-box { border: 2px solid var(--soft-line); border-radius: var(--radius); padding: 0.75rem 1.25rem; margin: 1rem 0; }
+.panel-box h3 { margin: 0.25rem 0 0.5rem; }
+.panel-box li { margin-bottom: 0.3rem; }
+.panel-ok { border-color: var(--ok); background: var(--ok-tint); }
+.start-actions, .doc-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+.count-table { border-collapse: collapse; margin: 0.5rem 0 1rem; }
+.count-table th, .count-table td { border: 1px solid #888; padding: 0.3rem 0.8rem; text-align: left; }
+.count-table td.n { text-align: right; font-weight: 700; }
+.key-yes { background: #c6efce; } .key-progress { background: #ffe699; } .key-no { background: #f4b6b6; } .key-none { background: #fff; }
+
+/* dialog */
+.dialog { border: 3px solid var(--text); border-radius: var(--radius); max-width: 34rem; width: calc(100% - 2rem); padding: 1.25rem 1.5rem; color: var(--text); }
+.dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+.dialog-title { margin: 0 0 0.5rem; font-size: 1.35rem; }
+.dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; }
+.noscript { padding: 2rem; font-size: 1.2rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the questions</a>
+<div class="app" id="app">
+  <header class="topbar">
+    <div>
+      <h1 class="app-title">Family plan tool</h1>
+      <p class="save-status" id="save-status" role="status" aria-live="polite">Not saved yet</p>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" class="btn" id="btn-save-file">Save to file</button>
+      <button type="button" class="btn" id="btn-open">Open a saved file</button>
+      <button type="button" class="btn btn-danger-outline" id="btn-reset">Start again</button>
+      <input type="file" id="file-input" accept=".json,application/json" hidden>
+    </div>
+  </header>
+  <div class="layout">
+    <nav class="sidebar" aria-label="Sections">
+      <div id="progress">
+        <p class="progress-text" id="progress-text">Progress</p>
+        <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div><div class="progress-part" id="progress-part"></div></div>
+        <ul class="progress-key" id="progress-key"></ul>
+      </div>
+      <div id="section-nav"></div>
+    </nav>
+    <main id="main" class="main" tabindex="-1">
+      <div id="notice" class="notice" role="alert" hidden></div>
+      <div id="view"></div>
+    </main>
+  </div>
+</div>
+<dialog id="dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-message">
+  <h2 id="dialog-title" class="dialog-title"></h2>
+  <div id="dialog-message"></div>
+  <div class="dialog-actions">
+    <button type="button" class="btn" id="dialog-cancel">Cancel</button>
+    <button type="button" class="btn btn-primary" id="dialog-ok">OK</button>
+  </div>
+</dialog>
+<noscript><p class="noscript">This tool needs JavaScript switched on in Firefox.</p></noscript>
+<script>
+/* =====================================================================
+   FAMILY PLAN TOOL: CONTENT (the part to edit)
+   =====================================================================
+   Everything the tool shows comes from this block: the sections, their
+   introductions, the general guidance and the questions.
+
+   HOW TO EDIT (plain-English notes)
+   - Change words inside quotation marks "..." or back-ticks `...` freely.
+   - NEVER change an "id" once answers have been saved: saved answers are
+     matched to questions by their id. Every id in a section must be
+     different. Ids use lower-case letters, numbers and underscores only.
+   - Each section has:
+       id        a unique name (never change it)
+       group     which part it belongs to (see GROUPS)
+       title     the heading on screen and in the plan
+       intro     1 to 2 sentences explaining what the section covers
+       guidance  the general guidance text (from guidance v2). It uses:
+                   a line starting "- " for a bullet point (indent two
+                   spaces more for a bullet inside a bullet);
+                   **words** for bold and *words* for italics;
+                   lines starting "|" for a table (first line = headings,
+                   second line = |---|---|).
+       plan      the "Our plan" questions. Each has an id and a label,
+                 and optionally:
+                   help  a hint shown under the question
+                   type  "textarea" (several lines, the default),
+                         "text" (one line) or
+                         "yesno" (Yes / No / Not sure)
+       have      the "Do we have ...?" items. Each has an id and a label.
+                 People choose Yes / In progress / No / Not sure, and can
+                 add a note. They can also add their own items.
+       storedLabel, checkLabel, oftenLabel (optional)
+                 replace the usual wording of the "Where it is stored",
+                 "How we check it works" and "How often" questions.
+   - Every section automatically gets a box for "Anything else" at the
+     end of "Our plan".
+   - Keep the commas between items and the quotation marks in pairs. If
+     the tool shows a blank page after an edit, a missing comma or
+     quotation mark is the usual cause.
+   - Never put personal details in this file.
+   ===================================================================== */
+
+var FAMILY_PLAN_CONTENT = {
+  contentVersion: "1",
+
+  GROUPS: [
+    { id: "ready", title: "Getting ready", subtitle: "Applies to every scenario" },
+    { id: "a", title: "Scenario A: Staying at home", subtitle: "Storm, long power cut, loss of water or gas, or being told to stay indoors" },
+    { id: "b", title: "Scenario B: Leaving with notice", subtitle: "About 1–2 hours to leave by car, for example for flood or wildfire" },
+    { id: "c", title: "Scenario C: House fire", subtitle: "Leaving instantly" },
+    { id: "upkeep", title: "Keeping things up to date", subtitle: "" },
+    { id: "numbers", title: "Useful UK numbers", subtitle: "" }
+  ],
+
+  SECTIONS: [
+    /* ============================================== GETTING READY */
+    {
+      id: "know_risks", group: "ready", title: "Know your risks",
+      intro: "This section is about working out which emergencies are most likely where we live, so we can put our effort where it matters most.",
+      guidance: `
+- Find out what is likely where you live: flooding, storms, long power cuts, extreme weather, wildfire, and any nearby industrial or nuclear sites.
+- Being prepared lets help go first to those who need it most.
+`,
+      plan: [
+        { id: "main_risks", label: "What do we think our main risks are?", help: "For example flooding, storms, long power cuts, extreme weather, wildfire, or a nearby industrial or nuclear site." },
+        { id: "likely_scenarios", label: "Which scenarios are most likely for us, and why?", help: "Scenario A: staying at home. Scenario B: leaving with notice. Scenario C: a house fire." },
+        { id: "nearby_sites", label: "Are there any industrial or nuclear sites near us? If so, which?" },
+        { id: "risk_sources", label: "Where did we find out about our local risks?" }
+      ],
+      have: [
+        { id: "risks_checked", label: "Have we found out which risks are likely where we live?" },
+        { id: "flood_checked", label: "Have we checked our flood risk?" },
+        { id: "sites_checked", label: "Have we checked for nearby industrial or nuclear sites?" },
+        { id: "scenarios_chosen", label: "Have we agreed which scenarios are most likely for us?" }
+      ],
+      storedLabel: "Where do we keep our notes about local risks?",
+      checkLabel: "How do we keep our view of the risks up to date?"
+    },
+    {
+      id: "staying_informed", group: "ready", title: "Staying informed",
+      intro: "This section covers how we will get reliable news and official instructions when the power, phones or internet are not working.",
+      guidance: `
+- Keep an **FM radio that works without mains power (battery or wind-up)**, with **spare batteries**. A car radio is a fallback.
+- Write down the frequencies of the national and local stations that carry emergency news.
+- Emergency alerts may be sent to mobile phones in the area. Keep phones charged and alerts switched on.
+- Follow official sources and trusted broadcasters. Be wary of anything that provokes a strong reaction, check it against official sources, and don't pass on rumours. Criminals use emergencies for scams.
+`,
+      plan: [
+        { id: "stations", label: "Which radio stations carry emergency news for us, and on what frequencies?" },
+        { id: "official_sources", label: "Which official sources and trusted broadcasters will we follow?" },
+        { id: "rumours", label: "How will we check information before acting on it or passing it on?" }
+      ],
+      have: [
+        { id: "fm_radio", label: "Do we have an FM radio that works without mains power (battery or wind-up)?" },
+        { id: "radio_batteries", label: "Do we have spare batteries for the radio?" },
+        { id: "car_radio", label: "Do we have a car radio we could use as a fallback?" },
+        { id: "frequencies", label: "Do we have the station frequencies written down?" },
+        { id: "alerts_on", label: "Do we have emergency alerts switched on on our phones?" },
+        { id: "phones_charged", label: "Do we have a habit of keeping our phones charged?" }
+      ],
+      storedLabel: "Where are the radio, spare batteries and the list of frequencies kept?",
+      checkLabel: "How do we check the radio works?"
+    },
+    {
+      id: "contacts", group: "ready", title: "Contacts",
+      intro: "This section is about keeping the numbers we need on paper and on our phones, in case phones go flat or networks go down.",
+      guidance: `
+- Keep a **paper list** of important numbers (family, neighbours, GP, pharmacy, vet, insurer, utilities), because phones may be flat or networks down. Keep it somewhere easy to find in the dark.
+- Add emergency contacts and medical information to your phone (ICE or Medical ID).
+- When networks are busy, only call if you need help.
+`,
+      plan: [
+        { id: "who_on_list", label: "Who is on our paper list of important numbers?", help: "For example family, neighbours, GP, pharmacy, vet, insurer and utilities. Write the names of the people or services here; the numbers themselves go on the paper list." },
+        { id: "ice", label: "How have we set up emergency contacts and medical information (ICE or Medical ID) on our phones?" },
+        { id: "busy_networks", label: "What have we agreed about using our phones when networks are busy?" }
+      ],
+      have: [
+        { id: "paper_list", label: "Do we have a paper list of important numbers?" },
+        { id: "list_complete", label: "Does the list include family, neighbours, GP, pharmacy, vet, insurer and utilities?" },
+        { id: "list_findable", label: "Is the list kept somewhere easy to find in the dark?" },
+        { id: "ice_set_up", label: "Do we have emergency contacts and medical information on our phones (ICE or Medical ID)?" }
+      ],
+      storedLabel: "Where is the paper list kept?",
+      checkLabel: "How do we check the list is up to date?"
+    },
+    {
+      id: "cash", group: "ready", title: "Cash and payments",
+      intro: "This section covers keeping enough cash and spare bank cards to buy essentials when card machines and cash machines are not working.",
+      guidance: `
+- Card payments and cash machines may not work in a power cut or cyber attack.
+- Keep **£100 per person in cash, in mixed notes and coins**, plus more than one bank card with known PINs.
+- Use the cash now and then so it isn't forgotten, and top it back up.
+`,
+      plan: [
+        { id: "cash_amount", label: "How much cash do we aim to keep, and in what mix of notes and coins?", help: "The guidance suggests £100 per person." },
+        { id: "cards", label: "Which spare bank cards do we have?", help: "Never write a card number or PIN in this tool." },
+        { id: "pins_known", type: "yesno", label: "Do we both know the PINs for the cards we would use?", help: "Answer yes or no only. Never write a PIN here." },
+        { id: "rotation", label: "How will we use and top up the cash so it is not forgotten?" }
+      ],
+      have: [
+        { id: "cash_100", label: "Do we have £100 per person in cash?" },
+        { id: "mixed", label: "Is the cash in mixed notes and coins?" },
+        { id: "two_cards", label: "Do we have more than one bank card?" },
+        { id: "pins", label: "Do we know the PINs for each card?" },
+        { id: "topup_routine", label: "Do we have a routine to use and top up the cash?" }
+      ],
+      storedLabel: "Where is the cash kept?",
+      checkLabel: "How do we check the cash is still there and the cards still work?"
+    },
+    {
+      id: "documents", group: "ready", title: "Documents",
+      intro: "This section is about having copies of our important documents ready to take with us, with backup copies stored safely online.",
+      guidance: `
+- Keep **copies** of key documents in a **waterproof pouch**, ready to take: ID and passports, birth certificates, insurance details, prescriptions and the medication list, medical equipment instructions, and the dogs' vet details, vaccination records and microchip numbers.
+- Keep **backup copies in cloud storage** as well.
+- Keep spare house and car keys.
+`,
+      plan: [
+        { id: "hard_copies", label: "Which documents do we have hard copies of?", help: "For example ID and passports, birth certificates, insurance details, prescriptions and the medication list, medical equipment instructions, and the dogs' vet details, vaccination records and microchip numbers." },
+        { id: "hard_where", type: "text", label: "Where are the hard copies kept?" },
+        { id: "pouch", type: "yesno", label: "Are the hard copies in a waterproof pouch?" },
+        { id: "cloud_which", label: "Which documents have we backed up to cloud storage?" },
+        { id: "cloud_where", type: "text", label: "Where are the cloud copies stored (which service)?" },
+        { id: "cloud_access", label: "How do we get to the cloud copies (for example which device, app or website)?" },
+        { id: "cloud_password", type: "yesno", label: "Do we know the password for the cloud storage?", help: "Answer yes or no only. This tool never asks for a password: never write one here." },
+        { id: "password_reminder", type: "text", label: "Where is any password reminder kept?", help: "Write only the place, never the password itself." }
+      ],
+      have: [
+        { id: "id_passports", label: "Do we have copies of our ID and passports?" },
+        { id: "birth_certs", label: "Do we have copies of our birth certificates?" },
+        { id: "insurance", label: "Do we have copies of our insurance details?" },
+        { id: "prescriptions", label: "Do we have copies of prescriptions and the medication list?" },
+        { id: "equipment_instructions", label: "Do we have copies of any medical equipment instructions?" },
+        { id: "dog_papers", label: "Do we have the dogs' vet details, vaccination records and microchip numbers?" },
+        { id: "waterproof_pouch", label: "Do we have a waterproof pouch for the copies?" },
+        { id: "cloud_backup", label: "Do we have backup copies in cloud storage?" },
+        { id: "spare_house_keys", label: "Do we have spare house keys?" },
+        { id: "spare_car_keys", label: "Do we have spare car keys?" }
+      ],
+      storedLabel: "Where are the document pouch and the spare keys kept?",
+      checkLabel: "How do we check the copies are complete and up to date?"
+    },
+    {
+      id: "medicines", group: "ready", title: "Medicines and first aid",
+      intro: "This section covers keeping a stock of medicines, a written medicines list and first aid kits, and knowing basic first aid.",
+      guidance: `
+- Keep **as much stock of regular medicines as you can**, with a **written list** of medicines and doses. Order repeat prescriptions as early as you're allowed, so you never run low.
+- Keep a stock of non-prescription medicines (painkillers and so on).
+- First aid kit: waterproof plasters, bandages, sterile dressings, medical tape, antiseptic, eyewash, a thermometer, tweezers, gloves and painkillers. Add a dog first aid kit (vet wrap, tick remover, paw balm).
+- Check expiry dates and throw out old medicines.
+- Learn basic first aid, including how to stop severe bleeding.
+- Keep spare glasses.
+`,
+      plan: [
+        { id: "regular_meds", label: "Which regular medicines do we need a stock of, and how much do we aim to keep?" },
+        { id: "repeats", label: "How do we make sure repeat prescriptions are ordered as early as allowed?" },
+        { id: "first_aid_skills", label: "Who knows basic first aid, and what would we like to learn?" }
+      ],
+      have: [
+        { id: "med_stock", label: "Do we have as much stock of regular medicines as we can?" },
+        { id: "med_list", label: "Do we have a written list of medicines and doses?" },
+        { id: "repeats_early", label: "Do we order repeat prescriptions as early as we are allowed?" },
+        { id: "otc", label: "Do we have a stock of non-prescription medicines (painkillers and so on)?" },
+        { id: "first_aid_kit", label: "Do we have a first aid kit (waterproof plasters, bandages, sterile dressings, medical tape, antiseptic, eyewash, thermometer, tweezers, gloves and painkillers)?" },
+        { id: "dog_first_aid", label: "Do we have a dog first aid kit (vet wrap, tick remover, paw balm)?" },
+        { id: "expiry_checked", label: "Have we checked expiry dates and thrown out old medicines?" },
+        { id: "first_aid_learnt", label: "Have we learnt basic first aid, including how to stop severe bleeding?" },
+        { id: "spare_glasses", label: "Do we have spare glasses?" }
+      ],
+      storedLabel: "Where are the medicines, the medicines list and the first aid kits kept?",
+      checkLabel: "How do we check stock levels and expiry dates?"
+    },
+    {
+      id: "neighbours", group: "ready", title: "Neighbours and community",
+      intro: "This section is about who we can help, and who can help us, in our street and community.",
+      guidance: `
+- Swap contact details with neighbours. Think about a street messaging group.
+- Agree who checks on whom, especially anyone living alone or with health needs.
+- Check on others once your own household is safe.
+- Anyone using powered medical equipment, or with a disability or long-term health condition, can join their electricity and water companies' **Priority Services Register**.
+`,
+      plan: [
+        { id: "who_checks", label: "Who will we check on, and who will check on us?", help: "Think especially of anyone living alone or with health needs." },
+        { id: "street_group", label: "Is there a street messaging group? How do we join or use it?" },
+        { id: "psr", label: "Does anyone in our household need to be on the Priority Services Register? If so, with which companies?" }
+      ],
+      have: [
+        { id: "swapped_details", label: "Have we swapped contact details with neighbours?" },
+        { id: "messaging_group", label: "Do we have a street messaging group?" },
+        { id: "check_agreement", label: "Have we agreed who checks on whom?" },
+        { id: "psr_registered", label: "Are we on the electricity and water companies' Priority Services Register (if it applies to us)?" }
+      ],
+      storedLabel: "Where are the neighbours' contact details kept?",
+      checkLabel: "How do we keep the neighbours' details and arrangements up to date?"
+    },
+    {
+      id: "your_home", group: "ready", title: "Your home",
+      intro: "This section covers the safety equipment, shut-offs and insurance for our home.",
+      guidance: `
+- Know how to turn off the **gas, electricity and water**. If the gas has been turned off, don't turn it back on yourself.
+- Fit **one smoke or heat alarm on each floor, in the hall and on the landing**. Fire services also suggest a heat alarm in the kitchen. Ten-year sealed alarms, linked so that all of them sound together, are best.
+- Fit a **carbon monoxide alarm** in any room where a gas heater, stove or fuel-burning appliance is used.
+- Keep a **fire blanket** in the kitchen.
+- Check your insurance covers your risks, including flooding, and keep the policy details with your documents.
+- Photograph your home and contents; it helps with insurance claims.
+`,
+      plan: [
+        { id: "shutoffs", label: "Where are the gas, electricity and water shut-offs, and who knows how to use them?" },
+        { id: "alarm_places", label: "Where are our smoke, heat and carbon monoxide alarms fitted? Are they linked?" },
+        { id: "insurance_cover", label: "What does our insurance cover? Does it include flooding?" }
+      ],
+      have: [
+        { id: "gas_off", label: "Do we know how to turn off the gas?" },
+        { id: "elec_off", label: "Do we know how to turn off the electricity?" },
+        { id: "water_off", label: "Do we know how to turn off the water?" },
+        { id: "alarm_each_floor", label: "Do we have a smoke or heat alarm on each floor, in the hall and on the landing?" },
+        { id: "kitchen_heat_alarm", label: "Do we have a heat alarm in the kitchen?" },
+        { id: "linked_alarms", label: "Do we have ten-year sealed alarms, linked so that they all sound together?" },
+        { id: "co_alarm", label: "Do we have a carbon monoxide alarm in every room with a gas heater, stove or fuel-burning appliance?" },
+        { id: "fire_blanket", label: "Do we have a fire blanket in the kitchen?" },
+        { id: "insurance_risks", label: "Does our insurance cover our risks, including flooding?" },
+        { id: "policy_with_docs", label: "Are the insurance policy details kept with our documents?" },
+        { id: "home_photos", label: "Do we have photographs of our home and contents?" }
+      ],
+      storedLabel: "Where are the shut-off instructions, insurance details and home photographs kept?",
+      checkLabel: "How do we check the alarms and shut-offs work?"
+    },
+
+    /* ============================================== SCENARIO A */
+    {
+      id: "water", group: "a", title: "Water",
+      intro: "This section covers storing enough drinking water for 7 days for all of us, including the dogs, and what to do if the water is cut off.",
+      guidance: `
+- Store **3 litres per person per day** for drinking and cooking: **21 litres per person for 7 days**. Add water for the dogs: about 40–60 ml per kg of body weight a day, more in warm weather or after exercise.
+- Use bottled water or clean food-grade containers with lids. Keep it cool and dark.
+- **Check stored water twice a year** for taste, smell and dates, and replace it if needed.
+- More water is needed for washing and flushing. If a cut is expected, **fill the bath, buckets and containers**.
+- If you're unsure whether water is safe, bring it to a rolling boil. Rain and river water may be contaminated.
+- Water in the hot water tank can be used for washing.
+`,
+      plan: [
+        { id: "amount", label: "How much drinking water do we need for 7 days, for the people and the dogs?", help: "3 litres per person per day, so 21 litres per person. Dogs: about 40–60 ml per kg of body weight a day." },
+        { id: "containers", label: "What do we store the water in?" },
+        { id: "cut_plan", label: "If a water cut is expected, what will we fill (bath, buckets, containers)?" },
+        { id: "washing", label: "Where will water for washing and flushing come from?", help: "For example the hot water tank, or the bath filled in advance." }
+      ],
+      have: [
+        { id: "drinking_21", label: "Do we have 21 litres of drinking water per person stored?" },
+        { id: "dog_water", label: "Do we have enough stored water for the dogs?" },
+        { id: "food_grade", label: "Do we have clean food-grade containers with lids?" },
+        { id: "buckets", label: "Do we have buckets and containers ready to fill if a cut is expected?" },
+        { id: "boil", label: "Do we have a way to boil water without mains power?" },
+        { id: "cool_dark", label: "Is the water stored somewhere cool and dark?" }
+      ],
+      storedLabel: "Where is the stored water kept?",
+      checkLabel: "How do we check the stored water (taste, smell and dates)?",
+      oftenLabel: "How often do we check it? (The guidance says twice a year.)"
+    },
+    {
+      id: "food", group: "a", title: "Food",
+      intro: "This section is about keeping 7 days of long-life food that we normally eat, with enough energy for each of us, plus food for the dogs.",
+      guidance: `
+- **7 days** of long-life food that you normally eat, stored at room temperature. Most of it should be edible cold, so you're not dependent on cooking.
+- Choose filling, energy-rich food: tins (meat, fish, vegetables, beans, soup), crispbread, pasta, rice, oats, dried fruit, nuts, peanut butter, cooking oil, long-life milk and fruit juice.
+- **Energy needs.** Adults in their 50s need, on average:
+  - **about 2,500–2,600 kcal a day for a man**;
+  - **about 2,000–2,100 for a woman**.
+
+  These are averages; size and activity change them. In a cold, unheated home, allow **an extra 100–200 kcal a day** (an extra snack), plus hot food and drinks. Warm layers matter more than extra food.
+- As a guide, per person for 7 days (based on about 2,200 kcal a day; a man needs about a sixth more):
+
+  | Food | Amount |
+  |---|---|
+  | Bread, cereals, potatoes, pasta, rice | 2.45 kg |
+  | Vegetables and pulses | 2.8 kg |
+  | Fruit and nuts | 1.75 kg |
+  | Milk and milk products | 1.8 kg |
+  | Fish, meat and eggs | 1.05 kg |
+  | Fats and oils | 0.25 kg |
+
+- Build the store up gradually, adding one or two items each time you shop. Rotate it by using and replacing.
+- In a power cut, eat chilled food first, then frozen food. Don't refreeze food that has thawed.
+- Don't forget a **tin opener**.
+- Keep **7 days of dog food**.
+`,
+      plan: [
+        { id: "what_store", label: "Which long-life foods that we normally eat will we keep?" },
+        { id: "cold_food", label: "Which of these can be eaten cold?" },
+        { id: "energy", label: "How have we checked the store gives each of us enough energy for 7 days?", help: "As a guide: about 2,500–2,600 kcal a day for a man and 2,000–2,100 for a woman in their 50s, plus 100–200 kcal more in a cold home." },
+        { id: "rotation", label: "How will we build up the store and rotate it?" },
+        { id: "power_cut_order", label: "In a power cut, what order will we eat things in?" }
+      ],
+      have: [
+        { id: "seven_days", label: "Do we have 7 days of long-life food for each person?" },
+        { id: "eat_cold", label: "Can most of the food be eaten cold?" },
+        { id: "starchy", label: "Do we have about 2.45 kg per person of bread, cereals, potatoes, pasta and rice?" },
+        { id: "veg", label: "Do we have about 2.8 kg per person of vegetables and pulses?" },
+        { id: "fruit", label: "Do we have about 1.75 kg per person of fruit and nuts?" },
+        { id: "milk", label: "Do we have about 1.8 kg per person of milk and milk products (for example long-life milk)?" },
+        { id: "protein", label: "Do we have about 1.05 kg per person of fish, meat and eggs (for example tins)?" },
+        { id: "fats", label: "Do we have about 0.25 kg per person of fats and oils?" },
+        { id: "cold_snacks", label: "Do we have extra snacks for a cold, unheated home?" },
+        { id: "tin_opener", label: "Do we have a tin opener?" },
+        { id: "dog_food", label: "Do we have 7 days of dog food?" }
+      ],
+      storedLabel: "Where is the food store kept?",
+      checkLabel: "How do we check dates and rotate the food?"
+    },
+    {
+      id: "cooking", group: "a", title: "Cooking without power",
+      intro: "This section covers how we would heat food and drinks safely without electricity.",
+      guidance: `
+- Keep plenty of no-cook food, **plus a way to cook without electricity**: a gas hob that can be lit by hand, or a camping stove with spare cartridges. Keep matches or a lighter.
+- Camping stoves are designed for outdoor use. Use them in a well-ventilated place, with a carbon monoxide alarm, and never leave them unattended.
+- Change gas cartridges outdoors, away from flames.
+- **Never use a barbecue, charcoal grill or generator indoors**: they give off carbon monoxide.
+`,
+      plan: [
+        { id: "method", label: "How will we cook without electricity?" },
+        { id: "where_cook", label: "Where would we use a camping stove safely, with good ventilation?" },
+        { id: "cartridges", label: "Where would we change gas cartridges (outdoors, away from flames)?" }
+      ],
+      have: [
+        { id: "no_cook_food", label: "Do we have plenty of food that needs no cooking?" },
+        { id: "hand_lit_hob", label: "Do we have a gas hob that can be lit by hand, or a camping stove?" },
+        { id: "spare_cartridges", label: "Do we have spare gas cartridges for the stove?" },
+        { id: "matches", label: "Do we have matches or a lighter?" },
+        { id: "co_alarm_cooking", label: "Do we have a carbon monoxide alarm where we would cook?" },
+        { id: "no_bbq_indoors", label: "Have we agreed never to use a barbecue, charcoal grill or generator indoors?" }
+      ],
+      storedLabel: "Where are the stove, cartridges and matches kept?",
+      checkLabel: "How do we check the stove works?"
+    },
+    {
+      id: "keeping_warm", group: "a", title: "Keeping warm",
+      intro: "This section is about staying warm if the heating stops, including setting up one warm room and using any heater safely.",
+      guidance: `
+- Homes get cold quickly when the heating stops.
+- Have **warm clothing** (wool layers, thick socks, hats, gloves, scarves), **blankets, duvets, sleeping bags and sleeping mats**. These are core items.
+- **Gather in one warm room.** Close its doors, hang blankets over the windows, and put rugs on the floor.
+- **Using a portable gas heater.** Fire services advise using only heaters designed for indoor use. If a portable camping-type gas heater is the only heat available in a long, freezing outage, keep the risk as low as possible:
+  - use it in **short bursts** to top up the warm room, not continuously;
+  - stand it on a **fireproof mat**, at least **1 metre** from furniture, curtains, people and dogs;
+  - keep a **window partly open** and a **carbon monoxide alarm** in the room;
+  - **never leave it unattended**, never move it while it's lit, and **switch it off before sleeping**;
+  - check the seal and fitting each time, and don't use a damaged unit;
+  - change cartridges outdoors.
+- **Gas cartridges in the cold.** Butane works poorly below freezing. Keep spare cartridges cool and dry, below 50 °C, but above 0 °C; in freezing weather, store them in the warm room, away from the heater.
+- **Carbon monoxide** has no smell. Headache, dizziness, nausea, confusion and tiredness are warning signs. If you suspect it, or the alarm sounds: switch the appliance off, get into fresh air, and call 999 if anyone feels unwell.
+- If the home becomes too cold, go and stay with family or friends.
+`,
+      plan: [
+        { id: "warm_room", type: "text", label: "Which room would be our warm room?" },
+        { id: "warm_room_how", label: "How would we make it warmer (closing doors, blankets over the windows, rugs on the floor)?" },
+        { id: "heater", label: "Would we use a portable gas heater? If so, how would we follow the safety rules?" },
+        { id: "co_signs", label: "What would we do if we suspected carbon monoxide?" },
+        { id: "too_cold", label: "If the home became too cold, where would we go?" }
+      ],
+      have: [
+        { id: "warm_clothes", label: "Do we have warm clothing (wool layers, thick socks, hats, gloves, scarves)?" },
+        { id: "blankets", label: "Do we have blankets and duvets?" },
+        { id: "sleeping_bags", label: "Do we have sleeping bags?" },
+        { id: "sleeping_mats", label: "Do we have sleeping mats?" },
+        { id: "window_blankets", label: "Do we have blankets or rugs to hang over the windows and put on the floor of the warm room?" },
+        { id: "indoor_heater", label: "Do we have a heater designed for indoor use (if we choose to have one)?" },
+        { id: "fireproof_mat", label: "Do we have a fireproof mat to stand a heater on?" },
+        { id: "co_alarm_warm_room", label: "Do we have a carbon monoxide alarm for the warm room?" },
+        { id: "cartridge_storage", label: "Do we have somewhere to keep spare cartridges cool and dry, but above 0 °C?" },
+        { id: "co_knowledge", label: "Do we know the warning signs of carbon monoxide poisoning?" }
+      ],
+      storedLabel: "Where are the warm clothing, bedding and any heater kept?",
+      checkLabel: "How do we check the heater, seals and alarms?"
+    },
+    {
+      id: "light_power", group: "a", title: "Light and power",
+      intro: "This section covers lighting and keeping phones charged during a power cut, and what to do when the power goes.",
+      guidance: `
+- **Torches or head torches**, with plenty of spare batteries; wind-up torches are useful. Torches are safer than candles and should be the first choice.
+- **Candles**, with matches, as well:
+  - in a proper holder on a stable, non-flammable surface;
+  - away from curtains, furniture and anything that can burn, and out of reach of the dogs;
+  - never left unattended, and put out before sleeping or leaving the room;
+  - don't carry lit candles between rooms.
+- **Charged power banks** for phones and lights, plus an in-car phone charger. Use phones sparingly to save battery.
+- When the power goes, switch off equipment (especially the hob and heaters) so nothing comes back on unattended, but leave one light on to show when the power is back. Report power cuts on **105**.
+`,
+      plan: [
+        { id: "lighting", label: "What will we use for light?" },
+        { id: "candles", label: "Will we use candles? If so, how will we keep them safe?" },
+        { id: "charging", label: "How will we keep our phones charged?" },
+        { id: "power_goes", label: "What will we do when the power goes?", help: "For example switch off the hob and heaters, leave one light on, and report the power cut on 105." }
+      ],
+      have: [
+        { id: "torches", label: "Do we have torches or head torches?" },
+        { id: "spare_batteries", label: "Do we have plenty of spare batteries?" },
+        { id: "wind_up_torch", label: "Do we have a wind-up torch?" },
+        { id: "candles_holders", label: "Do we have candles and proper holders?" },
+        { id: "candle_matches", label: "Do we have matches for the candles?" },
+        { id: "power_banks", label: "Do we have charged power banks?" },
+        { id: "car_charger", label: "Do we have an in-car phone charger?" },
+        { id: "number_105", label: "Do we have the power cut number (105) noted?" }
+      ],
+      storedLabel: "Where are the torches, batteries, candles and power banks kept?",
+      checkLabel: "How do we check the torches work and the power banks are charged?",
+      oftenLabel: "How often do we check them? (The guidance says every month.)"
+    },
+    {
+      id: "comms_power_cut", group: "a", title: "Communications in a power cut",
+      intro: "This section is about how we would keep in touch with each other and with family if mobile networks and landlines stop working.",
+      guidance: `
+- Mobile networks and digital landlines may fail. Wi-Fi calling can help while broadband is still working.
+- Keep the paper contact list to hand.
+`,
+      plan: [
+        { id: "how_contact", label: "How will we contact each other and family if networks fail?" },
+        { id: "wifi_calling", type: "yesno", label: "Can our phones use Wi-Fi calling?" }
+      ],
+      have: [
+        { id: "paper_list_handy", label: "Do we have the paper contact list to hand?" },
+        { id: "wifi_calling_on", label: "Do we have Wi-Fi calling switched on on our phones?" },
+        { id: "phone_power", label: "Do we have a way to keep phones charged (for example a power bank)?" }
+      ],
+      storedLabel: "Where is the paper contact list kept?",
+      checkLabel: "How do we check our phones and Wi-Fi calling work?"
+    },
+    {
+      id: "hygiene", group: "a", title: "Hygiene and toilets without water",
+      intro: "This section covers keeping clean and managing toilets safely when there is no running water.",
+      guidance: `
+- Hand sanitiser, wet wipes, toilet paper, soap, toothpaste, sanitary products, disposable gloves, kitchen roll and rubbish bags are core items. Disposable plates and cutlery save water.
+- **If the toilet can't be flushed:**
+  - put a strong bag (or two) in the toilet bowl, or use a bucket with a lid or a camping toilet;
+  - cover each use with sawdust or cat litter to cut smell;
+  - tie the bags and store them outside until you're told how to get rid of them.
+- Keep food preparation clean and wash hands often.
+`,
+      plan: [
+        { id: "toilet_plan", label: "What will we do if the toilet cannot be flushed?" },
+        { id: "waste_store", label: "Where outside will we store tied bags of waste?" }
+      ],
+      have: [
+        { id: "sanitiser", label: "Do we have hand sanitiser?" },
+        { id: "wet_wipes", label: "Do we have wet wipes?" },
+        { id: "toilet_paper", label: "Do we have toilet paper?" },
+        { id: "soap", label: "Do we have soap?" },
+        { id: "toothpaste", label: "Do we have toothpaste?" },
+        { id: "sanitary", label: "Do we have sanitary products (if needed)?" },
+        { id: "gloves", label: "Do we have disposable gloves?" },
+        { id: "kitchen_roll", label: "Do we have kitchen roll?" },
+        { id: "rubbish_bags", label: "Do we have rubbish bags?" },
+        { id: "disposables", label: "Do we have disposable plates and cutlery?" },
+        { id: "strong_bags", label: "Do we have strong bags to line the toilet bowl?" },
+        { id: "bucket_toilet", label: "Do we have a bucket with a lid or a camping toilet?" },
+        { id: "sawdust", label: "Do we have sawdust or cat litter?" }
+      ],
+      storedLabel: "Where are the hygiene supplies kept?",
+      checkLabel: "How do we check we still have enough?"
+    },
+    {
+      id: "dogs_home", group: "a", title: "Dogs (staying at home)",
+      intro: "This section covers what the dogs need to stay safe and well at home for 7 days.",
+      guidance: `
+- At least **7 days** of dog food and water, and medicines.
+- Also keep bedding, waste bags, leads and harnesses, and the vet's number written down.
+- Keep dogs calm and indoors in severe weather, and well away from heaters, stoves and candles.
+`,
+      plan: [
+        { id: "dog_needs", label: "What does each dog need for 7 days (food, water, medicines)?" },
+        { id: "calm", label: "How will we keep the dogs calm and safe indoors, away from heaters, stoves and candles?" }
+      ],
+      have: [
+        { id: "food_7", label: "Do we have at least 7 days of dog food?" },
+        { id: "water_7", label: "Do we have at least 7 days of water for the dogs?" },
+        { id: "dog_meds", label: "Do we have the dogs' medicines?" },
+        { id: "bedding", label: "Do we have spare bedding for the dogs?" },
+        { id: "waste_bags", label: "Do we have dog waste bags?" },
+        { id: "leads", label: "Do we have leads and harnesses?" },
+        { id: "vet_number", label: "Do we have the vet's number written down?" }
+      ],
+      storedLabel: "Where are the dogs' supplies kept?",
+      checkLabel: "How do we check the dogs' food and medicines are in date?"
+    },
+    {
+      id: "storms", group: "a", title: "Storms and severe weather",
+      intro: "This section is about preparing for storms, snow and ice, and heatwaves.",
+      guidance: `
+- Storms bring power cuts, flooding, fallen trees and travel disruption: prepare for both power cuts and flooding.
+- Before a storm, secure loose items outside.
+- During a storm, stay indoors, away from windows. Don't travel unless you must. Keep at least 50 m away from fallen power lines.
+- In snow and ice, rural homes may be cut off: have extra warm clothing, bedding and battery lighting.
+- In a heatwave: extra drinking water, keep medicines cool, and use fans and cooling towels.
+`,
+      plan: [
+        { id: "secure_outside", label: "What do we need to secure outside before a storm?" },
+        { id: "snow", label: "If snow or ice cut us off, what would we need?" },
+        { id: "heatwave", label: "How would we cope in a heatwave?" }
+      ],
+      have: [
+        { id: "secure_plan", label: "Do we have a way to secure loose items outside?" },
+        { id: "snow_extras", label: "Do we have extra warm clothing, bedding and battery lighting for snow and ice?" },
+        { id: "heat_water", label: "Do we have extra drinking water for a heatwave?" },
+        { id: "meds_cool", label: "Do we have a way to keep medicines cool?" },
+        { id: "fans", label: "Do we have fans?" },
+        { id: "cooling_towels", label: "Do we have cooling towels?" }
+      ],
+      storedLabel: "Where are the storm and severe weather supplies kept?",
+      checkLabel: "How do we check we are ready before winter and summer?"
+    },
+    {
+      id: "chem_nuclear", group: "a", title: "Chemical or nuclear incident: being told to stay indoors",
+      intro: "This section covers what to do if we are told to go in, stay in and tune in because of a chemical or nuclear incident, including iodine tablets.",
+      guidance: `
+**Go in, stay in, tune in.** Leave only if you're told to. The exception is a chemical release close to you outdoors, when you should move away from it, upwind if you can.
+
+**If you were outside when it happened:**
+- Go into the nearest solid building, even if it isn't your home.
+- Take off your outer clothing carefully, without pulling it over your head. Cut it off if you need to. This removes most of any contamination.
+- Put the clothes and shoes in a bag and leave it outside or in a separate room.
+- Don't eat, drink or smoke until you have washed.
+- **Chemical:** blot or brush the substance off the skin, then rinse with plenty of water if the skin itches or hurts.
+- **Radiation:** shower with soap and shampoo (no conditioner), then put on clean clothes that were stored indoors.
+- Wash any pet that was outside (wear gloves) and keep it indoors.
+
+**Sealing the house:**
+- Close all doors and windows, including trickle vents.
+- Switch off fans, extractor fans, air conditioning, and any heating or ventilation that draws in outside air.
+- Bring pets in only if they're with you. Don't go out to look for one.
+
+**Which room to use:**
+- UK guidance says go to the **middle of the building, away from outside doors, windows and walls**.
+- **If every room has windows:** choose the room with the **fewest and smallest windows**, on the side of the house away from the incident, and keep away from the glass.
+- **Chemical:** an upstairs room is better, because many chemicals are heavier than air.
+- **Radiation:** a central room on a lower floor is better.
+
+**While sheltering:**
+- Tune in to local radio, TV or official websites, and stay in until you're told it's safe. That's usually **1–2 days** for radiation, or a number of hours for a chemical release.
+- Food and drink already indoors, covered food and **mains tap water are safe** unless you're told otherwise. Don't eat garden produce or drink water stored outside or from wells until advised.
+- Don't go out to collect children from school; schools will look after them.
+- Use phones only when needed, to keep lines free. Call **999** in a real emergency.
+- If you need medicines, call **NHS 111** rather than going out.
+
+**Iodine tablets**
+- Stable iodine (potassium iodate) **protects only the thyroid gland, and only against radioactive iodine**. It does nothing against other radiation.
+- **Take it only when officially told to, and only the tablets provided.** Never use iodised salt or other products.
+- Tablets are issued in advance only to homes very close to a nuclear site. Further out, they're handed out in an emergency if needed.
+- **Timing matters:**
+  - one dose protects for 24 hours;
+  - it works best taken up to 24 hours before, or within 2 hours after, exposure;
+  - it still helps up to 8 hours after;
+  - don't start it more than 24 hours after exposure.
+- Adults and children over 12 usually take 2 tablets (85 mg tablets). **Follow the leaflet with the tablets you are given.**
+- People with an iodine allergy, or certain rare skin and blood vessel conditions, should not take it.
+- There is no official UK advice to buy your own. The plan is to follow official instructions.
+`,
+      plan: [
+        { id: "chem_room", type: "text", label: "Which room would we shelter in for a chemical release?", help: "An upstairs room, with the fewest and smallest windows, is better." },
+        { id: "rad_room", type: "text", label: "Which room would we shelter in for a radiation incident?", help: "A central room on a lower floor is better." },
+        { id: "sealing", label: "How would we seal the house (doors, windows, trickle vents, fans and ventilation)?" },
+        { id: "decontam", label: "Where would we take off and bag outer clothing if we came in from outside?" },
+        { id: "near_site", type: "yesno", label: "Do we live close enough to a nuclear site to be given iodine tablets in advance?" }
+      ],
+      have: [
+        { id: "go_in", label: "Do we all know the rule: go in, stay in, tune in?" },
+        { id: "clothing_bags", label: "Do we have strong bags for contaminated clothing?" },
+        { id: "scissors", label: "Do we have scissors to cut clothing off if needed?" },
+        { id: "soap_shampoo", label: "Do we have soap and shampoo (no conditioner)?" },
+        { id: "clean_clothes", label: "Do we have clean clothes stored indoors?" },
+        { id: "pet_gloves", label: "Do we have gloves for washing a pet that was outside?" },
+        { id: "vents_known", label: "Do we know where all the trickle vents, fans and ventilation switches are?" },
+        { id: "radio_tune_in", label: "Do we have a radio to tune in to official news?" },
+        { id: "iodine", label: "Do we have iodine tablets (only if officially issued to our home; do not buy your own)?" }
+      ],
+      storedLabel: "Where are the bags, scissors and any iodine tablets kept?",
+      checkLabel: "How do we check we know what to do?"
+    },
+    {
+      id: "coping", group: "a", title: "Coping",
+      intro: "This section is about looking after our wellbeing and keeping going during a long emergency at home.",
+      guidance: `
+- Being prepared reduces stress.
+- Anxiety and poor sleep are normal. Keep routines, eat and sleep well, stay in touch with others, and limit how much news you take in.
+- Have books, games and puzzles that don't need power.
+`,
+      plan: [
+        { id: "routines", label: "What routines would we keep to?" },
+        { id: "news_limit", label: "How will we limit how much news we take in?" },
+        { id: "keep_in_touch", label: "Who will we stay in touch with?" }
+      ],
+      have: [
+        { id: "books", label: "Do we have books that don't need power?" },
+        { id: "games", label: "Do we have games that don't need power?" },
+        { id: "puzzles", label: "Do we have puzzles that don't need power?" }
+      ],
+      storedLabel: "Where are the books, games and puzzles kept?",
+      checkLabel: "How do we check we have enough to keep us occupied?"
+    },
+
+    /* ============================================== SCENARIO B */
+    {
+      id: "deciding", group: "b", title: "Deciding to go",
+      intro: "This section covers when we would decide to leave, and the routes we would take by car.",
+      guidance: `
+- Don't wait to be told if you can see the risk building. You may get official warnings through alerts, radio or TV, but they may be late or patchy. Leave in good time, because roads will be slow and may close.
+- **Plan possible routes in advance**:
+  - a main route and at least one alternative;
+  - leaving in different directions;
+  - avoiding roads and dips that flood;
+  - marked on a paper map.
+
+  Know where the routes cross rivers or low ground.
+- Keep the car's fuel tank at least half full (or an electric car charged).
+- Return only when it's safe.
+`,
+      plan: [
+        { id: "triggers", label: "What signs would make us decide to leave, without waiting to be told?" },
+        { id: "main_route", label: "What is our main route out?" },
+        { id: "alt_routes", label: "What are our alternative routes, in different directions?" },
+        { id: "hazards", label: "Where do our routes cross rivers, low ground or roads that flood?" },
+        { id: "return", label: "How will we know when it is safe to return?" }
+      ],
+      have: [
+        { id: "main_route_planned", label: "Do we have a main route planned?" },
+        { id: "alt_route_planned", label: "Do we have at least one alternative route?" },
+        { id: "directions", label: "Do our routes leave in different directions?" },
+        { id: "avoid_floods", label: "Do our routes avoid roads and dips that flood?" },
+        { id: "paper_map_routes", label: "Do we have the routes marked on a paper map?" },
+        { id: "fuel_half", label: "Do we keep the car's fuel tank at least half full (or an electric car charged)?" }
+      ],
+      storedLabel: "Where is the paper map with the routes kept?",
+      checkLabel: "How do we check the routes are still usable?"
+    },
+    {
+      id: "what_to_take", group: "b", title: "What to take",
+      intro: "This section is about the packed grab bag for each person, and the additions checklist for things we add on the day.",
+      guidance: `
+Keep a **basic grab bag packed**, then use an **additions checklist** on the day to add what can't be stored in the bag.
+
+**Packed grab bag (per person)**
+
+| Item | Why |
+|---|---|
+| Copies of documents in a waterproof pouch | Proof of identity and insurance; needed to claim, rebook or register |
+| Cash (£100 per person) and bank cards | Shops and fuel stations may not take cards in a power cut |
+| Paper list of phone numbers | Phones may be flat, lost or without signal |
+| Spare house and car keys | Usual keys may be left behind in a rush |
+| Torch or head torch, spare batteries | Light without using the phone battery; a head torch leaves hands free |
+| FM radio (battery or wind-up) | News and instructions when phones and internet fail |
+| Power bank and phone charger | Keeps the phone working for calls, alerts and maps |
+| First aid kit and non-prescription medicines | Treat cuts, sprains and pain when help is far away |
+| Warm and waterproof clothing, hat, gloves, spare socks | Staying warm and dry prevents cold injury; wet clothes lose heat fast |
+| Survival bag | Keeps a person warm and dry if stranded; works better than a foil blanket |
+| Whistle | Carries much further than shouting, with little effort, to attract rescuers |
+| Toiletries, wet wipes, hand sanitiser | Basic hygiene when water and washing are limited |
+| Paper OS map of the area and a compass | Navigation with no signal or battery; shows routes, footpaths and high ground |
+| Pen and notebook | Recording information, leaving notes |
+| Dog leads, spare collar with ID tag, waste bags, collapsible bowl | Dogs must be controlled and identifiable; a bowl for water on the move |
+
+**Additions on the day**
+
+| Item | Why |
+|---|---|
+| Regular medicines and the medication list | Prescriptions can't be replaced quickly away from home |
+| Glasses or contact lenses | Can't be replaced quickly |
+| Mobile phones (charged) | Calls, alerts, maps |
+| Water bottles filled from the tap | Safe drinking water may be hard to find |
+| Food for a few days, snacks and a tin opener | Energy and comfort; shops may be shut |
+| Dog food, dog medicines, bedding, a dog first aid kit | The dogs' needs away from home |
+| Sleeping bags or blankets | Rest centres and other people's homes may be short of bedding |
+| Valuables | Kept together so they can be collected quickly |
+| Laptop or tablet and chargers | Access to cloud document copies and contacts |
+`,
+      plan: [
+        { id: "bags", label: "How many grab bags do we have, and for whom?" },
+        { id: "additions", label: "What is on our additions checklist for the day?" },
+        { id: "who_does", label: "Who does what on the day (collecting the additions, loading the car)?" }
+      ],
+      have: [
+        { id: "grab_bag", label: "Do we have a packed grab bag for each person?" },
+        { id: "gb_documents", label: "Do we have copies of documents in a waterproof pouch in the grab bag?" },
+        { id: "gb_cash", label: "Do we have cash (£100 per person) and bank cards for the grab bag?" },
+        { id: "gb_numbers", label: "Do we have a paper list of phone numbers in the grab bag?" },
+        { id: "gb_keys", label: "Do we have spare house and car keys in the grab bag?" },
+        { id: "gb_torch", label: "Do we have a torch or head torch and spare batteries in the grab bag?" },
+        { id: "gb_radio", label: "Do we have an FM radio (battery or wind-up) in the grab bag?" },
+        { id: "gb_power", label: "Do we have a power bank and phone charger in the grab bag?" },
+        { id: "gb_first_aid", label: "Do we have a first aid kit and non-prescription medicines in the grab bag?" },
+        { id: "gb_clothing", label: "Do we have warm and waterproof clothing, a hat, gloves and spare socks in the grab bag?" },
+        { id: "gb_survival_bag", label: "Do we have a survival bag in the grab bag?" },
+        { id: "gb_whistle", label: "Do we have a whistle in the grab bag?" },
+        { id: "gb_toiletries", label: "Do we have toiletries, wet wipes and hand sanitiser in the grab bag?" },
+        { id: "gb_map", label: "Do we have a paper OS map of the area and a compass in the grab bag?" },
+        { id: "gb_notebook", label: "Do we have a pen and notebook in the grab bag?" },
+        { id: "gb_dogs", label: "Do we have dog leads, a spare collar with ID tag, waste bags and a collapsible bowl in the grab bag?" },
+        { id: "additions_list", label: "Do we have a written additions checklist for the day?" },
+        { id: "water_bottles", label: "Do we have water bottles to fill from the tap?" },
+        { id: "travel_bedding", label: "Do we have sleeping bags or blankets we can take?" }
+      ],
+      storedLabel: "Where are the grab bags and the additions checklist kept?",
+      checkLabel: "How do we check the grab bag contents?",
+      oftenLabel: "How often do we check them? (The guidance says twice a year.)"
+    },
+    {
+      id: "shutting_up", group: "b", title: "Shutting up the house",
+      intro: "This section covers making the house safe before we leave, especially if flooding is expected.",
+      guidance: `
+- **Switch off the electricity, gas and water** before leaving.
+- **For flooding**, move valuables, documents and electrical items upstairs, and secure anything that could float or leak.
+- Close and lock windows and doors.
+- Leave a contact phone number for rescuers or neighbours, and tell family you have left.
+- Accept that food in the fridge and freezer will spoil. Photograph it for your insurance claim.
+`,
+      plan: [
+        { id: "steps", label: "In what order will we shut up the house?" },
+        { id: "flood_moves", label: "What would we move upstairs if flooding is expected?" },
+        { id: "contact_note", label: "Where will we leave a contact number, and who will we tell that we have left?" }
+      ],
+      have: [
+        { id: "shutdown_list", label: "Do we have a written shutting-up checklist?" },
+        { id: "shutoffs_known", label: "Do we know how to switch off the electricity, gas and water?" },
+        { id: "upstairs_space", label: "Do we have space upstairs for valuables, documents and electrical items?" },
+        { id: "secure_float", label: "Do we have a way to secure anything that could float or leak?" },
+        { id: "contact_card", label: "Do we have a contact number note ready to leave for rescuers or neighbours?" },
+        { id: "photo_fridge", label: "Do we know to photograph the fridge and freezer contents for the insurance claim?" }
+      ],
+      storedLabel: "Where is the shutting-up checklist kept?",
+      checkLabel: "How do we check we can do it quickly?"
+    },
+    {
+      id: "meeting_up", group: "b", title: "Where to go and meeting up",
+      intro: "This section is about where we would meet if separated, where we would stay for longer, and how we would contact each other.",
+      guidance: `
+- **Local meeting point:** an agreed place near home, easy to find, sheltered and accessible, in case you're separated or can't get home.
+- **Longer-term stay:** decide in advance where you would stay for days or weeks, such as family or friends outside the risk area who will take the dogs.
+- Agree how you will contact each other if networks fail.
+`,
+      plan: [
+        { id: "meeting_point", label: "Where is our local meeting point?", help: "An agreed place near home, easy to find, sheltered and accessible." },
+        { id: "longer_stay", label: "Where would we stay for days or weeks? Would they take the dogs?" },
+        { id: "contact_fail", label: "How will we contact each other if networks fail?" }
+      ],
+      have: [
+        { id: "meeting_agreed", label: "Do we have an agreed local meeting point?" },
+        { id: "stay_agreed", label: "Do we have an agreed place for a longer stay?" },
+        { id: "dogs_welcome", label: "Have we agreed that the dogs can come too?" },
+        { id: "contact_agreed", label: "Do we have an agreed way to contact each other if networks fail?" }
+      ],
+      storedLabel: "Where are the meeting point and longer-stay details written down?",
+      checkLabel: "How do we check the arrangements still stand?"
+    },
+    {
+      id: "dogs_leaving", group: "b", title: "Dogs (leaving with notice)",
+      intro: "This section covers what the dogs need when we leave home, and where they can stay.",
+      guidance: `
+- Leads, a harness, and a collar with an ID tag showing the owner's name and address (required by law in public). Keep microchip details up to date.
+- Food and water for several days, medicines, bedding, waste bags and a collapsible bowl.
+- Vaccination records, the vet's details and a photo of each dog, in a dry bag. Rest centres may ask for vaccination records and may not take pets, so plan where the dogs can stay.
+`,
+      plan: [
+        { id: "dog_stay", label: "Where can the dogs stay if a rest centre will not take them?" },
+        { id: "dog_travel", label: "How will the dogs travel in the car?" }
+      ],
+      have: [
+        { id: "leads", label: "Do we have leads?" },
+        { id: "harness", label: "Do we have a harness for each dog?" },
+        { id: "id_tag", label: "Do we have a collar with an ID tag showing the owner's name and address for each dog?" },
+        { id: "microchip", label: "Are the microchip details up to date?" },
+        { id: "food_water", label: "Do we have food and water for several days?" },
+        { id: "dog_meds", label: "Do we have the dogs' medicines ready to take?" },
+        { id: "bedding", label: "Do we have bedding for the dogs?" },
+        { id: "waste_bags", label: "Do we have waste bags?" },
+        { id: "bowl", label: "Do we have a collapsible bowl?" },
+        { id: "vacc_records", label: "Do we have the vaccination records?" },
+        { id: "vet_details", label: "Do we have the vet's details?" },
+        { id: "dog_photo", label: "Do we have a photo of each dog?" },
+        { id: "dry_bag", label: "Do we have a dry bag for the dogs' papers and photos?" }
+      ],
+      storedLabel: "Where are the dogs' travel items and papers kept?",
+      checkLabel: "How do we check the tags, microchip details and records are up to date?"
+    },
+    {
+      id: "flooding", group: "b", title: "Flooding",
+      intro: "This section covers what to do before, during and after a flood.",
+      guidance: `
+- Check your flood risk and sign up for warnings. Keep the Floodline number to hand.
+- **Before:** sandbags or boards, valuables upstairs, documents in waterproof bags, medicines easy to reach.
+- **During:** don't stay in a cellar; switch off the power; **never walk or drive through flood water** (30 cm of moving water can float a car); keep out of underground garages.
+- **After:** photograph the damage for insurance, dry rooms out, have gas and electrics checked before use, and don't eat food that has been in flood water.
+`,
+      plan: [
+        { id: "flood_risk", label: "What is our flood risk?" },
+        { id: "before", label: "What will we do before a flood?" },
+        { id: "during", label: "What will we do during a flood?" },
+        { id: "after", label: "What will we do after a flood?" }
+      ],
+      have: [
+        { id: "risk_checked", label: "Have we checked our flood risk?" },
+        { id: "warnings", label: "Have we signed up for flood warnings?" },
+        { id: "floodline", label: "Do we have the Floodline number to hand?" },
+        { id: "sandbags", label: "Do we have sandbags or boards?" },
+        { id: "waterproof_bags", label: "Do we have waterproof bags for documents?" },
+        { id: "meds_reach", label: "Are our medicines easy to reach?" }
+      ],
+      storedLabel: "Where are the sandbags or boards and waterproof bags kept?",
+      checkLabel: "How do we check our flood warnings and equipment are in place?"
+    },
+    {
+      id: "car", group: "b", title: "The car",
+      intro: "This section is about the emergency supplies we keep in the car.",
+      guidance: `
+Keep in the car:
+- a first aid kit, torch, phone charger and radio;
+- warm clothing and blankets;
+- water and snacks;
+- high-visibility clothing and jump leads;
+- an ice scraper, de-icer and a snow shovel;
+- a paper map.
+`,
+      plan: [
+        { id: "which_car", type: "text", label: "Which car would we use, and who would drive?" },
+        { id: "fresh", label: "How will we keep the water and snacks in the car fresh?" }
+      ],
+      have: [
+        { id: "first_aid", label: "Do we have a first aid kit in the car?" },
+        { id: "torch", label: "Do we have a torch in the car?" },
+        { id: "charger", label: "Do we have a phone charger in the car?" },
+        { id: "radio", label: "Do we have a radio in the car?" },
+        { id: "warm_clothing", label: "Do we have warm clothing in the car?" },
+        { id: "blankets", label: "Do we have blankets in the car?" },
+        { id: "water", label: "Do we have water in the car?" },
+        { id: "snacks", label: "Do we have snacks in the car?" },
+        { id: "hi_vis", label: "Do we have high-visibility clothing in the car?" },
+        { id: "jump_leads", label: "Do we have jump leads in the car?" },
+        { id: "ice_scraper", label: "Do we have an ice scraper and de-icer in the car?" },
+        { id: "shovel", label: "Do we have a snow shovel in the car?" },
+        { id: "map", label: "Do we have a paper map in the car?" }
+      ],
+      storedLabel: "Where in the car are the supplies kept?",
+      checkLabel: "How do we check the car supplies?"
+    },
+    {
+      id: "on_foot", group: "b", title: "If you have to go on foot",
+      intro: "This section covers walking out of the area with the dogs if the roads become impassable after we have left by car.",
+      guidance: `
+*If you've left by car but the roads become impassable, and you need to walk out of the area with the dogs*
+
+- **Before setting off:**
+  - tell someone your route and when you expect to arrive;
+  - plan a route on the **OS map** using footpaths and high ground, avoiding flood water;
+  - lock the car and leave a note in it with your phone number.
+- **Carry only what is vital.** A rough guide is no more than about **10% of your body weight**, or around 7–10 kg for an adult. Fitness matters more than the figure. Heavy loads slow you down and tire you.
+- **Bags:**
+  - use a **rucksack**, so both hands are free for the dogs' leads;
+  - a hip belt takes the weight off your shoulders;
+  - line it with a bin bag and keep important items in dry bags, because rucksacks are not waterproof;
+  - leave behind bags that need carrying by hand.
+- **The vital items:**
+  - **OS Explorer map (1:25,000) and a compass**: navigation without signal or battery;
+  - phone and power bank;
+  - head torch and spare batteries;
+  - water and food;
+  - waterproofs, warm layers, hat and gloves;
+  - survival bag;
+  - whistle;
+  - first aid kit and regular medicines;
+  - cash, cards and the document pouch.
+- **For the dogs:**
+  - leads and harnesses, with ID tags on their collars;
+  - water and a collapsible bowl;
+  - food for at least a day;
+  - medicines and waste bags;
+  - a coat for short-coated or older dogs;
+  - a light for each collar.
+
+  Check their paws for cuts and ice, and don't let them drink flood water. A fit, fully grown dog can carry about a tenth of its own weight in a dog pack, but not young, older, long-backed or flat-faced breeds. Small dogs can be carried in a sling or dog carrier.
+- **Food on the move.** Walking with a pack uses roughly 250–500 kcal an hour. Eat a snack about every hour and drink regularly.
+- **If you need help:**
+  - call **999 or 112** and ask for the police, then Mountain Rescue if needed;
+  - if there's no signal, give **six long whistle blasts (or torch flashes) in a minute, pause for a minute, then repeat**;
+  - three blasts is the reply.
+`,
+      plan: [
+        { id: "route", label: "How would we plan a walking route on the OS map (footpaths and high ground, avoiding flood water)?" },
+        { id: "tell", label: "Who would we tell our route and expected arrival time?" },
+        { id: "loads", label: "What would each of us carry, keeping to about 10% of body weight?" },
+        { id: "dogs_travel", label: "How would the dogs travel (on leads, in a dog pack, in a sling or carrier)?" },
+        { id: "help", label: "How would we call for help, with and without a phone signal?" }
+      ],
+      have: [
+        { id: "os_map", label: "Do we have an OS Explorer map (1:25,000) of our area?" },
+        { id: "compass", label: "Do we have a compass?" },
+        { id: "map_skills", label: "Do we know how to use the map and compass?" },
+        { id: "rucksacks", label: "Do we have a rucksack for each person?" },
+        { id: "hip_belts", label: "Do the rucksacks have hip belts?" },
+        { id: "bin_bags", label: "Do we have bin bags to line the rucksacks?" },
+        { id: "dry_bags", label: "Do we have dry bags for important items?" },
+        { id: "phone_bank", label: "Do we have a phone and power bank to carry?" },
+        { id: "head_torch", label: "Do we have head torches and spare batteries?" },
+        { id: "water_food", label: "Do we have water and food to carry, including snacks to eat every hour?" },
+        { id: "waterproofs", label: "Do we have waterproofs, warm layers, hats and gloves?" },
+        { id: "survival_bag", label: "Do we have a survival bag each?" },
+        { id: "whistle", label: "Do we have a whistle each?" },
+        { id: "first_aid_meds", label: "Do we have a first aid kit and our regular medicines to carry?" },
+        { id: "cash_pouch", label: "Do we have cash, cards and the document pouch ready to carry?" },
+        { id: "car_note", label: "Do we have a pen and paper to leave a note in the car with our phone number?" },
+        { id: "dog_leads_tags", label: "Do we have leads and harnesses for the dogs, with ID tags on their collars?" },
+        { id: "dog_water_bowl", label: "Do we have water and a collapsible bowl for the dogs?" },
+        { id: "dog_food_day", label: "Do we have food for the dogs for at least a day?" },
+        { id: "dog_meds_bags", label: "Do we have the dogs' medicines and waste bags to carry?" },
+        { id: "dog_coat", label: "Do we have a coat for any short-coated or older dog?" },
+        { id: "collar_lights", label: "Do we have a light for each dog's collar?" },
+        { id: "dog_pack", label: "Do we have a dog pack, sling or carrier (if suitable for our dogs)?" },
+        { id: "signal_known", label: "Do we know the distress signal (six long whistle blasts or torch flashes in a minute, then a minute's pause)?" }
+      ],
+      storedLabel: "Where are the map, compass, rucksacks and walking kit kept?",
+      checkLabel: "How do we check the walking kit and practise using the map?"
+    },
+
+    /* ============================================== SCENARIO C */
+    {
+      id: "preventing_fire", group: "c", title: "Preventing fire",
+      intro: "This section covers the everyday habits that stop a fire starting in our home.",
+      guidance: `
+- **Cooking:** never leave cooking unattended. Avoid chip pans and use a thermostat-controlled fryer instead.
+- **Electrics:**
+  - one plug per socket;
+  - don't overload extension leads or plug one lead into another;
+  - watch for scorch marks, hot plugs or flickering lights.
+- **Charging:** don't charge phones, laptops or batteries overnight, under pillows or on beds. Never charge e-bikes or e-scooters in a bedroom, a hallway or on your way out, or while asleep or out.
+- **Heaters:** keep them at least 1 metre from furniture and curtains. Never use them to dry clothes. Switch them off before sleeping.
+- **Candles:** follow the safety rules above. Consider battery LED candles.
+- **Smoking:** never in bed; use a proper ashtray.
+- Barbecues, camping stoves and generators are not for indoor use.
+- Have chimneys and stoves checked.
+`,
+      plan: [
+        { id: "cooking_rules", label: "What are our rules for cooking safely?" },
+        { id: "charging_rules", label: "Where and when do we charge phones, laptops and batteries?" },
+        { id: "heater_candle_rules", label: "How do we use heaters and candles safely?" }
+      ],
+      have: [
+        { id: "fryer", label: "Do we use a thermostat-controlled fryer instead of a chip pan?" },
+        { id: "one_plug", label: "Do we keep to one plug per socket, with no overloaded or daisy-chained extension leads?" },
+        { id: "electrics_checked", label: "Have we checked for scorch marks, hot plugs or flickering lights?" },
+        { id: "safe_charging", label: "Do we have a safe place to charge devices (not on beds, in bedrooms or hallways, and not overnight)?" },
+        { id: "heater_distance", label: "Do we keep heaters at least 1 metre from furniture and curtains?" },
+        { id: "led_candles", label: "Do we have battery LED candles?" },
+        { id: "ashtray", label: "Do we have a proper ashtray (if anyone smokes)?" },
+        { id: "chimney_checked", label: "Have we had chimneys and stoves checked (if we have them)?" }
+      ],
+      storedLabel: "Where are the LED candles and any safety notes kept?",
+      checkLabel: "How do we check plugs, leads and chargers?"
+    },
+    {
+      id: "bedtime", group: "c", title: "Bedtime check",
+      intro: "This section is about the quick check we do every night before going to bed.",
+      guidance: `
+Every night:
+- the cooker and hob are off;
+- appliances are unplugged where possible, with no washing machine or dryer running overnight;
+- heaters are off and candles are out;
+- exits and the stairs are clear;
+- house and window keys are where everyone can find them;
+- a phone is within reach of the bed.
+
+Closing internal doors at night slows a fire's spread, if that suits the household.
+`,
+      plan: [
+        { id: "who_checks", type: "text", label: "Who does the bedtime check?" },
+        { id: "close_doors", type: "yesno", label: "Do we close internal doors at night?" }
+      ],
+      have: [
+        { id: "cooker_off", label: "Do we check the cooker and hob are off?" },
+        { id: "unplugged", label: "Do we unplug appliances where possible, with no washing machine or dryer running overnight?" },
+        { id: "heaters_candles", label: "Do we check heaters are off and candles are out?" },
+        { id: "exits_clear", label: "Do we check the exits and stairs are clear?" },
+        { id: "keys_findable", label: "Are the house and window keys where everyone can find them?" },
+        { id: "phone_bed", label: "Do we have a phone within reach of the bed?" },
+        { id: "written_check", label: "Do we have the bedtime check written down somewhere we will see it?" }
+      ],
+      storedLabel: "Where is the bedtime checklist kept?",
+      checkLabel: "How do we make sure the check happens?"
+    },
+    {
+      id: "alarms_equipment", group: "c", title: "Alarms and equipment",
+      intro: "This section covers our smoke, heat and carbon monoxide alarms, and the fire blanket and any extinguisher.",
+      guidance: `
+- **One smoke or heat alarm on each floor, in the hall and on the landing**, ideally linked so that they all sound together, plus a heat alarm in the kitchen if possible.
+- **Test them monthly**, vacuum them every six months, and replace them after ten years.
+- **Fire blanket in the kitchen**, easy to reach and not above the cooker. Use it on a small pan fire, or wrap it round someone whose clothes are on fire.
+- A fire extinguisher is optional, useful only for a very small fire or one blocking your way out. Water, foam or CO2 types suit the home. Have it serviced and replace it as the maker says.
+- **Don't tackle a fire yourself** unless it is very small, everyone else is out and your way out is clear. If in doubt, get out.
+- **Never put water on a pan fire.** Don't move the pan; turn off the heat only if it's safe.
+- For an electrical fire, unplug the appliance or switch off at the fuse box. Never use water.
+`,
+      plan: [
+        { id: "alarm_locations", label: "Where are our alarms, and are they linked?" },
+        { id: "test_day", type: "text", label: "Which day of the month do we test the alarms?" },
+        { id: "extinguisher", label: "Have we decided to have a fire extinguisher? If so, which type, and where is it?" },
+        { id: "replace_dates", label: "When are the alarms due to be replaced (ten years after fitting)?" }
+      ],
+      have: [
+        { id: "alarm_floors", label: "Do we have a smoke or heat alarm on each floor?" },
+        { id: "alarm_hall", label: "Do we have an alarm in the hall?" },
+        { id: "alarm_landing", label: "Do we have an alarm on the landing?" },
+        { id: "alarms_linked", label: "Are the alarms linked so that they all sound together?" },
+        { id: "kitchen_heat", label: "Do we have a heat alarm in the kitchen?" },
+        { id: "co_alarms", label: "Do we have carbon monoxide alarms where needed?" },
+        { id: "blanket", label: "Do we have a fire blanket in the kitchen, easy to reach and not above the cooker?" },
+        { id: "blanket_use", label: "Do we know how to use the fire blanket?" },
+        { id: "extinguisher_have", label: "Do we have a fire extinguisher (optional; water, foam or CO2), serviced as the maker says?" },
+        { id: "fuse_box", label: "Do we know where the fuse box is, for an electrical fire?" }
+      ],
+      storedLabel: "Where are the fire blanket and any extinguisher kept?",
+      checkLabel: "How do we test the alarms?",
+      oftenLabel: "How often do we test and vacuum them? (The guidance says test monthly and vacuum every six months.)"
+    },
+    {
+      id: "escape_plan", group: "c", title: "Escape plan",
+      intro: "This section is about planning and practising how we would get out of the house in a fire.",
+      guidance: `
+- Plan the **normal way out and a second way out** from every room, especially bedrooms. Make sure everyone in the household knows them.
+- Keep escape routes clear and keys near exits.
+- Agree a **meeting place outside**, away from the house.
+- **Practise the plan**, including at night.
+`,
+      plan: [
+        { id: "normal_way", label: "What is the normal way out from each room, especially the bedrooms?" },
+        { id: "second_way", label: "What is the second way out from each room?" },
+        { id: "meeting_place", type: "text", label: "Where is our meeting place outside, away from the house?" },
+        { id: "practice", label: "When do we practise the plan, including at night?" }
+      ],
+      have: [
+        { id: "normal_route", label: "Do we have a planned escape route (the normal way out) from every room?" },
+        { id: "second_route", label: "Do we have a second way out from every room?" },
+        { id: "everyone_knows", label: "Does everyone in the household know the routes?" },
+        { id: "routes_clear", label: "Do we keep the escape routes clear?" },
+        { id: "keys_exits", label: "Do we keep keys near the exits?" },
+        { id: "meeting_agreed", label: "Do we have an agreed meeting place outside?" },
+        { id: "practised", label: "Have we practised the plan?" },
+        { id: "practised_night", label: "Have we practised the plan at night?" }
+      ],
+      storedLabel: "Where are the keys for the exits kept?",
+      checkLabel: "How do we practise the escape plan?"
+    },
+    {
+      id: "fire_breaks_out", group: "c", title: "If fire breaks out",
+      intro: "This section covers what each of us would do in the first minutes of a fire: warning everyone, getting out and calling 999.",
+      guidance: `
+- **Shout to warn everyone, and get out.** Don't stop for belongings.
+- **Crawl low under smoke**, where the air is clearer.
+- **Before opening a door, feel it with the back of your hand.** If it's warm, don't open it, because the fire is on the other side.
+- Close doors behind you to slow the fire.
+- **Call 999 once you're out.** Give your address and say whether anyone, including pets, is still inside.
+- **Never go back in for anything**, pets included. Tell firefighters where they are.
+- If your clothes catch fire: **stop, drop and roll**.
+`,
+      plan: [
+        { id: "roles", label: "Who does what (warning everyone, getting out, calling 999)?" },
+        { id: "dogs_out", label: "How will we try to get the dogs out without going back in?" }
+      ],
+      have: [
+        { id: "shout_get_out", label: "Do we all know to shout a warning and get out, without stopping for belongings?" },
+        { id: "crawl", label: "Do we know to crawl low under smoke?" },
+        { id: "door_check", label: "Do we know to feel doors with the back of the hand before opening them?" },
+        { id: "close_doors", label: "Do we know to close doors behind us?" },
+        { id: "call_999", label: "Do we know to call 999 once we are out, giving the address and saying who is still inside, including pets?" },
+        { id: "never_back", label: "Have we agreed never to go back in for anything, pets included?" },
+        { id: "stop_drop_roll", label: "Do we know to stop, drop and roll if clothes catch fire?" }
+      ],
+      storedLabel: "Where do we keep the things we would grab on the way out (phone, keys)?",
+      checkLabel: "How do we practise what to do?"
+    },
+    {
+      id: "trapped", group: "c", title: "If you're trapped",
+      intro: "This section is about what to do if a fire stops us getting out of the house.",
+      guidance: `
+- Get everyone into **one room with a window**, ideally with a phone.
+- Close the door and put bedding or towels along the bottom to keep smoke out.
+- **Call 999**, then open the window and shout **"Help, fire!"**
+- **Escaping from a window is only for the ground or first floor:**
+  - drop bedding or cushions below to land on;
+  - lower yourself out feet first, hang by your hands, then drop;
+  - **don't jump**;
+  - if the window won't open, break the glass in a bottom corner and cover the jagged edges with a blanket.
+- Above the first floor, wait at the window to be rescued.
+`,
+      plan: [
+        { id: "safe_room", label: "Which room with a window would we go to on each floor?" },
+        { id: "escape_windows", label: "Which windows could we escape from (ground or first floor only)?" }
+      ],
+      have: [
+        { id: "room_chosen", label: "Do we have a room with a window chosen as our refuge?" },
+        { id: "phone_room", label: "Do we have a phone in that room or with us at night?" },
+        { id: "towels", label: "Do we have bedding or towels to block the gap under the door?" },
+        { id: "windows_open", label: "Do the windows open, with keys for any window locks kept nearby?" },
+        { id: "lowering", label: "Do we know how to lower ourselves out feet first and drop, without jumping?" },
+        { id: "wait_rescue", label: "Do we know to wait at the window to be rescued if we are above the first floor?" }
+      ],
+      storedLabel: "Where are the window keys kept?",
+      checkLabel: "How do we check the windows open and the keys are in place?"
+    },
+
+    /* ============================================== KEEPING UP TO DATE */
+    {
+      id: "up_to_date", group: "upkeep", title: "Keeping things up to date",
+      intro: "This section covers the regular checks that keep our supplies, equipment and plan ready to use.",
+      guidance: `
+- **Every month:**
+  - charge the power banks and all rechargeable torches and lanterns;
+  - test the torches and the radio;
+  - test the smoke, heat and carbon monoxide alarms.
+- **Twice a year (for example when the clocks change):** check everything else:
+  - food, water, medicine and first aid dates;
+  - spare batteries and gas cartridges;
+  - the grab bag contents;
+  - the cash;
+  - document copies and cloud backups.
+
+  Vacuum the alarms. Replace anything used or out of date.
+- **The plan:** review it whenever circumstances change (moving home, new medicines, health or care changes, new pets) and go through it together. Keep a printed copy where everyone knows to find it.
+- Build the store up gradually rather than all at once.
+`,
+      plan: [
+        { id: "monthly_when", label: "When do we do the monthly checks, and who does them?" },
+        { id: "twice_yearly_when", type: "text", label: "When do we do the twice-yearly checks (for example when the clocks change)?" },
+        { id: "next_review", label: "When will we next review the plan together?" },
+        { id: "printed_copy", type: "text", label: "Where is the printed copy of the plan kept?" }
+      ],
+      have: [
+        { id: "m_charge", label: "Monthly: do we charge the power banks and all rechargeable torches and lanterns?" },
+        { id: "m_test_torches", label: "Monthly: do we test the torches and the radio?" },
+        { id: "m_test_alarms", label: "Monthly: do we test the smoke, heat and carbon monoxide alarms?" },
+        { id: "t_dates", label: "Twice a year: do we check food, water, medicine and first aid dates?" },
+        { id: "t_batteries", label: "Twice a year: do we check spare batteries and gas cartridges?" },
+        { id: "t_grab_bag", label: "Twice a year: do we check the grab bag contents?" },
+        { id: "t_cash", label: "Twice a year: do we check the cash?" },
+        { id: "t_documents", label: "Twice a year: do we check document copies and cloud backups?" },
+        { id: "t_vacuum", label: "Twice a year: do we vacuum the alarms?" },
+        { id: "t_replace", label: "Do we replace anything used or out of date?" },
+        { id: "printed_plan", label: "Do we have a printed copy of the plan where everyone knows to find it?" },
+        { id: "reminders", label: "Do we have reminders set for the monthly and twice-yearly checks?" }
+      ],
+      storedLabel: "Where do we record when the checks were done?",
+      checkLabel: "How do we make sure the checks happen?"
+    },
+
+    /* ============================================== USEFUL NUMBERS */
+    {
+      id: "uk_numbers", group: "numbers", title: "Useful UK numbers",
+      intro: "This section lists the national numbers we may need in an emergency, and checks we have them to hand.",
+      guidance: `
+| Service | Number |
+|---|---|
+| Emergency (fire, police, ambulance, coastguard, Mountain Rescue) | 999 or 112 |
+| Police, non-emergency | 101 |
+| NHS, urgent but not an emergency | 111 |
+| Power cut | 105 |
+| Gas emergency | 0800 111 999 |
+| Floodline | 0345 988 1188 |
+| emergencySMS (deaf or hard of hearing): register in advance by texting "register" to 999 | 999 |
+`,
+      plan: [
+        { id: "local_numbers", label: "Which other local numbers do we want to keep with these (for example the council or local radio station)?" },
+        { id: "ems_needed", type: "yesno", label: "Does anyone in our household need emergencySMS?" }
+      ],
+      have: [
+        { id: "on_paper", label: "Do we have these numbers on our paper contact list?" },
+        { id: "in_phones", label: "Do we have these numbers saved in our phones?" },
+        { id: "ems_registered", label: "Have we registered for emergencySMS (if needed)?" }
+      ],
+      storedLabel: "Where is the list of numbers kept?",
+      checkLabel: "How do we check the numbers are still correct?"
+    }
+  ]
+};
+/* =====================================================================
+   END OF CONTENT. The code that makes the tool work is below.
+   ===================================================================== */
+
+(function () {
+  "use strict";
+
+  var C = FAMILY_PLAN_CONTENT;
+  var GROUPS = C.GROUPS || [];
+  var SECTIONS = C.SECTIONS || [];
+
+  var APP_NAME = "Family plan tool";
+  var FORMAT = "FamilyPlanTool";
+  var FORMAT_VERSION = 1;
+  var DB_NAME = "FamilyPlanTool";      // unique to this tool
+  var DB_STORE = "plan";
+  var DB_KEY = "current";
+  var LS_KEY = "FamilyPlanTool.v1";    // fallback; unique to this tool
+  var MAX_FILE_BYTES = 5 * 1024 * 1024;
+
+  var STATUSES = [
+    { value: "yes", label: "Yes" },
+    { value: "progress", label: "In progress" },
+    { value: "no", label: "No" },
+    { value: "unsure", label: "Not sure" }
+  ];
+  var YESNO = ["Yes", "No", "Not sure"];
+  var PROGRESS_LABELS = {
+    notstarted: { sym: "○", text: "Not started" },
+    part: { sym: "◐", text: "Part done" },
+    complete: { sym: "✓", text: "Complete" },
+    notrelevant: { sym: "–", text: "Not relevant" }
+  };
+
+  function statusLabel(v) {
+    for (var i = 0; i < STATUSES.length; i++) if (STATUSES[i].value === v) return STATUSES[i].label;
+    return "";
+  }
+  function groupOf(s) {
+    for (var i = 0; i < GROUPS.length; i++) if (GROUPS[i].id === s.group) return GROUPS[i];
+    return { id: s.group, title: s.group, subtitle: "" };
+  }
+  function sectionsIn(g) { return SECTIONS.filter(function (s) { return s.group === g.id; }); }
+  function isSolo(g) { var list = sectionsIn(g); return list.length === 1 && list[0].title === g.title; }
+  function storedLabel(s) { return s.storedLabel || "Where are these things stored?"; }
+  function checkLabel(s) { return s.checkLabel || "How do we check they work?"; }
+  function oftenLabel(s) { return s.oftenLabel || "How often do we check?"; }
+  var NOTES_LABEL = "Anything else about our plan for this section";
+
+  /* ------------------------------------------------------------------ */
+  /* Guidance text: a very small reader for the guidance markup          */
+  /* ------------------------------------------------------------------ */
+
+  function indentOf(l) { return l.match(/^ */)[0].length; }
+
+  function parseLines(lines) {
+    var blocks = [], i = 0;
+    while (i < lines.length) {
+      var line = lines[i];
+      if (!line.trim()) { i++; continue; }
+      if (/^- /.test(line)) {
+        var items = [];
+        while (i < lines.length && /^- /.test(lines[i])) {
+          var itemLines = [lines[i].slice(2)];
+          i++;
+          while (i < lines.length) {
+            var l = lines[i];
+            if (!l.trim()) {
+              var j = i;
+              while (j < lines.length && !lines[j].trim()) j++;
+              if (j < lines.length && indentOf(lines[j]) >= 2) { itemLines.push(""); i++; continue; }
+              break;
+            }
+            if (indentOf(l) >= 2) { itemLines.push(l.slice(2)); i++; continue; }
+            break;
+          }
+          items.push(parseLines(itemLines));
+        }
+        blocks.push({ type: "list", items: items });
+      } else if (/^\|/.test(line.trim())) {
+        var rows = [];
+        while (i < lines.length && /^\|/.test(lines[i].trim())) {
+          var cells = lines[i].trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(function (c) { return c.trim(); });
+          if (!cells.every(function (c) { return /^:?-+:?$/.test(c); })) rows.push(cells);
+          i++;
+        }
+        blocks.push({ type: "table", head: rows[0] || [], rows: rows.slice(1) });
+      } else {
+        var para = [];
+        while (i < lines.length && lines[i].trim() && !/^- /.test(lines[i]) && !/^\|/.test(lines[i].trim())) {
+          para.push(lines[i].trim()); i++;
+        }
+        var text = para.join(" ");
+        var m = text.match(/^\*\*([^*]+)\*\*$/);
+        blocks.push(m ? { type: "sub", text: m[1] } : { type: "p", text: text });
+      }
+    }
+    return blocks;
+  }
+
+  function parseGuidance(src) {
+    var lines = String(src || "").replace(/\r/g, "").split("\n");
+    var min = Infinity;
+    lines.forEach(function (l) { if (l.trim()) min = Math.min(min, indentOf(l)); });
+    if (!isFinite(min)) min = 0;
+    return parseLines(lines.map(function (l) { return l.slice(Math.min(min, indentOf(l))); }));
+  }
+
+  /* "**bold**" and "*italic*" -> [{text, bold, italic}] */
+  function inlineParts(text) {
+    var out = [], re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g, last = 0, m;
+    text = String(text);
+    while ((m = re.exec(text))) {
+      if (m.index > last) out.push({ text: text.slice(last, m.index) });
+      if (m[1] !== undefined) out.push({ text: m[1], bold: true });
+      else out.push({ text: m[2], italic: true });
+      last = re.lastIndex;
+    }
+    if (last < text.length) out.push({ text: text.slice(last) });
+    return out;
+  }
+  function plainText(text) { return inlineParts(text).map(function (p) { return p.text; }).join(""); }
+
+  var guidanceCache = {};
+  function guidanceOf(s) {
+    if (!guidanceCache[s.id]) guidanceCache[s.id] = parseGuidance(s.guidance);
+    return guidanceCache[s.id];
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* State                                                              */
+  /* ------------------------------------------------------------------ */
+
+  function emptyState() { return { sections: {}, savedAt: null }; }
+  function emptySection() {
+    return { plan: {}, have: {}, custom: [], stored: "", checkHow: "", checkOften: "", notes: "", notRelevant: false };
+  }
+
+  var state = emptyState();
+  var currentView = "start"; // "start" | section id | "downloads"
+
+  function sec(id) {
+    if (!state.sections[id]) state.sections[id] = emptySection();
+    return state.sections[id];
+  }
+  function peek(id) { return state.sections[id] || null; }
+
+  /* ------------------------------------------------------------------ */
+  /* Small helpers                                                      */
+  /* ------------------------------------------------------------------ */
+
+  function $(id) { return document.getElementById(id); }
+
+  function el(tag, attrs) {
+    var node = document.createElement(tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) {
+        var v = attrs[k];
+        if (v === null || v === undefined || v === false) return;
+        if (k === "text") node.textContent = v;
+        else if (k === "className") node.className = v;
+        else if (k.indexOf("on") === 0 && typeof v === "function") node.addEventListener(k.slice(2), v);
+        else if (k === "value") node.value = v;
+        else if (k === "checked") node.checked = !!v;
+        else node.setAttribute(k, v === true ? "" : v);
+      });
+    }
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c === null || c === undefined || c === false) continue;
+      if (Array.isArray(c)) c.forEach(function (x) { if (x) node.appendChild(typeof x === "string" ? document.createTextNode(x) : x); });
+      else node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return node;
+  }
+
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+  function newId(prefix) { return prefix + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function formatDate(d) { return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear(); }
+  function formatTime(d) {
+    var h = d.getHours(), m = d.getMinutes();
+    var ampm = h >= 12 ? "pm" : "am";
+    h = h % 12; if (h === 0) h = 12;
+    return h + ":" + pad(m) + " " + ampm;
+  }
+  function formatDateTime(d) { return formatDate(d) + " at " + formatTime(d); }
+  function fileDate(d) { return pad(d.getDate()) + "-" + pad(d.getMonth() + 1) + "-" + d.getFullYear(); }
+  function isBlank(v) { return v === undefined || v === null || String(v).trim() === ""; }
+
+  /* ------------------------------------------------------------------ */
+  /* Progress                                                           */
+  /* ------------------------------------------------------------------ */
+
+  function sectionProgress(s) {
+    var d = peek(s.id);
+    if (d && d.notRelevant) return { status: "notrelevant", done: 0, total: 0 };
+    var total = 0, done = 0, extra = false;
+    s.plan.forEach(function (q) { total++; if (d && !isBlank(d.plan[q.id])) done++; });
+    s.have.forEach(function (h) {
+      total++;
+      var a = d && d.have[h.id];
+      if (a && a.status) done++;
+      if (a && !isBlank(a.note)) extra = true;
+    });
+    (d ? d.custom : []).forEach(function (c) { total++; if (c.status) done++; if (!isBlank(c.note)) extra = true; });
+    ["stored", "checkHow", "checkOften"].forEach(function (k) { total++; if (d && !isBlank(d[k])) done++; });
+    if (d && !isBlank(d.notes)) extra = true;
+    var status = (done === 0 && !extra) ? "notstarted" : (done >= total ? "complete" : "part");
+    return { status: status, done: done, total: total };
+  }
+
+  function hasAnyAnswers() {
+    return SECTIONS.some(function (s) {
+      var d = peek(s.id);
+      return (d && d.notRelevant) || sectionProgress(s).status !== "notstarted";
+    });
+  }
+
+  function badge(status, id) {
+    var p = PROGRESS_LABELS[status];
+    return el("span", { className: "badge badge-" + status, id: id || null },
+      el("span", { "aria-hidden": "true", text: p.sym }), p.text);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Storage (IndexedDB "FamilyPlanTool", fallback localStorage)         */
+  /* ------------------------------------------------------------------ */
+
+  var storage = {
+    backend: "none",
+    db: null,
+    init: function () {
+      var self = this;
+      return new Promise(function (resolve) {
+        var done = false;
+        function finish(backend) { if (done) return; done = true; self.backend = backend; resolve(backend); }
+        function fallback() {
+          try {
+            var t = "FamilyPlanTool.test";
+            window.localStorage.setItem(t, "1");
+            window.localStorage.removeItem(t);
+            finish("ls");
+          } catch (e) { finish("none"); }
+        }
+        var timer = setTimeout(fallback, 4000);
+        try {
+          if (!window.indexedDB) { clearTimeout(timer); fallback(); return; }
+          var req = window.indexedDB.open(DB_NAME, 1);
+          req.onupgradeneeded = function () {
+            if (!req.result.objectStoreNames.contains(DB_STORE)) req.result.createObjectStore(DB_STORE);
+          };
+          req.onsuccess = function () { clearTimeout(timer); self.db = req.result; finish("idb"); };
+          req.onerror = function () { clearTimeout(timer); fallback(); };
+          req.onblocked = function () { clearTimeout(timer); fallback(); };
+        } catch (e) { clearTimeout(timer); fallback(); }
+      });
+    },
+    idbRequest: function (mode, fn) {
+      var db = this.db;
+      return new Promise(function (resolve, reject) {
+        try {
+          var tx = db.transaction(DB_STORE, mode);
+          var req = fn(tx.objectStore(DB_STORE));
+          tx.oncomplete = function () { resolve(req && req.result); };
+          tx.onerror = function () { reject(tx.error); };
+          tx.onabort = function () { reject(tx.error); };
+        } catch (e) { reject(e); }
+      });
+    },
+    load: function () {
+      var self = this, fromLs = null;
+      try { var raw = window.localStorage.getItem(LS_KEY); if (raw) fromLs = JSON.parse(raw); } catch (e) { /* ignore */ }
+      if (self.backend !== "idb") return Promise.resolve(fromLs);
+      return self.idbRequest("readonly", function (s) { return s.get(DB_KEY); })
+        .then(function (fromDb) {
+          if (fromDb && fromLs) return (String(fromLs.savedAt || "") > String(fromDb.savedAt || "")) ? fromLs : fromDb;
+          return fromDb || fromLs;
+        })
+        .catch(function () { return fromLs; });
+    },
+    save: function (data) {
+      var self = this;
+      function saveLs() {
+        try { window.localStorage.setItem(LS_KEY, JSON.stringify(data)); return Promise.resolve(true); }
+        catch (e) { return Promise.reject(e); }
+      }
+      if (self.backend === "idb") {
+        return self.idbRequest("readwrite", function (s) { return s.put(data, DB_KEY); })
+          .then(function () {
+            try { window.localStorage.removeItem(LS_KEY); } catch (e) { /* ignore */ }
+            return true;
+          })
+          .catch(function () { self.backend = "ls"; return saveLs(); });
+      }
+      if (self.backend === "ls") return saveLs();
+      return Promise.reject(new Error("No storage available"));
+    },
+    /* Clears ONLY this tool's own record and key. */
+    clear: function () {
+      try { window.localStorage.removeItem(LS_KEY); } catch (e) { /* ignore */ }
+      if (this.backend === "idb") {
+        return this.idbRequest("readwrite", function (s) { return s.delete(DB_KEY); }).catch(function () {});
+      }
+      return Promise.resolve();
+    }
+  };
+
+  var persistAsked = false;
+  function askPersist() {
+    if (persistAsked) return;
+    persistAsked = true;
+    try {
+      if (navigator.storage && navigator.storage.persist) {
+        navigator.storage.persisted().then(function (p) { if (!p) return navigator.storage.persist(); }).catch(function () {});
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Autosave                                                           */
+  /* ------------------------------------------------------------------ */
+
+  var saveTimer = null;
+
+  function setSaveStatus(text, isError) {
+    var s = $("save-status");
+    s.textContent = text;
+    s.classList.toggle("is-error", !!isError);
+  }
+  function showSavedTime() {
+    if (state.savedAt) setSaveStatus("Saved on " + formatDateTime(new Date(state.savedAt)));
+    else setSaveStatus("Not saved yet");
+  }
+  function changed() {
+    askPersist();
+    updateProgress();
+    setSaveStatus("Saving…");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 600);
+  }
+  function saveNow() {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    state.savedAt = new Date().toISOString();
+    var data = clone(state);
+    data.format = FORMAT;
+    data.formatVersion = FORMAT_VERSION;
+    data.lastView = currentView;
+    return storage.save(data).then(function () { showSavedTime(); })
+      .catch(function () { setSaveStatus("Could not save on this computer. Please use “Save to file”.", true); });
+  }
+  window.addEventListener("pagehide", function () { if (saveTimer) saveNow(); });
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden" && saveTimer) saveNow();
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Notices and dialogs                                                */
+  /* ------------------------------------------------------------------ */
+
+  var noticeTimer = null;
+  function notice(text, kind) {
+    var n = $("notice");
+    n.textContent = text;
+    n.className = "notice" + (kind ? " notice-" + kind : "");
+    n.hidden = false;
+    clearTimeout(noticeTimer);
+    if (kind !== "error") noticeTimer = setTimeout(function () { n.hidden = true; }, 15000);
+    try { n.scrollIntoView({ block: "nearest" }); } catch (e) { /* ignore */ }
+  }
+  function hideNotice() { $("notice").hidden = true; }
+
+  /* opts: {title, message (string or array), okText, cancelText, danger, noCancel} */
+  function ask(opts) {
+    return new Promise(function (resolve) {
+      var dlg = $("dialog");
+      var msgs = Array.isArray(opts.message) ? opts.message : [opts.message];
+      if (!dlg || typeof dlg.showModal !== "function") {
+        if (opts.noCancel) { window.alert(opts.title + "\n\n" + msgs.join("\n\n")); resolve(true); }
+        else resolve(window.confirm(opts.title + "\n\n" + msgs.join("\n\n")));
+        return;
+      }
+      var lastFocus = document.activeElement;
+      $("dialog-title").textContent = opts.title;
+      var box = $("dialog-message");
+      box.textContent = "";
+      msgs.forEach(function (m) { box.appendChild(el("p", { text: m })); });
+      var ok = $("dialog-ok"), cancel = $("dialog-cancel");
+      ok.textContent = opts.okText || "OK";
+      ok.className = "btn " + (opts.danger ? "btn-danger" : "btn-primary");
+      cancel.textContent = opts.cancelText || "Cancel";
+      cancel.hidden = !!opts.noCancel;
+      function close(result) {
+        ok.removeEventListener("click", onOk);
+        cancel.removeEventListener("click", onCancel);
+        dlg.removeEventListener("cancel", onEsc);
+        dlg.close();
+        if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) { /* ignore */ } }
+        resolve(result);
+      }
+      function onOk() { close(true); }
+      function onCancel() { close(false); }
+      function onEsc(e) { e.preventDefault(); close(false); }
+      ok.addEventListener("click", onOk);
+      cancel.addEventListener("click", onCancel);
+      dlg.addEventListener("cancel", onEsc);
+      dlg.showModal();
+      (opts.noCancel ? ok : cancel).focus();
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Sidebar and progress                                               */
+  /* ------------------------------------------------------------------ */
+
+  function sectionIndex(id) {
+    for (var i = 0; i < SECTIONS.length; i++) if (SECTIONS[i].id === id) return i;
+    return -1;
+  }
+
+  function navButton(viewId, label, extraClass) {
+    return el("button", {
+      type: "button", className: "nav-btn" + (extraClass ? " " + extraClass : ""),
+      "data-view": viewId, onclick: function () { go(viewId); }
+    }, el("span", { className: "nav-label", text: label }), el("span", { className: "nav-badge" }));
+  }
+
+  function renderSidebar() {
+    var nav = $("section-nav");
+    nav.textContent = "";
+    var top = el("ul", { className: "section-list" });
+    top.appendChild(el("li", null, navButton("start", "Start here")));
+    nav.appendChild(top);
+    GROUPS.forEach(function (g) {
+      var list = sectionsIn(g);
+      if (!list.length) return;
+      var gid = "nav-g-" + g.id;
+      if (!isSolo(g)) nav.appendChild(el("p", { className: "nav-group", id: gid, text: g.title }));
+      var ul = el("ul", { className: "section-list", "aria-labelledby": isSolo(g) ? null : gid });
+      list.forEach(function (s) { ul.appendChild(el("li", null, navButton(s.id, s.title))); });
+      nav.appendChild(ul);
+    });
+    var bottom = el("ul", { className: "section-list" });
+    bottom.appendChild(el("li", null, navButton("downloads", "Download our plan and to-do list", "nav-special")));
+    nav.appendChild(bottom);
+    updateProgress();
+  }
+
+  function overallCounts() {
+    var c = { notstarted: 0, part: 0, complete: 0, notrelevant: 0 };
+    SECTIONS.forEach(function (s) { c[sectionProgress(s).status]++; });
+    return c;
+  }
+
+  function updateProgress() {
+    Array.prototype.forEach.call(document.querySelectorAll(".nav-btn"), function (btn) {
+      var v = btn.getAttribute("data-view");
+      if (v === currentView) btn.setAttribute("aria-current", "page"); else btn.removeAttribute("aria-current");
+      var holder = btn.querySelector(".nav-badge");
+      var i = sectionIndex(v);
+      holder.textContent = "";
+      if (i < 0) return;
+      holder.appendChild(badge(sectionProgress(SECTIONS[i]).status));
+    });
+    var c = overallCounts();
+    var relevant = SECTIONS.length - c.notrelevant;
+    $("progress-text").textContent = "Overall: " + c.complete + " of " + relevant + " relevant sections complete";
+    $("progress-fill").style.width = (relevant ? 100 * c.complete / relevant : 0) + "%";
+    $("progress-part").style.width = (relevant ? 100 * c.part / relevant : 0) + "%";
+    var key = $("progress-key");
+    key.textContent = "";
+    ["complete", "part", "notstarted", "notrelevant"].forEach(function (k) {
+      key.appendChild(el("li", null, PROGRESS_LABELS[k].sym + " " + PROGRESS_LABELS[k].text + ": " + c[k]));
+    });
+    var i = sectionIndex(currentView);
+    var head = $("sec-badge-holder");
+    if (i >= 0 && head) {
+      var p = sectionProgress(SECTIONS[i]);
+      head.textContent = "";
+      head.appendChild(badge(p.status));
+      if (p.status !== "notrelevant") head.appendChild(el("span", { className: "help", text: " " + p.done + " of " + p.total + " answered" }));
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Views                                                              */
+  /* ------------------------------------------------------------------ */
+
+  function go(viewId, opts) {
+    opts = opts || {};
+    if (viewId !== "start" && viewId !== "downloads" && sectionIndex(viewId) < 0) viewId = "start";
+    currentView = viewId;
+    hideNotice();
+    renderView();
+    updateProgress();
+    if (!opts.noScroll) window.scrollTo(0, 0);
+    if (!opts.noFocus) {
+      var h = document.querySelector("#view h2");
+      if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    }
+    if (!opts.noSave && storage.backend !== "none" && hasAnyAnswers()) saveNow();
+  }
+
+  function renderView() {
+    var view = $("view");
+    view.textContent = "";
+    if (currentView === "start") view.appendChild(renderStart());
+    else if (currentView === "downloads") view.appendChild(renderDocuments());
+    else view.appendChild(renderSection(SECTIONS[sectionIndex(currentView)]));
+  }
+
+  function redraw(focusSelector) {
+    var y = window.scrollY;
+    renderView();
+    updateProgress();
+    window.scrollTo(0, y);
+    if (focusSelector) {
+      var f = document.querySelector(focusSelector);
+      if (f) f.focus({ preventScroll: false });
+    }
+  }
+
+  function renderStart() {
+    var resumeId = null;
+    for (var i = 0; i < SECTIONS.length; i++) {
+      var st = sectionProgress(SECTIONS[i]).status;
+      if (st === "part" || st === "notstarted") { resumeId = SECTIONS[i].id; break; }
+    }
+    return el("div", null,
+      el("h2", { text: "Our family plan" }),
+      el("p", { className: "lead", text: "Work through each section of the general guidance together and record what we have decided, what we have and what still needs doing. The tool then makes our family plan and a separate to-do list, ready to open in LibreOffice Writer." }),
+      el("div", { className: "panel-box panel-ok" },
+        el("h3", { text: "Private to this computer" }),
+        el("ul", null,
+          el("li", { text: "Everything we type stays on this computer. Nothing is sent anywhere, and the tool works without the internet." }),
+          el("li", { text: "Passwords and PINs are never recorded. The tool only asks whether we know them." }),
+          el("li", { text: "Never upload a saved file or a downloaded plan to GitHub or any other website." }))),
+      el("div", { className: "panel-box" },
+        el("h3", { text: "How it works" }),
+        el("ol", null,
+          el("li", { text: "Choose a section from the list on the left, or press the button below." }),
+          el("li", { text: "Each section has an introduction, the general guidance, and four parts to fill in: our plan; resources, tools and equipment; where it is stored; and how we check it works." }),
+          el("li", { text: "If a section does not apply to us, tick “Not relevant to us”. It is then left out of the plan and the to-do list." }),
+          el("li", { text: "Answers are saved on this computer as we type. The words under the title show when they were last saved." }),
+          el("li", { text: "Press “Save to file” at the end of each session to keep a backup copy. Use “Open a saved file” to carry on from a backup, or on the other computer." }),
+          el("li", { text: "When ready, choose “Download our plan and to-do list” at the bottom of the list on the left." }))),
+      el("div", { className: "start-actions" },
+        el("button", { type: "button", className: "btn btn-primary btn-large", onclick: function () { go(resumeId || SECTIONS[0].id); } },
+          hasAnyAnswers() && resumeId ? "Carry on where we left off" : "Begin with the first section"),
+        el("button", { type: "button", className: "btn btn-large", onclick: function () { $("file-input").click(); } }, "Open a saved file"),
+        el("button", { type: "button", className: "btn btn-large", onclick: function () { go("downloads"); } }, "Download our plan and to-do list"))
+    );
+  }
+
+  /* ---- guidance on screen ---- */
+  function inlineEls(text) {
+    return inlineParts(text).map(function (p) {
+      if (p.bold) return el("strong", { text: p.text });
+      if (p.italic) return el("em", { text: p.text });
+      return document.createTextNode(p.text);
+    });
+  }
+  function blocksEl(blocks) {
+    var frag = document.createDocumentFragment();
+    blocks.forEach(function (b) {
+      if (b.type === "p") frag.appendChild(el("p", null, inlineEls(b.text)));
+      else if (b.type === "sub") frag.appendChild(el("p", { className: "g-sub" }, inlineEls(b.text)));
+      else if (b.type === "list") frag.appendChild(el("ul", null, b.items.map(function (it) {
+        var li = el("li");
+        it.forEach(function (child, idx) {
+          if (idx === 0 && child.type === "p") li.appendChild(el("span", null, inlineEls(child.text)));
+          else li.appendChild(blocksEl([child]));
+        });
+        return li;
+      })));
+      else if (b.type === "table") {
+        frag.appendChild(el("table", { className: "g-table" },
+          el("thead", null, el("tr", null, b.head.map(function (h) { return el("th", { scope: "col" }, inlineEls(h)); }))),
+          el("tbody", null, b.rows.map(function (r) { return el("tr", null, r.map(function (c) { return el("td", null, inlineEls(c)); })); }))));
+      }
+    });
+    return frag;
+  }
+
+  /* ---- question widgets ---- */
+  function textField(id, label, help, value, onValue, long) {
+    var helpId = help ? id + "-help" : null;
+    var input = long
+      ? el("textarea", { id: id, className: "field", rows: "3", "aria-describedby": helpId })
+      : el("input", { id: id, type: "text", className: "field", "aria-describedby": helpId, autocomplete: "off" });
+    input.value = value || "";
+    input.addEventListener("input", function () { onValue(input.value); changed(); });
+    return el("div", { className: "q" },
+      el("label", { className: "q-label", "for": id, text: label }),
+      help ? el("p", { className: "help" + (/never/i.test(help) ? " help-warn" : ""), id: helpId, text: help }) : null,
+      input);
+  }
+
+  /* options: [{value,label,cls}] */
+  function chipGroup(name, legendText, options, current, onValue, help, legendExtra) {
+    var helpId = help ? name + "-help" : null;
+    var fs = el("fieldset", { className: "q", "aria-describedby": helpId });
+    fs.appendChild(el("legend", { className: "q-label" }, legendText, legendExtra || null));
+    var box = el("div", { className: "choices" });
+    if (help) fs.appendChild(el("p", { className: "help" + (/never/i.test(help) ? " help-warn" : ""), id: helpId, text: help }));
+    options.forEach(function (o, idx) {
+      var rid = name + "-" + idx;
+      var r = el("input", { type: "radio", id: rid, name: name, value: o.value, checked: current === o.value });
+      r.addEventListener("change", function () { if (r.checked) onValue(o.value); });
+      box.appendChild(el("span", { className: "chip " + (o.cls || "s-plain") }, r, el("label", { "for": rid, text: o.label })));
+    });
+    box.appendChild(el("button", {
+      type: "button", className: "clear-btn", "aria-label": "Clear the answer to: " + plainText(legendText),
+      onclick: function () {
+        Array.prototype.forEach.call(box.querySelectorAll("input"), function (x) { x.checked = false; });
+        onValue("");
+      }
+    }, "Clear"));
+    fs.appendChild(box);
+    return fs;
+  }
+
+  function statusOptions() { return STATUSES.map(function (s) { return { value: s.value, label: s.label, cls: "s-" + s.value }; }); }
+
+  function haveItem(s, item, answer, isCustom, onRemove) {
+    var name = "have-" + s.id + "-" + item.id;
+    var li = el("li", { className: "have-item" + (answer.status ? " st-" + answer.status : ""), "data-item": item.id });
+    var noteId = name + "-note";
+    var fs = chipGroup(name, item.label, statusOptions(), answer.status || "", function (v) {
+      answer.status = v;
+      li.className = "have-item" + (v ? " st-" + v : "");
+      changed();
+    }, null, isCustom ? el("span", { className: "custom-tag", text: " (our own item)" }) : null);
+    fs.className = "";
+    li.appendChild(fs);
+    var note = el("input", { type: "text", id: noteId, className: "field", autocomplete: "off", "aria-label": "Note for: " + item.label });
+    note.value = answer.note || "";
+    note.addEventListener("input", function () { answer.note = note.value; changed(); });
+    li.appendChild(el("div", { className: "note-row" }, el("label", { "for": noteId, text: "Note (optional)" }), note,
+      isCustom ? el("button", { type: "button", className: "btn btn-small btn-quiet", onclick: onRemove, "aria-label": "Remove our own item: " + item.label }, "Remove") : null));
+    return li;
+  }
+
+  function renderSection(s) {
+    var i = sectionIndex(s.id);
+    var g = groupOf(s);
+    var d = sec(s.id);
+    var wrap = el("div", { "data-section": s.id });
+
+    wrap.appendChild(el("div", { className: "section-head" },
+      el("div", null,
+        el("p", { className: "crumb", text: (isSolo(g) ? "" : g.title + " · ") + "Section " + (i + 1) + " of " + SECTIONS.length }),
+        el("h2", { text: s.title })),
+      el("div", { id: "sec-badge-holder" })));
+
+    var nr = el("input", { type: "checkbox", id: "nr-" + s.id, checked: d.notRelevant });
+    nr.addEventListener("change", function () {
+      d.notRelevant = nr.checked;
+      changed();
+      redraw("#nr-" + s.id);
+    });
+    wrap.appendChild(el("div", { className: "nr-box" }, nr,
+      el("label", { "for": "nr-" + s.id, text: "Not relevant to us" }),
+      el("span", { className: "help", text: "Leaves this section out of the plan and the to-do list." })));
+
+    wrap.appendChild(el("h3", { text: "About this section" }));
+    wrap.appendChild(el("p", { className: "lead", text: s.intro }));
+
+    var det = el("details", { className: "guidance", open: !d.notRelevant },
+      el("summary", { text: "General guidance" }),
+      el("div", { className: "guidance-body" }, blocksEl(guidanceOf(s))));
+    wrap.appendChild(det);
+
+    if (d.notRelevant) {
+      wrap.appendChild(el("p", { className: "nr-note", text: "We have marked this section as not relevant to us, so the questions are hidden and it is left out of the plan and the to-do list. Any answers already given are kept. Untick “Not relevant to us” to fill it in." }));
+    } else {
+      wrap.appendChild(el("h3", { className: "part-title" }, el("span", { className: "num", text: "1." }), "Our plan"));
+      wrap.appendChild(el("p", { className: "help", text: "What we intend to do. Write as much or as little as is useful." }));
+      s.plan.forEach(function (q) {
+        var fid = "f-" + s.id + "-" + q.id;
+        if (q.type === "yesno") {
+          wrap.appendChild(chipGroup(fid, q.label, YESNO.map(function (v) { return { value: v, label: v }; }),
+            d.plan[q.id] || "", function (v) { d.plan[q.id] = v; changed(); }, q.help));
+        } else {
+          wrap.appendChild(textField(fid, q.label, q.help, d.plan[q.id], function (v) { d.plan[q.id] = v; }, q.type !== "text"));
+        }
+      });
+      wrap.appendChild(textField("f-" + s.id + "-notes", NOTES_LABEL + " (optional)", null, d.notes, function (v) { d.notes = v; }, true));
+
+      wrap.appendChild(el("h3", { className: "part-title" }, el("span", { className: "num", text: "2." }), "Resources, tools and equipment"));
+      wrap.appendChild(el("p", { className: "help", text: "For each item the guidance recommends, choose Yes, In progress, No or Not sure. Add a note if it helps. Every item appears in the to-do list." }));
+      var ul = el("ul", { className: "have-list" });
+      s.have.forEach(function (item) {
+        if (!d.have[item.id]) d.have[item.id] = { status: "", note: "" };
+        ul.appendChild(haveItem(s, item, d.have[item.id], false));
+      });
+      d.custom.forEach(function (c) {
+        ul.appendChild(haveItem(s, c, c, true, function () {
+          ask({ title: "Remove this item?", message: "“" + c.label + "” and its note will be removed from this section.", okText: "Remove it", danger: true })
+            .then(function (yes) {
+              if (!yes) return;
+              d.custom = d.custom.filter(function (x) { return x !== c; });
+              changed();
+              redraw("#add-" + s.id);
+            });
+        }));
+      });
+      wrap.appendChild(ul);
+      var addInput = el("input", { type: "text", id: "add-" + s.id, className: "field", autocomplete: "off", placeholder: "For example: Do we have a spare phone charger?" });
+      function addItem() {
+        var label = addInput.value.trim();
+        if (!label) { addInput.focus(); return; }
+        d.custom.push({ id: newId("own"), label: label, status: "", note: "" });
+        changed();
+        redraw("#add-" + s.id);
+        notice("Added “" + label + "”. It is now in the list above and will appear in the to-do list.", "ok");
+      }
+      addInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); addItem(); } });
+      wrap.appendChild(el("div", { className: "add-box" },
+        el("label", { "for": "add-" + s.id, text: "Add our own item" }),
+        el("div", { className: "add-controls" }, addInput,
+          el("button", { type: "button", className: "btn", onclick: addItem }, "Add item"))));
+
+      wrap.appendChild(el("h3", { className: "part-title" }, el("span", { className: "num", text: "3." }), "Where it is stored"));
+      wrap.appendChild(textField("f-" + s.id + "-stored", storedLabel(s), null, d.stored, function (v) { d.stored = v; }, true));
+
+      wrap.appendChild(el("h3", { className: "part-title" }, el("span", { className: "num", text: "4." }), "How we check it works"));
+      wrap.appendChild(textField("f-" + s.id + "-checkhow", checkLabel(s), null, d.checkHow, function (v) { d.checkHow = v; }, true));
+      wrap.appendChild(textField("f-" + s.id + "-checkoften", oftenLabel(s), "For example: every month, or twice a year when the clocks change.", d.checkOften, function (v) { d.checkOften = v; }, false));
+    }
+
+    var prev = i === 0 ? null : SECTIONS[i - 1];
+    var next = i === SECTIONS.length - 1 ? null : SECTIONS[i + 1];
+    wrap.appendChild(el("div", { className: "prev-next" },
+      el("button", { type: "button", className: "btn btn-large", id: "btn-prev", onclick: function () { go(prev ? prev.id : "start"); } },
+        "← Previous: " + (prev ? prev.title : "Start here")),
+      el("button", { type: "button", className: "btn btn-primary btn-large", id: "btn-next", onclick: function () { go(next ? next.id : "downloads"); } },
+        "Next: " + (next ? next.title : "Download our plan") + " →")));
+    return wrap;
+  }
+
+  /* ---- to-do counts ---- */
+  function todoItems() {
+    var out = [];
+    SECTIONS.forEach(function (s) {
+      var d = peek(s.id);
+      if (d && d.notRelevant) return;
+      s.have.forEach(function (h) {
+        var a = (d && d.have[h.id]) || {};
+        out.push({ section: s, label: h.label, status: a.status || "", note: a.note || "", custom: false });
+      });
+      (d ? d.custom : []).forEach(function (c) {
+        out.push({ section: s, label: c.label, status: c.status || "", note: c.note || "", custom: true });
+      });
+    });
+    return out;
+  }
+  function todoCounts(items) {
+    var c = { yes: 0, progress: 0, no: 0, unsure: 0, none: 0 };
+    items.forEach(function (it) { c[it.status || "none"]++; });
+    return c;
+  }
+
+  function renderDocuments() {
+    var c = overallCounts();
+    var items = todoItems();
+    var t = todoCounts(items);
+    var relevant = SECTIONS.length - c.notrelevant;
+    return el("div", null,
+      el("h2", { text: "Download our plan and to-do list" }),
+      el("p", { className: "lead", text: "Both documents are made on this computer as OpenDocument Text (.odt) files and go into the Downloads folder. Open them in LibreOffice Writer to read, print or save as PDF." }),
+      el("table", { className: "count-table" },
+        el("caption", { className: "visually-hidden", text: "Progress by section" }),
+        el("tbody", null,
+          el("tr", null, el("th", { scope: "row", text: "Sections complete" }), el("td", { className: "n", text: String(c.complete) })),
+          el("tr", null, el("th", { scope: "row", text: "Sections part done" }), el("td", { className: "n", text: String(c.part) })),
+          el("tr", null, el("th", { scope: "row", text: "Sections not started" }), el("td", { className: "n", text: String(c.notstarted) })),
+          el("tr", null, el("th", { scope: "row", text: "Sections not relevant (left out)" }), el("td", { className: "n", text: String(c.notrelevant) })))),
+      el("div", { className: "panel-box" },
+        el("h3", { text: "1. Our family plan" }),
+        el("p", { text: "For each of the " + relevant + " relevant sections: an introduction, the general guidance, and our plan, with our answers. Empty answers are left out." }),
+        el("div", { className: "doc-actions" },
+          el("button", { type: "button", className: "btn btn-primary btn-large", id: "btn-dl-plan", onclick: downloadPlan }, "Download our family plan (.odt)"))),
+      el("div", { className: "panel-box" },
+        el("h3", { text: "2. Our to-do list" }),
+        el("p", { text: "A separate document listing all " + items.length + " “Do we have …?” items from the relevant sections, colour-coded:" }),
+        el("table", { className: "count-table" },
+          el("thead", null, el("tr", null, el("th", { scope: "col", text: "Colour" }), el("th", { scope: "col", text: "Status" }), el("th", { scope: "col", text: "Items" }))),
+          el("tbody", null,
+            el("tr", { className: "key-yes" }, el("td", { text: "Green" }), el("td", { text: "Yes" }), el("td", { className: "n", text: String(t.yes) })),
+            el("tr", { className: "key-progress" }, el("td", { text: "Amber" }), el("td", { text: "In progress" }), el("td", { className: "n", text: String(t.progress) })),
+            el("tr", { className: "key-no" }, el("td", { text: "Red" }), el("td", { text: "No" }), el("td", { className: "n", text: String(t.no) })),
+            el("tr", { className: "key-no" }, el("td", { text: "Red" }), el("td", { text: "Not sure" }), el("td", { className: "n", text: String(t.unsure) })),
+            el("tr", { className: "key-none" }, el("td", { text: "White" }), el("td", { text: "Not answered" }), el("td", { className: "n", text: String(t.none) })))),
+        el("p", { text: "Work through the list, update the answers in this tool, then download a fresh list." }),
+        el("div", { className: "doc-actions" },
+          el("button", { type: "button", className: "btn btn-primary btn-large", id: "btn-dl-todo", onclick: downloadTodo }, "Download our to-do list (.odt)"))),
+      el("div", { className: "panel-box panel-ok" },
+        el("h3", { text: "Keep them private" }),
+        el("p", { text: "The downloaded documents contain our answers. Keep them on this computer, a USB stick or paper. Never upload them to GitHub or any other website." })),
+      el("div", { className: "prev-next" },
+        el("button", { type: "button", className: "btn btn-large", onclick: function () { go(SECTIONS[SECTIONS.length - 1].id); } }, "← Previous: " + SECTIONS[SECTIONS.length - 1].title),
+        el("button", { type: "button", className: "btn btn-large", onclick: function () { go("start"); } }, "Back to Start here"))
+    );
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Save to file and open a saved file                                 */
+  /* ------------------------------------------------------------------ */
+
+  function downloadBlob(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var a = el("a", { href: url, download: name });
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 4000);
+  }
+
+  function backupData() {
+    var now = new Date();
+    return {
+      format: FORMAT,
+      formatVersion: FORMAT_VERSION,
+      appName: APP_NAME,
+      contentVersion: C.contentVersion || "",
+      savedAt: now.toISOString(),
+      savedOn: formatDateTime(now),
+      sections: clone(state.sections)
+    };
+  }
+
+  function saveToFile() {
+    if (saveTimer) saveNow();
+    var name = "family-plan-" + fileDate(new Date()) + ".json";
+    downloadBlob(new Blob([JSON.stringify(backupData(), null, 2)], { type: "application/json" }), name);
+    notice("Saved as “" + name + "” in the Downloads folder. Keep it somewhere safe, such as a USB stick.", "ok");
+  }
+
+  function isPlainObject(x) { return !!x && typeof x === "object" && !Array.isArray(x); }
+  function cleanString(x) { return typeof x === "string" ? x : (typeof x === "number" ? String(x) : ""); }
+  function cleanStatus(x) { return STATUSES.some(function (s) { return s.value === x; }) ? x : ""; }
+
+  /* Checks a parsed file. Returns {ok, data, savedOn, skipped} or {ok:false, message}. */
+  function validateBackup(obj) {
+    var notOurs = "This file is not a Family plan tool file, so it could not be opened. Please choose a file with a name like “family-plan-23-11-2026.json”.";
+    var damaged = "This file seems to be damaged, so it could not be opened. Try another saved copy.";
+    if (!isPlainObject(obj)) return { ok: false, message: notOurs };
+    if (obj.format === "HomeEmergencyPlanner") return { ok: false, message: "This is a backup from the older Household Emergency Planner. That planner is separate, so its backups cannot be opened here. Please choose a file with a name like “family-plan-23-11-2026.json”." };
+    if (obj.format !== FORMAT) return { ok: false, message: notOurs };
+    if (typeof obj.formatVersion !== "number" || obj.formatVersion < 1) return { ok: false, message: damaged };
+    if (obj.formatVersion > FORMAT_VERSION) return { ok: false, message: "This file was made by a newer version of the Family plan tool, so this version cannot open it." };
+    if (obj.sections !== undefined && !isPlainObject(obj.sections)) return { ok: false, message: damaged };
+
+    var out = emptyState(), skipped = 0;
+    var src = isPlainObject(obj.sections) ? obj.sections : {};
+    Object.keys(src).forEach(function (sid) {
+      var s = SECTIONS[sectionIndex(sid)];
+      var v = src[sid];
+      if (!s || !isPlainObject(v)) { skipped++; return; }
+      var d = emptySection();
+      if (isPlainObject(v.plan)) s.plan.forEach(function (q) {
+        var a = cleanString(v.plan[q.id]);
+        if (q.type === "yesno" && YESNO.indexOf(a) < 0) a = "";
+        if (a) d.plan[q.id] = a;
+      });
+      if (isPlainObject(v.have)) s.have.forEach(function (h) {
+        var a = v.have[h.id];
+        if (isPlainObject(a)) d.have[h.id] = { status: cleanStatus(a.status), note: cleanString(a.note) };
+      });
+      if (Array.isArray(v.custom)) d.custom = v.custom.filter(function (x) { return isPlainObject(x) && typeof x.label === "string" && x.label.trim(); })
+        .map(function (x) { return { id: typeof x.id === "string" && x.id ? x.id : newId("own"), label: x.label.trim(), status: cleanStatus(x.status), note: cleanString(x.note) }; });
+      ["stored", "checkHow", "checkOften", "notes"].forEach(function (k) { d[k] = cleanString(v[k]); });
+      d.notRelevant = v.notRelevant === true;
+      out.sections[sid] = d;
+    });
+    return { ok: true, data: out, savedOn: typeof obj.savedOn === "string" ? obj.savedOn : "", skipped: skipped };
+  }
+
+  function openFile(file) {
+    if (!file) return;
+    if (file.size > MAX_FILE_BYTES) {
+      notice("That file is too large to be a Family plan tool file. Please choose a file with a name like “family-plan-23-11-2026.json”.", "error");
+      return;
+    }
+    var reader = new FileReader();
+    reader.onerror = function () { notice("Sorry, that file could not be read. Please try again.", "error"); };
+    reader.onload = function () {
+      var text = String(reader.result).replace(/^﻿/, "");
+      if (text.slice(0, 2) === "PK") {
+        notice("This looks like a downloaded plan or to-do list (.odt), which opens in LibreOffice Writer. To carry on with the tool, choose the saved file ending in .json, with a name like “family-plan-23-11-2026.json”.", "error");
+        return;
+      }
+      var parsed;
+      try { parsed = JSON.parse(text); }
+      catch (e) { notice("This file is not a Family plan tool file, so it could not be opened. Please choose a file with a name like “family-plan-23-11-2026.json”.", "error"); return; }
+      var result = validateBackup(parsed);
+      if (!result.ok) { notice(result.message, "error"); return; }
+      var confirmFirst = hasAnyAnswers()
+        ? ask({
+            title: "Replace what is in the tool now?",
+            message: [
+              "Opening “" + file.name + "” will replace all the answers currently in the tool.",
+              "If you want to keep the current answers, press Cancel and use “Save to file” first."
+            ],
+            okText: "Yes, open the file", cancelText: "Cancel"
+          })
+        : Promise.resolve(true);
+      confirmFirst.then(function (yes) {
+        if (!yes) return;
+        state = result.data;
+        saveNow().then(function () {
+          go("start", { noSave: true });
+          notice("Opened “" + file.name + "”" + (result.savedOn ? " (saved on " + result.savedOn + ")" : "") + ". Our answers have been restored." +
+            (result.skipped ? " A small part of the file was not recognised and was left out." : ""), "ok");
+        });
+      });
+    };
+    reader.readAsText(file);
+  }
+
+  function startAgain() {
+    ask({
+      title: "Start again?",
+      message: [
+        "This will delete all the answers in the Family plan tool on this computer, including any items we added.",
+        "We recommend pressing Cancel and using “Save to file” first, so there is a copy.",
+        "Files already saved, and everything else on this computer, are not affected."
+      ],
+      okText: "Delete our answers and start again", cancelText: "Cancel", danger: true
+    }).then(function (yes) {
+      if (!yes) return;
+      clearTimeout(saveTimer); saveTimer = null;
+      storage.clear().then(function () {
+        state = emptyState();
+        showSavedTime();
+        go("start", { noSave: true });
+        notice("All answers have been cleared. We can start again.", "ok");
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* OpenDocument Text (.odt) output                                     */
+  /* ------------------------------------------------------------------ */
+
+  var NS = 'xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" ' +
+    'xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" ' +
+    'xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" ' +
+    'xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" ' +
+    'xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" ' +
+    'xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" ' +
+    'xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" ' +
+    'xmlns:dc="http://purl.org/dc/elements/1.1/" ' +
+    'xmlns:xlink="http://www.w3.org/1999/xlink"';
+
+  var COLOURS = { yes: "#c6efce", progress: "#ffe699", no: "#f4b6b6", unsure: "#f4b6b6", none: "#ffffff" };
+
+  function xmlEsc(s) {
+    return String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g, "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  /* User text: keeps line breaks, tabs and runs of spaces. */
+  function odfText(s) {
+    return String(s).replace(/\r\n?/g, "\n").split("\n").map(function (line) {
+      return xmlEsc(line).replace(/\t/g, "<text:tab/>").replace(/ {2,}/g, function (m) { return ' <text:s text:c="' + (m.length - 1) + '"/>'; });
+    }).join("<text:line-break/>");
+  }
+  /* Guidance text with **bold** and *italic*. */
+  function odfInline(text) {
+    return inlineParts(text).map(function (p) {
+      if (p.bold) return '<text:span text:style-name="Strong_20_Emphasis">' + xmlEsc(p.text) + "</text:span>";
+      if (p.italic) return '<text:span text:style-name="Emphasis">' + xmlEsc(p.text) + "</text:span>";
+      return xmlEsc(p.text);
+    }).join("");
+  }
+  function P(style, inner) { return '<text:p text:style-name="' + style + '">' + inner + "</text:p>"; }
+  function H(level, inner, style) {
+    return '<text:h text:style-name="' + (style || "Heading_20_" + level) + '" text:outline-level="' + level + '">' + inner + "</text:h>";
+  }
+
+  /* A document under construction: collects automatic styles for tables. */
+  function OdfDoc() {
+    this.body = [];
+    this.tableCount = 0;
+    this.autoStyles = {};
+  }
+  OdfDoc.prototype.add = function (x) { this.body.push(x); };
+  OdfDoc.prototype.colStyle = function (cm) {
+    var name = "Col" + String(Math.round(cm * 100));
+    this.autoStyles[name] = '<style:style style:name="' + name + '" style:family="table-column"><style:table-column-properties style:column-width="' + cm.toFixed(2) + 'cm"/></style:style>';
+    return name;
+  };
+  /* cols: widths in cm; head: [inner xml]; rows: [{cells:[inner xml], cellStyle?, cellStyles?}] */
+  OdfDoc.prototype.table = function (cols, head, rows, bodyParaStyle) {
+    var self = this;
+    var total = cols.reduce(function (a, b) { return a + b; }, 0);
+    var tname = "Table" + (++this.tableCount);
+    var tstyle = "Tbl" + String(Math.round(total * 100));
+    this.autoStyles[tstyle] = '<style:style style:name="' + tstyle + '" style:family="table"><style:table-properties style:width="' + total.toFixed(2) + 'cm" table:align="left" fo:margin-top="0.1cm" fo:margin-bottom="0.3cm"/></style:style>';
+    var x = '<table:table table:name="' + tname + '" table:style-name="' + tstyle + '">';
+    cols.forEach(function (w) { x += '<table:table-column table:style-name="' + self.colStyle(w) + '"/>'; });
+    x += "<table:table-header-rows><table:table-row>";
+    head.forEach(function (h) { x += '<table:table-cell table:style-name="CellHead" office:value-type="string">' + P("Table_20_Heading", h) + "</table:table-cell>"; });
+    x += "</table:table-row></table:table-header-rows>";
+    rows.forEach(function (r) {
+      x += '<table:table-row table:style-name="RowKeep">';
+      r.cells.forEach(function (c, i) {
+        var cs = (r.cellStyles && r.cellStyles[i]) || r.cellStyle || "CellBody";
+        x += '<table:table-cell table:style-name="' + cs + '" office:value-type="string">' + P(bodyParaStyle || "Table_20_Contents", c) + "</table:table-cell>";
+      });
+      x += "</table:table-row>";
+    });
+    x += "</table:table>";
+    this.add(x);
+  };
+
+  function guessWidths(head, rows, total) {
+    var n = head.length;
+    var lens = head.map(function (h, i) {
+      var m = plainText(h).length;
+      rows.forEach(function (r) { m = Math.max(m, Math.min(60, plainText(r[i] || "").length)); });
+      return Math.max(8, m);
+    });
+    var sum = lens.reduce(function (a, b) { return a + b; }, 0);
+    return lens.map(function (l) { return Math.max(2.5, total * l / sum); }).map(function (w, i, arr) {
+      var s = arr.reduce(function (a, b) { return a + b; }, 0);
+      return w * total / s;
+    });
+  }
+
+  /* Guidance blocks -> ODF. Tables are not allowed inside ODF lists, so a list
+     is closed before a table and reopened after it. */
+  function guidanceToOdf(doc, blocks) {
+    function itemXml(blocks, level, tables) {
+      var x = "";
+      blocks.forEach(function (b, idx) {
+        if (b.type === "p" || b.type === "sub") x += P("List_20_Contents", odfInline(b.type === "sub" ? "**" + b.text + "**" : b.text));
+        else if (b.type === "list") {
+          x += "<text:list>";
+          b.items.forEach(function (it) { x += "<text:list-item>" + itemXml(it, level + 1, tables) + "</text:list-item>"; });
+          x += "</text:list>";
+        } else if (b.type === "table") tables.push(b);
+      });
+      return x;
+    }
+    function addTable(b) {
+      doc.table(guessWidths(b.head, b.rows, 16), b.head.map(odfInline), b.rows.map(function (r) {
+        return { cells: b.head.map(function (h, i) { return odfInline(r[i] || ""); }) };
+      }));
+    }
+    blocks.forEach(function (b) {
+      if (b.type === "p") doc.add(P("Text_20_body", odfInline(b.text)));
+      else if (b.type === "sub") doc.add(P("Subheading", odfInline(b.text)));
+      else if (b.type === "table") addTable(b);
+      else if (b.type === "list") {
+        var open = false;
+        b.items.forEach(function (it) {
+          var tables = [];
+          var xml = "<text:list-item>" + itemXml(it, 1, tables) + "</text:list-item>";
+          if (!open) { doc.add('<text:list text:style-name="L1">'); open = true; }
+          doc.add(xml);
+          if (tables.length) {
+            doc.add("</text:list>"); open = false;
+            tables.forEach(addTable);
+          }
+        });
+        if (open) doc.add("</text:list>");
+      }
+    });
+  }
+
+  function statusCellStyle(st) { return "Cell_" + (st || "none"); }
+
+  function cellStylesXml() {
+    var x = '<style:style style:name="CellHead" style:family="table-cell"><style:table-cell-properties fo:background-color="#d9e2ec" fo:padding="0.1cm" fo:border="0.5pt solid #555555"/></style:style>' +
+      '<style:style style:name="CellBody" style:family="table-cell"><style:table-cell-properties fo:background-color="transparent" fo:padding="0.1cm" fo:border="0.5pt solid #555555"/></style:style>';
+    Object.keys(COLOURS).forEach(function (k) {
+      x += '<style:style style:name="' + statusCellStyle(k) + '" style:family="table-cell"><style:table-cell-properties fo:background-color="' + COLOURS[k] + '" fo:padding="0.1cm" fo:border="0.5pt solid #555555"/></style:style>';
+    });
+    x += '<style:style style:name="RowKeep" style:family="table-row"><style:table-row-properties fo:keep-together="always"/></style:style>';
+    x += '<style:style style:name="H1break" style:family="paragraph" style:parent-style-name="Heading_20_1"><style:paragraph-properties fo:break-before="page"/></style:style>';
+    return x;
+  }
+
+  function contentXml(doc) {
+    var auto = cellStylesXml() + Object.keys(doc.autoStyles).map(function (k) { return doc.autoStyles[k]; }).join("");
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<office:document-content ' + NS + ' office:version="1.3">' +
+      "<office:automatic-styles>" + auto + "</office:automatic-styles>" +
+      "<office:body><office:text>" + doc.body.join("") + "</office:text></office:body></office:document-content>";
+  }
+
+  function stylesXml(footerText) {
+    function para(name, display, parent, pprops, tprops, extra) {
+      return '<style:style style:name="' + name + '" style:display-name="' + display + '" style:family="paragraph"' +
+        (parent ? ' style:parent-style-name="' + parent + '"' : "") + (extra || "") + ">" +
+        (pprops ? "<style:paragraph-properties " + pprops + "/>" : "") +
+        (tprops ? "<style:text-properties " + tprops + "/>" : "") + "</style:style>";
+    }
+    function heading(level, size, colour, top) {
+      return para("Heading_20_" + level, "Heading " + level, "Heading",
+        'fo:margin-top="' + top + '" fo:margin-bottom="0.2cm" fo:keep-with-next="always"',
+        'fo:font-size="' + size + '" fo:font-weight="bold" fo:color="' + colour + '" style:font-size-asian="' + size + '" style:font-weight-asian="bold"',
+        ' style:next-style-name="Text_20_body" style:default-outline-level="' + level + '" style:class="text"');
+    }
+    function bulletLevel(level, ch, indentCm) {
+      return '<text:list-level-style-bullet text:level="' + level + '" text:bullet-char="' + ch + '">' +
+        '<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">' +
+        '<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="' + indentCm + 'cm" fo:text-indent="-0.5cm" fo:margin-left="' + indentCm + 'cm"/>' +
+        "</style:list-level-properties></text:list-level-style-bullet>";
+    }
+    var outline = '<text:outline-style style:name="Outline">' + [1, 2, 3, 4].map(function (l) {
+      return '<text:outline-level-style text:level="' + l + '" style:num-format=""><style:list-level-properties text:list-level-position-and-space-mode="label-alignment"><style:list-level-label-alignment text:label-followed-by="nothing"/></style:list-level-properties></text:outline-level-style>';
+    }).join("") + "</text:outline-style>";
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<office:document-styles ' + NS + ' office:version="1.3">' +
+      '<office:font-face-decls><style:font-face style:name="Liberation Sans" svg:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable"/></office:font-face-decls>' +
+      "<office:styles>" +
+      '<style:default-style style:family="paragraph"><style:paragraph-properties fo:hyphenation-ladder-count="no-limit" style:writing-mode="lr-tb"/>' +
+      '<style:text-properties style:font-name="Liberation Sans" fo:font-size="11.5pt" fo:language="en" fo:country="GB" fo:hyphenate="false"/></style:default-style>' +
+      '<style:default-style style:family="table"><style:table-properties table:border-model="collapsing"/></style:default-style>' +
+      '<style:style style:name="Standard" style:family="paragraph" style:class="text"/>' +
+      para("Text_20_body", "Text body", "Standard", 'fo:margin-top="0cm" fo:margin-bottom="0.2cm" fo:line-height="120%"', null, ' style:class="text"') +
+      para("Heading", "Heading", "Standard", 'fo:margin-top="0.4cm" fo:margin-bottom="0.2cm" fo:keep-with-next="always"', 'style:font-name="Liberation Sans"', ' style:next-style-name="Text_20_body" style:class="text"') +
+      heading(1, "20pt", "#083a66", "0.2cm") + heading(2, "16pt", "#0b4f8a", "0.6cm") + heading(3, "13pt", "#1a1a1a", "0.4cm") +
+      para("Title", "Title", "Heading", 'fo:text-align="start" fo:margin-bottom="0.2cm"', 'fo:font-size="28pt" fo:font-weight="bold" fo:color="#083a66"', ' style:class="chapter"') +
+      para("Subtitle", "Subtitle", "Heading", 'fo:margin-top="0cm" fo:margin-bottom="0.5cm"', 'fo:font-size="13pt" fo:color="#444444"', ' style:class="chapter"') +
+      para("Subheading", "Guidance subheading", "Text_20_body", 'fo:margin-top="0.25cm" fo:keep-with-next="always"', 'fo:font-weight="bold"') +
+      para("Label", "Answer label", "Text_20_body", 'fo:margin-top="0.25cm" fo:margin-bottom="0.05cm" fo:keep-with-next="always"', 'fo:font-weight="bold" fo:color="#083a66"') +
+      para("Answer", "Answer", "Text_20_body", 'fo:margin-left="0.5cm" fo:margin-bottom="0.2cm"', null) +
+      para("Group_20_Intro", "Part introduction", "Text_20_body", null, 'fo:font-style="italic" fo:font-size="12pt"') +
+      para("Empty", "Empty note", "Text_20_body", null, 'fo:font-style="italic" fo:color="#555555"') +
+      para("List_20_Contents", "List Contents", "Standard", 'fo:margin-top="0cm" fo:margin-bottom="0.1cm" fo:line-height="115%"', null) +
+      para("Table_20_Contents", "Table Contents", "Standard", 'fo:margin-top="0cm" fo:margin-bottom="0cm"', 'fo:font-size="10.5pt"', ' style:class="extra"') +
+      para("Table_20_Heading", "Table Heading", "Table_20_Contents", null, 'fo:font-weight="bold"', ' style:class="extra"') +
+      para("Footer", "Footer", "Standard", 'fo:text-align="center"', 'fo:font-size="9pt" fo:color="#444444"', ' style:class="extra"') +
+      '<style:style style:name="Strong_20_Emphasis" style:display-name="Strong Emphasis" style:family="text"><style:text-properties fo:font-weight="bold"/></style:style>' +
+      '<style:style style:name="Emphasis" style:family="text"><style:text-properties fo:font-style="italic"/></style:style>' +
+      outline +
+      '<text:list-style style:name="L1" style:display-name="Guidance bullets">' + bulletLevel(1, "•", 0.7) + bulletLevel(2, "–", 1.4) + bulletLevel(3, "◦", 2.1) + "</text:list-style>" +
+      "</office:styles>" +
+      '<office:automatic-styles><style:page-layout style:name="pm1"><style:page-layout-properties fo:page-width="21cm" fo:page-height="29.7cm" style:print-orientation="portrait" fo:margin-top="1.8cm" fo:margin-bottom="1.2cm" fo:margin-left="2cm" fo:margin-right="2cm"/>' +
+      '<style:footer-style><style:header-footer-properties fo:min-height="0cm" fo:margin-top="0.4cm"/></style:footer-style></style:page-layout></office:automatic-styles>' +
+      '<office:master-styles><style:master-page style:name="Standard" style:page-layout-name="pm1"><style:footer>' +
+      P("Footer", xmlEsc(footerText) + ' · page <text:page-number text:select-page="current">1</text:page-number>') +
+      "</style:footer></style:master-page></office:master-styles></office:document-styles>";
+  }
+
+  function metaXml(title, now) {
+    var iso = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate()) + "T" + pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<office:document-meta ' + NS + ' office:version="1.3"><office:meta>' +
+      "<meta:generator>" + APP_NAME + " 1</meta:generator><dc:title>" + xmlEsc(title) + "</dc:title><dc:language>en-GB</dc:language>" +
+      "<meta:creation-date>" + iso + "</meta:creation-date><dc:date>" + iso + "</dc:date></office:meta></office:document-meta>";
+  }
+
+  var MANIFEST = '<?xml version="1.0" encoding="UTF-8"?>\n<manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0" manifest:version="1.3">' +
+    '<manifest:file-entry manifest:full-path="/" manifest:version="1.3" manifest:media-type="application/vnd.oasis.opendocument.text"/>' +
+    '<manifest:file-entry manifest:full-path="content.xml" manifest:media-type="text/xml"/>' +
+    '<manifest:file-entry manifest:full-path="styles.xml" manifest:media-type="text/xml"/>' +
+    '<manifest:file-entry manifest:full-path="meta.xml" manifest:media-type="text/xml"/>' +
+    "</manifest:manifest>";
+
+  /* ---- minimal ZIP writer (STORE method, CRC-32) ---- */
+  var CRC_TABLE = (function () {
+    var t = new Uint32Array(256);
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  function crc32(bytes) {
+    var c = 0xFFFFFFFF;
+    for (var i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+  /* files: [{name, data: string}] in order. Returns Uint8Array. */
+  function makeZip(files, when) {
+    var enc = new TextEncoder();
+    var dosTime = (when.getHours() << 11) | (when.getMinutes() << 5) | Math.floor(when.getSeconds() / 2);
+    var dosDate = ((when.getFullYear() - 1980) << 9) | ((when.getMonth() + 1) << 5) | when.getDate();
+    var locals = [], centrals = [], offset = 0;
+    files.forEach(function (f) {
+      var name = enc.encode(f.name), data = enc.encode(f.data), crc = crc32(data);
+      var h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0, 0x04034b50, true); h.setUint16(4, 10, true); h.setUint16(6, 0, true); h.setUint16(8, 0, true);
+      h.setUint16(10, dosTime, true); h.setUint16(12, dosDate, true); h.setUint32(14, crc, true);
+      h.setUint32(18, data.length, true); h.setUint32(22, data.length, true); h.setUint16(26, name.length, true); h.setUint16(28, 0, true);
+      locals.push(new Uint8Array(h.buffer), name, data);
+      var c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 10, true); c.setUint16(8, 0, true); c.setUint16(10, 0, true);
+      c.setUint16(12, dosTime, true); c.setUint16(14, dosDate, true); c.setUint32(16, crc, true);
+      c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, name.length, true);
+      c.setUint16(30, 0, true); c.setUint16(32, 0, true); c.setUint16(34, 0, true); c.setUint16(36, 0, true); c.setUint32(38, 0, true);
+      c.setUint32(42, offset, true);
+      centrals.push(new Uint8Array(c.buffer), name);
+      offset += 30 + name.length + data.length;
+    });
+    var cdSize = centrals.reduce(function (a, b) { return a + b.length; }, 0);
+    var e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(4, 0, true); e.setUint16(6, 0, true);
+    e.setUint16(8, files.length, true); e.setUint16(10, files.length, true);
+    e.setUint32(12, cdSize, true); e.setUint32(16, offset, true); e.setUint16(20, 0, true);
+    var parts = locals.concat(centrals, [new Uint8Array(e.buffer)]);
+    var total = parts.reduce(function (a, b) { return a + b.length; }, 0);
+    var out = new Uint8Array(total), pos = 0;
+    parts.forEach(function (p) { out.set(p, pos); pos += p.length; });
+    return out;
+  }
+
+  function makeOdt(doc, title, footer, now) {
+    return makeZip([
+      { name: "mimetype", data: "application/vnd.oasis.opendocument.text" },
+      { name: "META-INF/manifest.xml", data: MANIFEST },
+      { name: "content.xml", data: contentXml(doc) },
+      { name: "styles.xml", data: stylesXml(footer) },
+      { name: "meta.xml", data: metaXml(title, now) }
+    ], now);
+  }
+
+  function relevantGroups() {
+    return GROUPS.map(function (g) {
+      return { group: g, sections: sectionsIn(g).filter(function (s) { var d = peek(s.id); return !(d && d.notRelevant); }) };
+    }).filter(function (x) { return x.sections.length; });
+  }
+
+  /* ---- 1. Family plan ---- */
+  function buildPlanOdt(now) {
+    now = now || new Date();
+    var doc = new OdfDoc();
+    doc.add(P("Title", "Family plan"));
+    doc.add(P("Subtitle", "Generated on " + xmlEsc(formatDateTime(now))));
+    doc.add(P("Text_20_body", "This is our household emergency plan. Everything is planned for 7 days. Each section explains what it covers, gives the general guidance, and then sets out our plan: our decisions, information and preparations."));
+    doc.add(P("Text_20_body", "Keep a printed copy where everyone knows to find it, and review it whenever our circumstances change."));
+    var groups = relevantGroups();
+    if (!groups.length) {
+      doc.add(P("Empty", "Every section has been marked as not relevant, so there is nothing to show."));
+    } else {
+      doc.add(H(2, "What this plan covers"));
+      doc.add('<text:list text:style-name="L1">');
+      groups.forEach(function (x) {
+        doc.add("<text:list-item>" + P("List_20_Contents", '<text:span text:style-name="Strong_20_Emphasis">' + xmlEsc(x.group.title) + "</text:span>") +
+          (isSolo(x.group) ? "" : "<text:list>" + x.sections.map(function (s) {
+            return "<text:list-item>" + P("List_20_Contents", xmlEsc(s.title + " (" + PROGRESS_LABELS[sectionProgress(s).status].text.toLowerCase() + ")")) + "</text:list-item>";
+          }).join("") + "</text:list>") + "</text:list-item>");
+      });
+      doc.add("</text:list>");
+    }
+
+    groups.forEach(function (x) {
+      var g = x.group, solo = isSolo(g);
+      doc.add(H(1, xmlEsc(g.title), "H1break"));
+      if (g.subtitle) doc.add(P("Group_20_Intro", xmlEsc(g.subtitle)));
+      x.sections.forEach(function (s) {
+        var lv = solo ? 2 : 3;
+        if (!solo) doc.add(H(2, xmlEsc(s.title)));
+        doc.add(H(lv, "About this section"));
+        doc.add(P("Text_20_body", xmlEsc(s.intro)));
+        doc.add(H(lv, "General guidance"));
+        guidanceToOdf(doc, guidanceOf(s));
+        doc.add(H(lv, "Our plan"));
+        planAnswersToOdf(doc, s);
+      });
+    });
+    return makeOdt(doc, "Family plan", "Family plan, generated on " + formatDate(now), now);
+  }
+
+  function qa(doc, label, answer) {
+    if (isBlank(answer)) return false;
+    doc.add(P("Label", xmlEsc(label)));
+    doc.add(P("Answer", odfText(String(answer).trim())));
+    return true;
+  }
+
+  function planAnswersToOdf(doc, s) {
+    var d = peek(s.id) || emptySection();
+    var any = false;
+    s.plan.forEach(function (q) { if (qa(doc, q.label, d.plan[q.id])) any = true; });
+    if (qa(doc, NOTES_LABEL, d.notes)) any = true;
+
+    var rows = [], unanswered = 0;
+    function addRow(label, a, custom) {
+      if (!a || (!a.status && isBlank(a.note))) { unanswered++; return; }
+      if (!a.status) unanswered++;
+      rows.push({
+        cells: [xmlEsc(label) + (custom ? ' <text:span text:style-name="Emphasis">(our own item)</text:span>' : ""), xmlEsc(a.status ? statusLabel(a.status) : "Not answered"), odfText(a.note || "")],
+        cellStyles: ["CellBody", statusCellStyle(a.status), "CellBody"]
+      });
+    }
+    s.have.forEach(function (h) { addRow(h.label, d.have[h.id], false); });
+    d.custom.forEach(function (c) { addRow(c.label, c, true); });
+    if (rows.length) {
+      any = true;
+      doc.add(P("Label", "Resources, tools and equipment"));
+      doc.table([9, 3, 5], ["Do we have …?", "Status", "Note"], rows);
+      if (unanswered) doc.add(P("Empty", unanswered + (unanswered === 1 ? " item has" : " items have") + " not been answered yet. See the to-do list."));
+    }
+    if (qa(doc, storedLabel(s), d.stored)) any = true;
+    if (qa(doc, checkLabel(s), d.checkHow)) any = true;
+    if (qa(doc, oftenLabel(s), d.checkOften)) any = true;
+    if (!any) doc.add(P("Empty", "We have not filled in this section yet."));
+  }
+
+  /* ---- 2. To-do list ---- */
+  function buildTodoOdt(now) {
+    now = now || new Date();
+    var doc = new OdfDoc();
+    var items = todoItems();
+    var t = todoCounts(items);
+    doc.add(P("Title", "To-do list"));
+    doc.add(P("Subtitle", "Generated on " + xmlEsc(formatDateTime(now))));
+    doc.add(P("Text_20_body", "Every “Do we have …?” item from the relevant sections of our family plan, with its status and any note. Work through the list, update the tool, then download a fresh list."));
+    doc.add(H(1, "Colour key and counts"));
+    doc.table([3, 4.5, 2.5], ["Colour", "Status", "Items"], [
+      { cells: ["Green", "Yes", String(t.yes)], cellStyle: statusCellStyle("yes") },
+      { cells: ["Amber", "In progress", String(t.progress)], cellStyle: statusCellStyle("progress") },
+      { cells: ["Red", "No", String(t.no)], cellStyle: statusCellStyle("no") },
+      { cells: ["Red", "Not sure", String(t.unsure)], cellStyle: statusCellStyle("unsure") },
+      { cells: ["White", "Not answered", String(t.none)], cellStyle: statusCellStyle("none") },
+      { cells: ["", '<text:span text:style-name="Strong_20_Emphasis">Total</text:span>', '<text:span text:style-name="Strong_20_Emphasis">' + items.length + "</text:span>"] }
+    ]);
+    if (!items.length) doc.add(P("Empty", "There are no items: every section has been marked as not relevant."));
+    relevantGroups().forEach(function (x) {
+      var rows = [];
+      x.sections.forEach(function (s) {
+        items.filter(function (it) { return it.section === s; }).forEach(function (it) {
+          rows.push({
+            cells: [xmlEsc(s.title), xmlEsc(it.label) + (it.custom ? ' <text:span text:style-name="Emphasis">(our own item)</text:span>' : ""),
+              '<text:span text:style-name="Strong_20_Emphasis">' + xmlEsc(it.status ? statusLabel(it.status) : "Not answered") + "</text:span>", odfText(it.note)],
+            cellStyle: statusCellStyle(it.status)
+          });
+        });
+      });
+      if (!rows.length) return;
+      doc.add(H(1, xmlEsc(x.group.title)));
+      doc.table([3.2, 6.8, 3.2, 3.8], ["Section", "Item", "Status", "Note"], rows);
+    });
+    return makeOdt(doc, "To-do list", "To-do list, generated on " + formatDate(now), now);
+  }
+
+  var ODT_TYPE = "application/vnd.oasis.opendocument.text";
+  function downloadPlan() {
+    if (saveTimer) saveNow();
+    var now = new Date(), name = "family-plan-" + fileDate(now) + ".odt";
+    downloadBlob(new Blob([buildPlanOdt(now)], { type: ODT_TYPE }), name);
+    notice("Our family plan has been saved as “" + name + "” in the Downloads folder. Double-click it to open it in LibreOffice Writer.", "ok");
+  }
+  function downloadTodo() {
+    if (saveTimer) saveNow();
+    var now = new Date(), name = "family-plan-to-do-" + fileDate(now) + ".odt";
+    downloadBlob(new Blob([buildTodoOdt(now)], { type: ODT_TYPE }), name);
+    notice("Our to-do list has been saved as “" + name + "” in the Downloads folder. Double-click it to open it in LibreOffice Writer.", "ok");
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Start-up                                                           */
+  /* ------------------------------------------------------------------ */
+
+  function loadInto(saved) {
+    if (!saved) return;
+    var r = validateBackup(saved);
+    if (!r.ok) return;
+    state = r.data;
+    state.savedAt = typeof saved.savedAt === "string" ? saved.savedAt : null;
+    if (typeof saved.lastView === "string") currentView = saved.lastView;
+  }
+
+  function init() {
+    if (!SECTIONS.length) {
+      $("view").appendChild(el("p", { className: "notice notice-error", text: "The sections could not be loaded. If the content block was edited recently, check it for a missing comma or quotation mark." }));
+      return;
+    }
+    $("btn-save-file").addEventListener("click", saveToFile);
+    $("btn-open").addEventListener("click", function () { $("file-input").click(); });
+    $("btn-reset").addEventListener("click", startAgain);
+    $("file-input").addEventListener("change", function (e) {
+      var f = e.target.files && e.target.files[0];
+      e.target.value = "";
+      openFile(f);
+    });
+    storage.init().then(function () { return storage.load(); }).then(function (saved) {
+      loadInto(saved);
+      renderSidebar();
+      showSavedTime();
+      if (storage.backend === "none") setSaveStatus("This browser cannot keep answers here. Use “Save to file” often.", true);
+      go(currentView, { noFocus: true, noSave: true });
+      window.FamilyPlanTool.ready = true;
+    });
+  }
+
+  // A little access for testing and troubleshooting.
+  window.FamilyPlanTool = {
+    ready: false,
+    storageBackend: function () { return storage.backend; },
+    flushSave: function () { return saveNow(); },
+    buildPlanOdt: buildPlanOdt,
+    buildTodoOdt: buildTodoOdt,
+    getState: function () { return clone(state); }
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+</script>
+</body>
+</html>
